@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen">
+    <nav class="bg-white shadow p-4 flex gap-4 rounded-b-lg mb-8">
+        <a href="index.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
+        <a href="dashboard.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
+        <a href="api.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-code mr-1"></i>API</a>
+        <a href="login.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
+    </nav>
+    <div class="w-full max-w-sm bg-white rounded-lg shadow-md p-8">
+        <h2 class="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h2>
+        <form id="loginForm" class="space-y-5">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">Usuario</label>
+                <input type="text" id="username" name="username" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                <input type="password" id="password" name="password" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div id="errorMsg" class="text-red-600 text-sm hidden"></div>
+            <button type="submit"
+                class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition">Entrar</button>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById('loginForm');
+        const errorMsg = document.getElementById('errorMsg');
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = form.username.value.trim();
+            const password = form.password.value.trim();
+            if (!username || !password) {
+                errorMsg.textContent = 'Por favor, complete todos los campos.';
+                errorMsg.classList.remove('hidden');
+                return;
+            } else {
+                errorMsg.classList.add('hidden');
+            }
+            // Lógica de autenticación real
+            try {
+                const response = await fetch('/api/usuarios/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `nombreUsuario=${encodeURIComponent(username)}&contrasena=${encodeURIComponent(password)}`
+                });
+                if (!response.ok) throw new Error('Error en la petición');
+                const ok = await response.json();
+                if (ok === true) {
+                    window.location.href = 'index.html';
+                } else {
+                    errorMsg.textContent = 'Usuario o contraseña incorrectos.';
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorMsg.textContent = 'Error de conexión con el servidor.';
+                errorMsg.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

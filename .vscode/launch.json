@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PuertogamesApplication<puertogames>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.puertogames.puertogames.PuertogamesApplication",
+            "projectName": "puertogames",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo de Videojuegos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen">
+    <nav class="bg-white shadow p-4 flex gap-4 rounded-b-lg mb-8">
+        <a href="index.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
+        <a href="dashboard.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
+        <a href="api.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-code mr-1"></i>API</a>
+        <a href="login.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
+    </nav>
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Catálogo de Videojuegos</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-xl font-semibold mb-2">The Legend of Zelda: Breath of the Wild</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Aventura</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Nintendo Switch</p>
+                <p class="text-yellow-500 font-semibold"><span class="font-medium text-gray-700">Rating:</span> 9.7</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-xl font-semibold mb-2">God of War Ragnarök</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Acción</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> PlayStation 5</p>
+                <p class="text-yellow-500 font-semibold"><span class="font-medium text-gray-700">Rating:</span> 9.5</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-xl font-semibold mb-2">Halo Infinite</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Shooter</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Xbox Series X</p>
+                <p class="text-yellow-500 font-semibold"><span class="font-medium text-gray-700">Rating:</span> 8.8</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-xl font-semibold mb-2">Elden Ring</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> RPG</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> PC, PlayStation, Xbox</p>
+                <p class="text-yellow-500 font-semibold"><span class="font-medium text-gray-700">Rating:</span> 9.6</p>
+            </div>
+            <!-- Card 5 -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-xl font-semibold mb-2">Super Mario Odyssey</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Plataforma</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Nintendo Switch</p>
+                <p class="text-yellow-500 font-semibold"><span class="font-medium text-gray-700">Rating:</span> 9.2</p>
+            </div>
+            <!-- Card 6 -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+                <h2 class="text-xl font-semibold mb-2">Red Dead Redemption 2</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Aventura</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> PC, PlayStation, Xbox</p>
+                <p class="text-yellow-500 font-semibold"><span class="font-medium text-gray-700">Rating:</span> 9.8</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

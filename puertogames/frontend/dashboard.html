@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo de Videojuegos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen">
+    <nav class="bg-white shadow p-4 flex gap-4 rounded-b-lg mb-8">
+        <a href="index.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
+        <a href="dashboard.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
+        <a href="api.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-code mr-1"></i>API</a>
+        <a href="login.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
+    </nav>
+    <div class="container mx-auto py-8">
+        <h1 class="text-4xl font-extrabold mb-10 text-center text-purple-800 drop-shadow">Catálogo de Videojuegos</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transition transform hover:-translate-y-2 hover:shadow-2xl border-t-4 border-blue-400">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShGl8frrmMD-xq62jBrPqbFk_a2nijjfeTdw&s" alt="Zelda" class="w-28 h-40 object-cover rounded mb-4 shadow">
+                <h2 class="text-xl font-bold mb-2 text-blue-700 text-center">The Legend of Zelda: Breath of the Wild</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Aventura</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Nintendo Switch</p>
+                <p class="text-yellow-500 font-bold flex items-center"><i class="fas fa-star mr-1"></i>9.5</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transition transform hover:-translate-y-2 hover:shadow-2xl border-t-4 border-red-400">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg" alt="God of War" class="w-28 h-40 object-cover rounded mb-4 shadow">
+                <h2 class="text-xl font-bold mb-2 text-red-700 text-center">God of War</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Acción</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> PlayStation 4</p>
+                <p class="text-yellow-500 font-bold flex items-center"><i class="fas fa-star mr-1"></i>9.7</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transition transform hover:-translate-y-2 hover:shadow-2xl border-t-4 border-green-400">
+                <img src="https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2020/07/halo-infinite-2005377.jpeg?tf=3840x" alt="Halo Infinite" class="w-28 h-40 object-cover rounded mb-4 shadow">
+                <h2 class="text-xl font-bold mb-2 text-green-700 text-center">Halo Infinite</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Shooter</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Xbox Series X</p>
+                <p class="text-yellow-500 font-bold flex items-center"><i class="fas fa-star mr-1"></i>8.8</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center transition transform hover:-translate-y-2 hover:shadow-2xl border-t-4 border-yellow-400">
+                <img src="https://i.pinimg.com/736x/f5/60/cc/f560cc7d9a907ae6e4bc5d914a844889.jpg" alt="Minecraft" class="w-28 h-40 object-cover rounded mb-4 shadow">
+                <h2 class="text-xl font-bold mb-2 text-yellow-700 text-center">Minecraft</h2>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Sandbox</p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Multiplataforma</p>
+                <p class="text-yellow-500 font-bold flex items-center"><i class="fas fa-star mr-1"></i>9.0</p>
+            </div>
+            <!-- Puedes agregar más cards con imágenes y estilos similares -->
+        </div>
+    </div>
+</body>
+</html>
