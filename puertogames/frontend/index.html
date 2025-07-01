@@ -57,14 +57,25 @@
 
     <div class="container mx-auto py-8 px-4">
         <h1 class="text-4xl font-extrabold mb-10 text-center text-purple-800 drop-shadow">Catálogo de Videojuegos</h1>
-        <div class="flex justify-center mb-8">
-            <input id="searchInput" type="text" placeholder="Buscar juego..." class="w-full max-w-md px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+        
+        <!-- Filtros de búsqueda -->
+        <div class="flex flex-col md:flex-row justify-center mb-8 gap-4">
+            <input id="searchInput" type="text" placeholder="Buscar por nombre..." class="w-full md:w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+            
+            <select id="platformFilter" class="w-full md:w-1/3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white">
+                <option value="">Todas las plataformas</option>
+                <option value="Nintendo Switch">Nintendo Switch</option>
+                <option value="Multiplataforma">Multiplataforma</option>
+                <option value="PS5/Xbox/PC">PS5/Xbox/PC</option>
+                <option value="Próximamente">Próximamente</option>
+            </select>
         </div>
+        
         <!-- Sección de Juegos -->
         <div id="games-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <!-- Zelda -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-blue-400">
-                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co49x7.png" alt="Zelda" class="w-28 h-40 object-cover rounded mb-4 shadow">
+            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-blue-400" data-platform="Nintendo Switch">
+                <img src="./imagenes/zelda.jpg" alt="Zelda" class="w-28 h-40 object-cover rounded mb-4 shadow">
                 <h2 class="text-xl font-bold mb-2 text-blue-700 text-center">The Legend of Zelda: Breath of the Wild</h2>
                 <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Aventura</p>
                 <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Nintendo Switch</p>
@@ -80,8 +91,8 @@
             </div>
 
             <!-- Minecraft -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-green-400">
-                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co1x0a.png" alt="Minecraft" class="w-28 h-40 object-cover rounded mb-4 shadow">
+            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-green-400" data-platform="Multiplataforma">
+                <img src="./imagenes/mine.avif" alt="Minecraft" class="w-28 h-40 object-cover rounded mb-4 shadow">
                 <h2 class="text-xl font-bold mb-2 text-green-700 text-center">Minecraft</h2>
                 <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Sandbox</p>
                 <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Multiplataforma</p>
@@ -97,8 +108,8 @@
             </div>
 
             <!-- EA Sports FC 24 -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-red-400">
-                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co6lx2.png" alt="EA Sports FC 24" class="w-28 h-40 object-cover rounded mb-4 shadow">
+            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-red-400" data-platform="PS5/Xbox/PC">
+                <img src="./imagenes/ea25.avif" alt="EA Sports FC 24" class="w-28 h-40 object-cover rounded mb-4 shadow">
                 <h2 class="text-xl font-bold mb-2 text-red-700 text-center">EA Sports FC 24</h2>
                 <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Deportes</p>
                 <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> PS5/Xbox/PC</p>
@@ -114,8 +125,8 @@
             </div>
 
             <!-- GTA VI -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-yellow-400">
-                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co6wyg.png" alt="GTA VI" class="w-28 h-40 object-cover rounded mb-4 shadow">
+            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-yellow-400" data-platform="Próximamente">
+                <img src="./imagenes/gta6.avif" alt="GTA VI" class="w-28 h-40 object-cover rounded mb-4 shadow">
                 <h2 class="text-xl font-bold mb-2 text-yellow-700 text-center">GTA VI</h2>
                 <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Acción-Aventura</p>
                 <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Próximamente</p>
@@ -154,7 +165,7 @@
                 platform: "Nintendo Switch",
                 releaseDate: "3 de marzo, 2017",
                 developer: "Nintendo EPD",
-                image: "https://images.igdb.com/igdb/image/upload/t_cover_big/co49x7.png"
+                image: "./imagenes/zelda.jpg"
             },
             minecraft: {
                 title: "Minecraft",
@@ -174,7 +185,7 @@
                 platform: "Multiplataforma",
                 releaseDate: "18 de noviembre, 2011",
                 developer: "Mojang Studios",
-                image: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1x0a.png"
+                image: "./imagenes/mine.avif"
             },
             fc24: {
                 title: "EA Sports FC 24",
@@ -194,7 +205,7 @@
                 platform: "PS5, Xbox Series X/S, PC",
                 releaseDate: "29 de septiembre, 2023",
                 developer: "EA Vancouver",
-                image: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6lx2.png"
+                image: "./imagenes/ea25.avif"
             },
             gta6: {
                 title: "Grand Theft Auto VI",
@@ -214,7 +225,7 @@
                 platform: "Próximamente (2025)",
                 releaseDate: "2025 (Estimado)",
                 developer: "Rockstar Games",
-                image: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6wyg.png"
+                image: "./imagenes/gta6.avif"
             }
         };
 
@@ -287,21 +298,30 @@
             });
         }
 
-        // Filtrado de juegos por búsqueda
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
+        // Función para filtrar juegos
+        function filterGames() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const platformFilter = document.getElementById('platformFilter').value;
             const gameCards = document.querySelectorAll('.game-card');
             
             gameCards.forEach(card => {
                 const title = card.querySelector('h2').innerText.toLowerCase();
-                if (title.includes(searchTerm)) {
+                const platform = card.getAttribute('data-platform');
+                
+                const matchesSearch = title.includes(searchTerm);
+                const matchesPlatform = platformFilter === '' || platform === platformFilter;
+                
+                if (matchesSearch && matchesPlatform) {
                     card.classList.remove('hidden');
                 } else {
                     card.classList.add('hidden');
                 }
             });
-        });
+        }
+
+        // Event listeners para los filtros
+        document.getElementById('searchInput').addEventListener('input', filterGames);
+        document.getElementById('platformFilter').addEventListener('change', filterGames);
     </script>
 </body>
 </html>
-

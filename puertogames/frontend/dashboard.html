@@ -98,26 +98,52 @@
             { title: "Civ VI", genre: "Estrategia", platform: "Mobile", rating: 9.2 }
         ];
 
+        // Utilidades para procesar datos
+        const genres = ['Aventura', 'Acción', 'RPG', 'Shooter', 'Estrategia'];
+        const platforms = ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile'];
+
+        function countBy(arr, key, values) {
+            return values.map(v => arr.filter(g => g[key] === v).length);
+        }
+
+        function avgRatingByPlatform(arr, platforms) {
+            return platforms.map(p => {
+                const filtered = arr.filter(g => g.platform === p);
+                if (filtered.length === 0) return 0;
+                return (filtered.reduce((sum, g) => sum + g.rating, 0) / filtered.length).toFixed(1);
+            });
+        }
+
+        function getRatings(arr) {
+            return arr.map(g => g.rating);
+        }
+
+        function getTitles(arr) {
+            return arr.map(g => g.title);
+        }
+
         function initCharts() {
+            // Distribución por Género
             new Chart(document.getElementById('genreChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Aventura', 'Acción', 'RPG', 'Shooter', 'Estrategia'],
+                    labels: genres,
                     datasets: [{
-                        data: [12, 19, 8, 15, 7],
+                        data: countBy(games, 'genre', genres),
                         backgroundColor: ['#EA580C','#F97316','#FB923C','#FDBA74','#FED7AA']
                     }]
                 },
                 options: { plugins: { legend: { labels: { color: 'white' } } } }
             });
 
+            // Rating Promedio por Plataforma
             new Chart(document.getElementById('platformChart'), {
                 type: 'bar',
                 data: {
-                    labels: ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile'],
+                    labels: platforms,
                     datasets: [{
                         label: 'Rating Promedio',
-                        data: [8.7, 9.1, 8.5, 9.3, 7.8],
+                        data: avgRatingByPlatform(games, platforms),
                         backgroundColor: '#EA580C'
                     }]
                 },
@@ -130,26 +156,28 @@
                 }
             });
 
+            // Cantidad de Juegos por Plataforma
             new Chart(document.getElementById('countPlatformChart'), {
                 type: 'polarArea',
                 data: {
-                    labels: ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile'],
+                    labels: platforms,
                     datasets: [{
                         label: 'Cantidad de Juegos',
-                        data: [6, 4, 2, 3, 1],
+                        data: countBy(games, 'platform', platforms),
                         backgroundColor: ['#F97316','#FB923C','#FDBA74','#FCD34D','#FDE68A']
                     }]
                 },
                 options: { plugins: { legend: { labels: { color: 'white' } } } }
             });
 
+            // Comparación de Ratings
             new Chart(document.getElementById('compareRatingChart'), {
                 type: 'radar',
                 data: {
-                    labels: ['Zelda','Elden Ring','Warzone','Starcraft','God of War','Hades','Valorant','Civ VI'],
+                    labels: getTitles(games),
                     datasets: [{
                         label: 'Rating',
-                        data: [9.5, 9.7, 8.5, 9.0, 9.8, 9.4, 8.7, 9.2],
+                        data: getRatings(games),
                         backgroundColor: 'rgba(234, 88, 12, 0.2)',
                         borderColor: '#EA580C'
                     }]
