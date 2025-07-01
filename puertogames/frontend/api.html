@@ -3,51 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia de Videojuegos</title>
+    <title>Trivia | Puerto Games</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen">
-    <nav class="bg-white shadow p-4 flex gap-4 rounded-b-lg mb-8">
-        <a href="index.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
-        <a href="dashboard.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
-        <a href="api.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-code mr-1"></i>API</a>
-        <a href="login.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
-    </nav>
-    <div class="bg-gray-800 rounded-xl shadow-lg p-8 max-w-md w-full text-center mt-4">
-        <h1 class="text-2xl font-bold text-white mb-4">Curiosidad de Videojuegos</h1>
-        <div id="trivia" class="text-gray-200 text-lg mb-6 min-h-[80px] flex items-center justify-center">
-            Cargando curiosidad...
+<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen flex flex-col">
+    <nav class="bg-white shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
+        <div class="flex items-center">
+            <i class="fas fa-gamepad text-blue-600 text-2xl mr-2"></i>
+            <span class="text-xl font-bold text-blue-800">PUERTO GAMES</span>
         </div>
-        <button id="reload" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition">
-            Otra curiosidad
-        </button>
+        <div class="flex gap-4 mt-2 sm:mt-0">
+            <a href="index.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
+            <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
+            <a href="api.html" class="text-blue-800 font-semibold underline"><i class="fas fa-code mr-1"></i>API</a>
+            <a href="login.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
+        </div>
+    </nav>
+
+    <div class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-2xl bg-white rounded-xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white text-center">
+                <h1 class="text-2xl font-bold"><i class="fas fa-question-circle mr-2"></i>Trivia de Videojuegos</h1>
+                <p class="text-sm opacity-90 mt-1">Descubre datos curiosos sobre tus juegos favoritos</p>
+            </div>
+            
+            <div class="p-8">
+                <!-- Contenedor de la pregunta -->
+                <div id="triviaQuestion" class="bg-gray-50 rounded-lg p-6 mb-6">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin text-blue-500 text-2xl mb-2"></i>
+                        <p class="text-gray-600">Cargando pregunta...</p>
+                    </div>
+                </div>
+                
+                <!-- Contenedor de opciones -->
+                <div id="optionsContainer" class="grid grid-cols-1 gap-3 mb-6" style="display: none;">
+                    <!-- Las opciones se insertarán aquí dinámicamente -->
+                </div>
+                
+                <!-- Información de dificultad y categoría -->
+                <div id="questionInfo" class="flex justify-between text-sm text-gray-500 mb-6" style="display: none;">
+                    <span id="difficulty" class="flex items-center">
+                        <i class="fas fa-bolt mr-1"></i>
+                        <span id="difficultyText"></span>
+                    </span>
+                    <span id="category" class="flex items-center">
+                        <i class="fas fa-tag mr-1"></i>
+                        <span id="categoryText"></span>
+                    </span>
+                </div>
+                
+                <!-- Contador de preguntas -->
+                <div id="counter" class="text-center text-gray-500 text-sm mb-6">
+                    Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestions">10</span>
+                </div>
+                
+                <!-- Resultados -->
+                <div id="results" class="hidden text-center mb-6">
+                    <h3 class="text-xl font-bold text-purple-700 mb-2">Tu puntuación</h3>
+                    <div class="text-4xl font-bold mb-2">
+                        <span id="score">0</span>/<span id="maxScore">10</span>
+                    </div>
+                    <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
+                        <div id="progressBar" class="h-full bg-blue-600 transition-all duration-500"></div>
+                    </div>
+                </div>
+                
+                <!-- Botones de acción -->
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button id="newQuestionBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center justify-center">
+                        <i class="fas fa-sync-alt mr-2"></i> Nueva Pregunta
+                    </button>
+                    <button id="revealAnswerBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center justify-center">
+                        <i class="fas fa-lightbulb mr-2"></i> Mostrar Respuesta
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <footer class="bg-white p-4 text-center text-gray-600 text-sm">
+        © 2023 Puerto Games. Todos los derechos reservados.
+    </footer>
+
     <script>
+        let currentQuestion = null;
+        let score = 0;
+        let questionCount = 0;
+        const maxQuestions = 10;
+        
+        // Colores según dificultad
+        const difficultyColors = {
+            easy: 'text-green-500',
+            medium: 'text-yellow-500',
+            hard: 'text-red-500'
+        };
+        
+        // Traducciones de dificultad
+        const difficultyTranslations = {
+            easy: 'Fácil',
+            medium: 'Media',
+            hard: 'Difícil'
+        };
+        
         async function fetchTrivia() {
-            const triviaDiv = document.getElementById('trivia');
-            triviaDiv.textContent = 'Cargando curiosidad...';
+            if (questionCount >= maxQuestions) {
+                showFinalResults();
+                return;
+            }
+            
+            const questionDiv = document.getElementById('triviaQuestion');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const questionInfo = document.getElementById('questionInfo');
+            
+            // Mostrar estado de carga
+            questionDiv.innerHTML = `
+                <div class="text-center">
+                    <i class="fas fa-spinner fa-spin text-blue-500 text-2xl mb-2"></i>
+                    <p class="text-gray-600">Cargando pregunta...</p>
+                </div>
+            `;
+            optionsContainer.style.display = 'none';
+            questionInfo.style.display = 'none';
+            
             try {
-                // Usamos la API de Open Trivia DB para obtener trivia de videojuegos
                 const res = await fetch('https://opentdb.com/api.php?amount=1&category=15&type=multiple');
                 const data = await res.json();
+                
                 if (data.results && data.results.length > 0) {
-                    // Decodificamos entidades HTML
+                    currentQuestion = data.results[0];
                     const parser = new DOMParser();
-                    const decoded = parser.parseFromString(data.results[0].question, 'text/html').body.textContent;
-                    triviaDiv.textContent = decoded;
+                    
+                    // Mostrar pregunta
+                    const decodedQuestion = parser.parseFromString(currentQuestion.question, 'text/html').body.textContent;
+                    questionDiv.innerHTML = `
+                        <h3 class="text-lg font-semibold text-center text-gray-800">${decodedQuestion}</h3>
+                    `;
+                    
+                    // Mostrar información de la pregunta
+                    document.getElementById('difficultyText').textContent = difficultyTranslations[currentQuestion.difficulty] || currentQuestion.difficulty;
+                    document.getElementById('difficulty').className = `flex items-center ${difficultyColors[currentQuestion.difficulty] || 'text-gray-500'}`;
+                    document.getElementById('categoryText').textContent = currentQuestion.category;
+                    questionInfo.style.display = 'flex';
+                    
+                    // Actualizar contador
+                    questionCount++;
+                    document.getElementById('currentQuestion').textContent = questionCount;
+                    
+                    // Preparar opciones de respuesta
+                    optionsContainer.innerHTML = '';
+                    const allAnswers = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
+                    shuffleArray(allAnswers);
+                    
+                    allAnswers.forEach(answer => {
+                        const decodedAnswer = parser.parseFromString(answer, 'text/html').body.textContent;
+                        const optionBtn = document.createElement('button');
+                        optionBtn.className = 'w-full bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-4 text-left transition transform hover:scale-[1.02]';
+                        optionBtn.textContent = decodedAnswer;
+                        optionBtn.onclick = () => checkAnswer(answer);
+                        optionsContainer.appendChild(optionBtn);
+                    });
+                    
+                    optionsContainer.style.display = 'grid';
                 } else {
-                    triviaDiv.textContent = 'No se pudo obtener una curiosidad.';
+                    showError('No se pudo obtener una pregunta en este momento.');
                 }
             } catch (e) {
-                triviaDiv.textContent = 'Error al cargar la curiosidad.';
+                showError('Error al cargar la trivia. Intenta de nuevo.');
+                console.error(e);
             }
         }
-
-        document.getElementById('reload').addEventListener('click', fetchTrivia);
-
-        // Cargar trivia al iniciar
-        fetchTrivia();
+        
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = currentQuestion.correct_answer;
+            const parser = new DOMParser();
+            const decodedCorrect = parser.parseFromString(correctAnswer, 'text/html').body.textContent;
+            
+            // Deshabilitar todos los botones de opción
+            const optionButtons = document.querySelectorAll('#optionsContainer button');
+            optionButtons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === decodedCorrect) {
+                    btn.classList.add('bg-green-100', 'border-green-400');
+                } else if (btn.textContent === parser.parseFromString(selectedAnswer, 'text/html').body.textContent && selectedAnswer !== correctAnswer) {
+                    btn.classList.add('bg-red-100', 'border-red-400');
+                }
+            });
+            
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                Swal.fire({
+                    title: '¡Correcto!',
+                    text: `Respuesta correcta.`,
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                }).then(() => {
+                    fetchTrivia();
+                });
+            } else {
+                Swal.fire({
+                    title: 'Incorrecto',
+                    html: `La respuesta correcta era: <strong>${decodedCorrect}</strong>`,
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                }).then(() => {
+                    fetchTrivia();
+                });
+            }
+        }
+        
+        function showFinalResults() {
+            document.getElementById('triviaQuestion').style.display = 'none';
+            document.getElementById('optionsContainer').style.display = 'none';
+            document.getElementById('questionInfo').style.display = 'none';
+            document.getElementById('newQuestionBtn').style.display = 'none';
+            document.getElementById('revealAnswerBtn').style.display = 'none';
+            
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('score').textContent = score;
+            document.getElementById('maxScore').textContent = maxQuestions;
+            document.getElementById('progressBar').style.width = `${(score/maxQuestions)*100}%`;
+            
+            // Mostrar mensaje según puntuación
+            let message, icon;
+            if (score === maxQuestions) {
+                message = '¡Perfecto! Eres un experto en videojuegos.';
+                icon = 'success';
+            } else if (score >= maxQuestions * 0.7) {
+                message = '¡Buen trabajo! Sabes bastante sobre videojuegos.';
+                icon = 'success';
+            } else if (score >= maxQuestions * 0.4) {
+                message = 'No está mal, pero puedes mejorar.';
+                icon = 'info';
+            } else {
+                message = 'Puedes hacerlo mejor. ¡Sigue aprendiendo!';
+                icon = 'warning';
+            }
+            
+            Swal.fire({
+                title: 'Trivia completada',
+                text: message,
+                icon: icon,
+                confirmButtonText: 'Jugar de nuevo'
+            }).then(() => {
+                resetTrivia();
+            });
+        }
+        
+        function resetTrivia() {
+            score = 0;
+            questionCount = 0;
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('triviaQuestion').style.display = 'block';
+            document.getElementById('newQuestionBtn').style.display = 'flex';
+            document.getElementById('revealAnswerBtn').style.display = 'flex';
+            fetchTrivia();
+        }
+        
+        function showError(message) {
+            document.getElementById('triviaQuestion').innerHTML = `
+                <div class="text-center text-red-600">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    ${message}
+                </div>
+            `;
+        }
+        
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('newQuestionBtn').addEventListener('click', fetchTrivia);
+        document.getElementById('revealAnswerBtn').addEventListener('click', () => {
+            if (currentQuestion) {
+                const parser = new DOMParser();
+                const decodedCorrect = parser.parseFromString(currentQuestion.correct_answer, 'text/html').body.textContent;
+                Swal.fire({
+                    title: 'Respuesta correcta',
+                    text: decodedCorrect,
+                    icon: 'info',
+                    confirmButtonText: 'Gracias'
+                });
+            }
+        });
+        
+        // Cargar primera pregunta al iniciar
+        document.addEventListener('DOMContentLoaded', fetchTrivia);
     </script>
 </body>
 </html>
