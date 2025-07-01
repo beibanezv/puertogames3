@@ -1,5 +1,3 @@
-// charts.js
-
 // Suponiendo que tienes Chart.js incluido en tu HTML
 // <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

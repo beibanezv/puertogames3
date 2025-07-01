@@ -1,41 +1,29 @@
-const API_URL = 'http://localhost:3000/api/login'; // Cambia la URL según tu backend
-
-// Función para validar si el usuario ya está logueado
-function checkSession() {
-    const session = localStorage.getItem('session');
-    if (!session) {
-        window.location.href = 'login.html';
-    }
-}
-
-// Función para hacer login
-async function login(username, password) {
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        });
-        if (!response.ok) throw new Error('Login fallido');
-        const data = await response.json();
-        localStorage.setItem('session', JSON.stringify(data));
-        window.location.href = 'index.html'; // Redirige al home o dashboard
-    } catch (error) {
-        alert('Usuario o contraseña incorrectos');
-    }
-}
-
-// Ejemplo de uso con un formulario
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('loginForm');
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = form.elements['username'].value;
-            const password = form.elements['password'].value;
-            login(username, password);
-        });
-    } else {
-        checkSession();
-    }
+    const errorMsg = document.getElementById('errorMsg');
+
+    form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = form.username.value.trim();
+        const password = form.password.value.trim();
+
+        try {
+            const res = await fetch('/api/usuarios/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `nombreUsuario=${encodeURIComponent(username)}&contrasena=${encodeURIComponent(password)}`
+            });
+            const ok = await res.json();
+            if (ok === true) {
+                localStorage.setItem('session', username);
+                window.location.href = 'index.html';
+            } else {
+                errorMsg.textContent = 'Usuario o contraseña incorrectos';
+                errorMsg.classList.remove('hidden');
+            }
+        } catch (e) {
+            errorMsg.textContent = 'Error al conectar con el servidor';
+            errorMsg.classList.remove('hidden');
+        }
+    });
 });

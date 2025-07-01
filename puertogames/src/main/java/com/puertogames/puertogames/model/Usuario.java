@@ -1,5 +1,6 @@
 package com.puertogames.puertogames.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,11 +15,11 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nombre_usuario")
     private String nombreUsuario;
 
+    @Column(name = "contrasena")
     private String contrasena;
-
-    private String rol;
 
     // Getters y setters
 
@@ -46,11 +47,4 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
 }

@@ -32,40 +32,62 @@
                 class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition">Entrar</button>
         </form>
     </div>
+
+    <div class="text-sm text-center">
+    <label>
+        <input type="checkbox" id="isRegister" class="mr-1"> Quiero registrarme
+    </label>
+</div>
+
     <script>
-        const form = document.getElementById('loginForm');
-        const errorMsg = document.getElementById('errorMsg');
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const username = form.username.value.trim();
-            const password = form.password.value.trim();
-            if (!username || !password) {
-                errorMsg.textContent = 'Por favor, complete todos los campos.';
-                errorMsg.classList.remove('hidden');
-                return;
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const username = form.username.value.trim();
+        const password = form.password.value.trim();
+        const isRegister = document.getElementById('isRegister').checked;
+
+        if (!username || !password) {
+            errorMsg.textContent = 'Por favor, complete todos los campos.';
+            errorMsg.classList.remove('hidden');
+            return;
+        }
+
+        const endpoint = isRegister ? '/api/usuarios/registro' : '/api/usuarios/login';
+        const body = `nombreUsuario=${encodeURIComponent(username)}&contrasena=${encodeURIComponent(password)}`;
+
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: body
+            });
+
+            if (!response.ok) throw new Error();
+
+            if (isRegister) {
+                alert('Registro exitoso, ahora puede iniciar sesión');
+                document.getElementById('isRegister').checked = false;
             } else {
-                errorMsg.classList.add('hidden');
-            }
-            // Lógica de autenticación real
-            try {
-                const response = await fetch('/api/usuarios/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `nombreUsuario=${encodeURIComponent(username)}&contrasena=${encodeURIComponent(password)}`
-                });
-                if (!response.ok) throw new Error('Error en la petición');
-                const ok = await response.json();
-                if (ok === true) {
+                const success = await response.json();
+                if (success) {
                     window.location.href = 'index.html';
                 } else {
                     errorMsg.textContent = 'Usuario o contraseña incorrectos.';
                     errorMsg.classList.remove('hidden');
                 }
-            } catch (err) {
-                errorMsg.textContent = 'Error de conexión con el servidor.';
-                errorMsg.classList.remove('hidden');
             }
-        });
-    </script>
+        } catch (err) {
+            errorMsg.textContent = isRegister
+                ? 'Error al registrar usuario.'
+                : 'Error al iniciar sesión.';
+            errorMsg.classList.remove('hidden');
+        }
+    });
+</script>
+
 </body>
 </html>
