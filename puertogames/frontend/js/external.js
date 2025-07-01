@@ -63,6 +63,8 @@ const FREETOGAME_API_URL = '/api/reviews/proxy/freetogame';
 const BACKEND_API_URL = '/api/juegos';
 const BACKEND_REVIEWS_URL = '/api/reviews';
 
+let allGames = [];
+
 async function loadGames() {
     const container = document.getElementById('games-container');
     container.innerHTML = '<div class="col-span-full text-center text-gray-500">Cargando juegos...</div>';
@@ -116,6 +118,7 @@ async function loadGames() {
         console.error('Error al cargar juegos:', e);
         return;
     }
+    allGames = games; // Guardar todos los juegos para búsqueda
     renderGames(games);
 }
 
@@ -292,6 +295,24 @@ function showToast(mensaje, tipo = 'info') {
 
 // Ejemplo de uso: showToast('¡Bienvenido a Puerto Games!', 'success');
 // Puedes llamar showToast('Mensaje', 'success'|'error'|'info') en cualquier parte del JS
+
+// Buscador simple
+if (typeof window !== 'undefined') {
+    window.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const value = this.value.trim().toLowerCase();
+                if (!value) {
+                    renderGames(allGames);
+                } else {
+                    const filtered = allGames.filter(g => g.title.toLowerCase().includes(value));
+                    renderGames(filtered);
+                }
+            });
+        }
+    });
+}
 
 window.addEventListener('DOMContentLoaded', () => {
     showToast('¡Bienvenido a Puerto Games!', 'info');

@@ -57,9 +57,11 @@
 
     <div class="container mx-auto py-8 px-4">
         <h1 class="text-4xl font-extrabold mb-10 text-center text-purple-800 drop-shadow">Catálogo de Videojuegos</h1>
-        
+        <div class="flex justify-center mb-8">
+            <input id="searchInput" type="text" placeholder="Buscar juego..." class="w-full max-w-md px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+        </div>
         <!-- Sección de Juegos -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div id="games-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <!-- Zelda -->
             <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-blue-400">
                 <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co49x7.png" alt="Zelda" class="w-28 h-40 object-cover rounded mb-4 shadow">
@@ -284,6 +286,21 @@
                 }
             });
         }
+
+        // Filtrado de juegos por búsqueda
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const gameCards = document.querySelectorAll('.game-card');
+            
+            gameCards.forEach(card => {
+                const title = card.querySelector('h2').innerText.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
     </script>
 </body>
 </html>
