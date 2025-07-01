@@ -3,91 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Iniciar Sesión | Puerto Games</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen">
-    <nav class="bg-white shadow p-4 flex gap-4 rounded-b-lg mb-8">
-        <a href="index.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
-        <a href="dashboard.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
-        <a href="api.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-code mr-1"></i>API</a>
-        <a href="login.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
+<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen flex flex-col">
+    <nav class="bg-white shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
+        <div class="flex items-center">
+            <i class="fas fa-gamepad text-blue-600 text-2xl mr-2"></i>
+            <span class="text-xl font-bold text-blue-800">PUERTO GAMES</span>
+        </div>
+        <div class="flex gap-4 mt-2 sm:mt-0">
+            <a href="index.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
+            <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
+            <a href="api.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-code mr-1"></i>API</a>
+            <a href="login.html" class="text-blue-800 font-semibold underline"><i class="fas fa-user mr-1"></i>Login</a>
+        </div>
     </nav>
-    <div class="w-full max-w-sm bg-white rounded-lg shadow-md p-8">
-        <h2 class="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h2>
-        <form id="loginForm" class="space-y-5">
-            <div>
-                <label for="username" class="block text-sm font-medium text-gray-700">Usuario</label>
-                <input type="text" id="username" name="username" required
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+
+    <div class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white text-center">
+                <h2 class="text-2xl font-bold"><i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión</h2>
+                <p class="text-sm opacity-90 mt-1">Accede a tu cuenta de Puerto Games</p>
             </div>
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                <input type="password" id="password" name="password" required
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-            </div>
-            <div id="errorMsg" class="text-red-600 text-sm hidden"></div>
-            <button type="submit"
-                class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition">Entrar</button>
-        </form>
+            
+            <form id="loginForm" class="p-8 space-y-6">
+                <div class="space-y-2">
+                    <label for="username" class="block text-sm font-medium text-gray-700">Usuario</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </div>
+                        <input type="text" id="username" name="username" required
+                            class="pl-10 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Ingresa tu usuario">
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" id="password" name="password" required
+                            class="pl-10 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Ingresa tu contraseña">
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Recuérdame</label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-blue-600 hover:text-blue-500">¿Olvidaste tu contraseña?</a>
+                    </div>
+                </div>
+                
+                <div id="errorMsg" class="text-red-600 text-sm hidden"></div>
+                
+                <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition transform hover:scale-[1.02]">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Entrar
+                </button>
+                
+                <div class="text-center text-sm text-gray-600">
+                    ¿No tienes cuenta? <a href="#" class="text-blue-600 hover:underline font-medium">Regístrate aquí</a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="text-sm text-center">
-    <label>
-        <input type="checkbox" id="isRegister" class="mr-1"> Quiero registrarme
-    </label>
-</div>
-
     <script>
-    const form = document.getElementById('loginForm');
-    const errorMsg = document.getElementById('errorMsg');
-
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        const username = form.username.value.trim();
-        const password = form.password.value.trim();
-        const isRegister = document.getElementById('isRegister').checked;
-
-        if (!username || !password) {
-            errorMsg.textContent = 'Por favor, complete todos los campos.';
-            errorMsg.classList.remove('hidden');
-            return;
-        }
-
-        const endpoint = isRegister ? '/api/usuarios/registro' : '/api/usuarios/login';
-        const body = `nombreUsuario=${encodeURIComponent(username)}&contrasena=${encodeURIComponent(password)}`;
-
-        try {
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: body
-            });
-
-            if (!response.ok) throw new Error();
-
-            if (isRegister) {
-                alert('Registro exitoso, ahora puede iniciar sesión');
-                document.getElementById('isRegister').checked = false;
+        const form = document.getElementById('loginForm');
+        const errorMsg = document.getElementById('errorMsg');
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = form.username.value.trim();
+            const password = form.password.value.trim();
+            if (!username || !password) {
+                errorMsg.textContent = 'Por favor, complete todos los campos.';
+                errorMsg.classList.remove('hidden');
+                return;
             } else {
-                const success = await response.json();
-                if (success) {
+                errorMsg.classList.add('hidden');
+            }
+            // Lógica de autenticación real
+            try {
+                const response = await fetch('/api/usuarios/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `nombreUsuario=${encodeURIComponent(username)}&contrasena=${encodeURIComponent(password)}`
+                });
+                if (!response.ok) throw new Error('Error en la petición');
+                const ok = await response.json();
+                if (ok === true) {
                     window.location.href = 'index.html';
                 } else {
                     errorMsg.textContent = 'Usuario o contraseña incorrectos.';
                     errorMsg.classList.remove('hidden');
                 }
+            } catch (err) {
+                errorMsg.textContent = 'Error de conexión con el servidor.';
+                errorMsg.classList.remove('hidden');
             }
-        } catch (err) {
-            errorMsg.textContent = isRegister
-                ? 'Error al registrar usuario.'
-                : 'Error al iniciar sesión.';
-            errorMsg.classList.remove('hidden');
-        }
-    });
-</script>
-
+        });
+    </script>
 </body>
 </html>
