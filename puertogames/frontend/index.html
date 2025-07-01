@@ -61,89 +61,26 @@
         <!-- Filtros de búsqueda -->
         <div class="flex flex-col md:flex-row justify-center mb-8 gap-4">
             <input id="searchInput" type="text" placeholder="Buscar por nombre..." class="w-full md:w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400" />
-            
             <select id="platformFilter" class="w-full md:w-1/3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white">
                 <option value="">Todas las plataformas</option>
-                <option value="Nintendo Switch">Nintendo Switch</option>
-                <option value="Multiplataforma">Multiplataforma</option>
-                <option value="PS5/Xbox/PC">PS5/Xbox/PC</option>
-                <option value="Próximamente">Próximamente</option>
+                <option value="pc">PC</option>
+                <option value="playstation">PlayStation</option>
+                <option value="xbox">Xbox</option>
+                <option value="nintendo">Nintendo</option>
+                <option value="android">Android</option>
+                <option value="ios">iOS</option>
             </select>
         </div>
         
         <!-- Sección de Juegos -->
-        <div id="games-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Zelda -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-blue-400" data-platform="Nintendo Switch">
-                <img src="./imagenes/zelda.jpg" alt="Zelda" class="w-28 h-40 object-cover rounded mb-4 shadow">
-                <h2 class="text-xl font-bold mb-2 text-blue-700 text-center">The Legend of Zelda: Breath of the Wild</h2>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Aventura</p>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Nintendo Switch</p>
-                <div class="flex items-center mt-2">
-                    <div class="text-yellow-400 mr-1">
-                        ★★★★☆
-                    </div>
-                    <span class="text-gray-600">9.5/10</span>
-                </div>
-                <button onclick="showGameDetails('zelda')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
-                    <i class="fas fa-info-circle mr-1"></i> Ver detalles
-                </button>
-            </div>
-
-            <!-- Minecraft -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-green-400" data-platform="Multiplataforma">
-                <img src="./imagenes/mine.avif" alt="Minecraft" class="w-28 h-40 object-cover rounded mb-4 shadow">
-                <h2 class="text-xl font-bold mb-2 text-green-700 text-center">Minecraft</h2>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Sandbox</p>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Multiplataforma</p>
-                <div class="flex items-center mt-2">
-                    <div class="text-yellow-400 mr-1">
-                        ★★★★☆
-                    </div>
-                    <span class="text-gray-600">9.0/10</span>
-                </div>
-                <button onclick="showGameDetails('minecraft')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
-                    <i class="fas fa-info-circle mr-1"></i> Ver detalles
-                </button>
-            </div>
-
-            <!-- EA Sports FC 24 -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-red-400" data-platform="PS5/Xbox/PC">
-                <img src="./imagenes/ea25.avif" alt="EA Sports FC 24" class="w-28 h-40 object-cover rounded mb-4 shadow">
-                <h2 class="text-xl font-bold mb-2 text-red-700 text-center">EA Sports FC 24</h2>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Deportes</p>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> PS5/Xbox/PC</p>
-                <div class="flex items-center mt-2">
-                    <div class="text-yellow-400 mr-1">
-                        ★★★★☆
-                    </div>
-                    <span class="text-gray-600">8.2/10</span>
-                </div>
-                <button onclick="showGameDetails('fc24')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
-                    <i class="fas fa-info-circle mr-1"></i> Ver detalles
-                </button>
-            </div>
-
-            <!-- GTA VI -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-yellow-400" data-platform="Próximamente">
-                <img src="./imagenes/gta6.avif" alt="GTA VI" class="w-28 h-40 object-cover rounded mb-4 shadow">
-                <h2 class="text-xl font-bold mb-2 text-yellow-700 text-center">GTA VI</h2>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Acción-Aventura</p>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Próximamente</p>
-                <div class="flex items-center mt-2">
-                    <div class="text-yellow-400 mr-1">
-                        ★★★★★
-                    </div>
-                    <span class="text-gray-600">10/10 (esperado)</span>
-                </div>
-                <button onclick="showGameDetails('gta6')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
-                    <i class="fas fa-info-circle mr-1"></i> Ver detalles
-                </button>
-            </div>
+        <div id="gamesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Los juegos de RAWG se cargarán aquí dinámicamente -->
         </div>
     </div>
   </main>
 
+    <!-- Scripts -->
+    <script src="js/rawg.js"></script>
     <script>
         // Datos completos de todos los juegos
         const games = {
