@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen flex flex-col">
     <nav class="bg-white shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
@@ -111,6 +113,29 @@
                 errorMsg.classList.remove('hidden');
             }
         });
+
+        // Notificación Toastify al navegar entre páginas
+        const pageMap = {
+            'index.html': 'Catálogo de Videojuegos',
+            'dashboard.html': 'Dashboard de Juegos',
+            'api.html': 'Trivia de Videojuegos',
+            'login.html': 'Login de Usuario'
+        };
+        const current = location.pathname.split('/').pop();
+        const ref = document.referrer;
+        if (ref && pageMap[current]) {
+            setTimeout(() => {
+                Toastify({
+                    text: `Has navegado a: ${pageMap[current]}`,
+                    duration: 2500,
+                    gravity: 'top',
+                    position: 'right',
+                    backgroundColor: '#6366f1',
+                    stopOnFocus: true,
+                    close: true
+                }).showToast();
+            }, 300);
+        }
     </script>
 </body>
 </html>

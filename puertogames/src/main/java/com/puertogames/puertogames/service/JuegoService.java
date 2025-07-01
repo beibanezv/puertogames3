@@ -29,6 +29,10 @@ public class JuegoService {
                 j.setGenero(juego.getGenero());
                 j.setPlataforma(juego.getPlataforma());
                 j.setCalificacion(juego.getCalificacion());
+                j.setDescripcion(juego.getDescripcion());
+                j.setImagenUrl(juego.getImagenUrl());
+                j.setFechaLanzamiento(juego.getFechaLanzamiento());
+                j.setDesarrollador(juego.getDesarrollador());
                 return repo.save(j);
             })
             .orElseThrow(() -> new RuntimeException("Juego no encontrado"));

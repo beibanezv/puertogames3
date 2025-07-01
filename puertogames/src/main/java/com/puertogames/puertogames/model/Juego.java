@@ -22,6 +22,14 @@ public class Juego {
 
     private Double calificacion;
 
+    private String descripcion;
+
+    private String imagenUrl;
+
+    private String fechaLanzamiento;
+
+    private String desarrollador;
+
     // Getters y setters
 
     public Long getId() {
@@ -62,5 +70,37 @@ public class Juego {
 
     public void setCalificacion(Double calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
+    }
+
+    public String getFechaLanzamiento() {
+        return fechaLanzamiento;
+    }
+
+    public void setFechaLanzamiento(String fechaLanzamiento) {
+        this.fechaLanzamiento = fechaLanzamiento;
+    }
+
+    public String getDesarrollador() {
+        return desarrollador;
+    }
+
+    public void setDesarrollador(String desarrollador) {
+        this.desarrollador = desarrollador;
     }
 }
