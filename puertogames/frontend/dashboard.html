@@ -8,30 +8,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen flex flex-col">
-    <nav class="bg-white shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
+<body class="bg-gradient-to-br from-black to-gray-900 min-h-screen flex flex-col">
+    <nav class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
         <div class="flex items-center">
-            <i class="fas fa-gamepad text-blue-600 text-2xl mr-2"></i>
-            <span class="text-xl font-bold text-blue-800">PUERTO GAMES</span>
+            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3">
+                <span class="text-orange-500 font-bold text-xl">PG</span>
+            </div>
+            <span class="text-xl font-bold text-white">PUERTO GAMES</span>
         </div>
         <div class="flex gap-4 mt-2 sm:mt-0">
-            <a href="index.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
-            <a href="dashboard.html" class="text-blue-800 font-semibold underline"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
-            <a href="api.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-code mr-1"></i>API</a>
-            <a href="login.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
+            <a href="index.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
+            <a href="dashboard.html" class="text-white font-semibold underline"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
+            <a href="api.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-code mr-1"></i>API</a>
+            <a href="login.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
         </div>
     </nav>
 
     <div class="container mx-auto px-4 py-8 flex-grow">
         <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-purple-800">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-orange-500">
                 <i class="fas fa-gamepad mr-3"></i>Catálogo de Videojuegos
             </h1>
-            
             <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                 <div class="relative">
-                    <select id="filterGenre" class="appearance-none pl-3 pr-8 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                    <select id="filterGenre" class="appearance-none pl-3 pr-8 py-2 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-800 text-white">
                         <option value="">Todos los géneros</option>
                         <option value="Aventura">Aventura</option>
                         <option value="Acción">Acción</option>
@@ -43,9 +50,8 @@
                         <i class="fas fa-chevron-down text-gray-400"></i>
                     </div>
                 </div>
-                
                 <div class="relative">
-                    <select id="filterPlatform" class="appearance-none pl-3 pr-8 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                    <select id="filterPlatform" class="appearance-none pl-3 pr-8 py-2 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-800 text-white">
                         <option value="">Todas las plataformas</option>
                         <option value="PC">PC</option>
                         <option value="PlayStation">PlayStation</option>
@@ -60,218 +66,108 @@
             </div>
         </div>
 
-        <!-- Gráficos de estadísticas -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-xl shadow-lg">
-                <h2 class="text-xl font-bold mb-4 text-gray-800">Distribución por Género</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-orange-600">
+                <h2 class="text-xl font-bold mb-4 text-white">Distribución por Género</h2>
                 <canvas id="genreChart" height="250"></canvas>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg">
-                <h2 class="text-xl font-bold mb-4 text-gray-800">Rating Promedio por Plataforma</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-orange-600">
+                <h2 class="text-xl font-bold mb-4 text-white">Rating Promedio por Plataforma</h2>
                 <canvas id="platformChart" height="250"></canvas>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-orange-600">
+                <h2 class="text-xl font-bold mb-4 text-white">Cantidad de Juegos por Plataforma</h2>
+                <canvas id="countPlatformChart" height="250"></canvas>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-orange-600">
+                <h2 class="text-xl font-bold mb-4 text-white">Comparación de Ratings</h2>
+                <canvas id="compareRatingChart" height="250"></canvas>
             </div>
         </div>
 
-        <!-- Grid de juegos -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gamesGrid">
-            <!-- Las cards se generarán dinámicamente con JS -->
-        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gamesGrid"></div>
     </div>
 
-    <footer class="bg-white p-4 text-center text-gray-600 text-sm">
+    <footer class="bg-gray-800 p-4 text-center text-gray-400 text-sm border-t border-orange-600">
         © 2023 Puerto Games. Todos los derechos reservados.
     </footer>
 
     <script>
-        // Datos de ejemplo (en un proyecto real vendrían de una API)
         const games = [
-            { 
-                id: 1, 
-                title: "The Legend of Zelda: Breath of the Wild", 
-                genre: "Aventura", 
-                platform: "Nintendo Switch", 
-                rating: 9.5, 
-                image: "https://via.placeholder.com/300x400?text=Zelda",
-                description: "Una aventura épica en el reino de Hyrule donde explorarás un vasto mundo abierto lleno de misterios y desafíos."
-            },
-            // ... otros juegos (mínimo 8 para demostrar el filtrado)
+            { title: "Zelda", genre: "Aventura", platform: "Nintendo", rating: 9.5 },
+            { title: "Elden Ring", genre: "RPG", platform: "PC", rating: 9.7 },
+            { title: "Warzone", genre: "Shooter", platform: "Xbox", rating: 8.5 },
+            { title: "Starcraft", genre: "Estrategia", platform: "PC", rating: 9.0 },
+            { title: "God of War", genre: "Acción", platform: "PlayStation", rating: 9.8 },
+            { title: "Hades", genre: "RPG", platform: "PC", rating: 9.4 },
+            { title: "Valorant", genre: "Shooter", platform: "PC", rating: 8.7 },
+            { title: "Civ VI", genre: "Estrategia", platform: "Mobile", rating: 9.2 }
         ];
 
-        // Inicializar gráficos
         function initCharts() {
-            // Gráfico de géneros
-            const genreCtx = document.getElementById('genreChart').getContext('2d');
-            const genreChart = new Chart(genreCtx, {
+            new Chart(document.getElementById('genreChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Aventura', 'Acción', 'RPG', 'Shooter', 'Estrategia', 'Deportes'],
+                    labels: ['Aventura', 'Acción', 'RPG', 'Shooter', 'Estrategia'],
                     datasets: [{
-                        data: [12, 19, 8, 15, 7, 5],
-                        backgroundColor: [
-                            '#3B82F6',
-                            '#EF4444',
-                            '#10B981',
-                            '#F59E0B',
-                            '#8B5CF6',
-                            '#EC4899'
-                        ],
-                        borderWidth: 1
+                        data: [12, 19, 8, 15, 7],
+                        backgroundColor: ['#EA580C','#F97316','#FB923C','#FDBA74','#FED7AA']
                     }]
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.label}: ${context.raw} juegos`;
-                                }
-                            }
-                        }
-                    }
-                }
+                options: { plugins: { legend: { labels: { color: 'white' } } } }
             });
 
-            // Gráfico de plataformas
-            const platformCtx = document.getElementById('platformChart').getContext('2d');
-            const platformChart = new Chart(platformCtx, {
+            new Chart(document.getElementById('platformChart'), {
                 type: 'bar',
                 data: {
                     labels: ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile'],
                     datasets: [{
-                        label: 'Rating promedio',
+                        label: 'Rating Promedio',
                         data: [8.7, 9.1, 8.5, 9.3, 7.8],
-                        backgroundColor: '#6366F1',
-                        borderWidth: 1
+                        backgroundColor: '#EA580C'
                     }]
                 },
                 options: {
-                    responsive: true,
+                    plugins: { legend: { display: false } },
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 10
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `Rating: ${context.raw}/10`;
-                                }
-                            }
-                        }
+                        y: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        x: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } }
                     }
                 }
             });
-        }
 
-        // Filtrado de juegos
-        function setupFilters() {
-            document.getElementById('filterGenre').addEventListener('change', filterGames);
-            document.getElementById('filterPlatform').addEventListener('change', filterGames);
-        }
-
-        function filterGames() {
-            const genre = document.getElementById('filterGenre').value;
-            const platform = document.getElementById('filterPlatform').value;
-            
-            let filteredGames = games;
-            
-            if (genre) {
-                filteredGames = filteredGames.filter(game => game.genre === genre);
-            }
-            
-            if (platform) {
-                filteredGames = filteredGames.filter(game => game.platform.includes(platform));
-            }
-            
-            renderGames(filteredGames);
-            
-            // Mostrar mensaje si no hay resultados
-            if (filteredGames.length === 0) {
-                Swal.fire({
-                    title: 'No hay resultados',
-                    text: 'No encontramos juegos con esos criterios de búsqueda.',
-                    icon: 'info',
-                    confirmButtonText: 'Entendido'
-                });
-            }
-        }
-
-        // Renderizar juegos
-        function renderGames(gamesToRender) {
-            const grid = document.getElementById('gamesGrid');
-            grid.innerHTML = '';
-            
-            gamesToRender.forEach(game => {
-                const ratingStars = '★'.repeat(Math.floor(game.rating)) + '☆'.repeat(5-Math.floor(game.rating));
-                
-                grid.innerHTML += `
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition transform hover:-translate-y-2 hover:shadow-2xl">
-                    <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
-                        <img src="${game.image}" alt="${game.title}" class="h-full w-full object-cover hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-gray-800 truncate">${game.title}</h3>
-                        <div class="flex flex-wrap gap-2 mb-3">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">${game.genre}</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">${game.platform}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div class="text-yellow-500 font-bold">
-                                ${ratingStars}
-                                <span class="text-gray-600 ml-1">(${game.rating.toFixed(1)})</span>
-                            </div>
-                            <button class="text-blue-600 hover:text-blue-800 transition" onclick="showGameDetails(${game.id})">
-                                <i class="fas fa-info-circle text-lg"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                `;
+            new Chart(document.getElementById('countPlatformChart'), {
+                type: 'polarArea',
+                data: {
+                    labels: ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile'],
+                    datasets: [{
+                        label: 'Cantidad de Juegos',
+                        data: [6, 4, 2, 3, 1],
+                        backgroundColor: ['#F97316','#FB923C','#FDBA74','#FCD34D','#FDE68A']
+                    }]
+                },
+                options: { plugins: { legend: { labels: { color: 'white' } } } }
             });
-        }
 
-        // Mostrar detalles del juego con SweetAlert
-        function showGameDetails(id) {
-            const game = games.find(g => g.id === id);
-            const ratingStars = '★'.repeat(Math.floor(game.rating)) + '☆'.repeat(5-Math.floor(game.rating));
-            
-            Swal.fire({
-                title: game.title,
-                html: `
-                    <div class="text-left">
-                        <img src="${game.image}" alt="${game.title}" class="w-full h-48 object-cover rounded-lg mb-4">
-                        <p class="mb-2"><span class="font-semibold">Género:</span> ${game.genre}</p>
-                        <p class="mb-2"><span class="font-semibold">Plataforma:</span> ${game.platform}</p>
-                        <p class="mb-2"><span class="font-semibold">Rating:</span> ${ratingStars} (${game.rating.toFixed(1)}/10)</p>
-                        <p class="mt-4 text-gray-700">${game.description}</p>
-                    </div>
-                `,
-                width: '600px',
-                confirmButtonText: 'Cerrar',
-                background: 'white',
-                backdrop: 'rgba(0,0,0,0.4)',
-                showCloseButton: true,
-                customClass: {
-                    popup: 'rounded-xl'
+            new Chart(document.getElementById('compareRatingChart'), {
+                type: 'radar',
+                data: {
+                    labels: ['Zelda','Elden Ring','Warzone','Starcraft','God of War','Hades','Valorant','Civ VI'],
+                    datasets: [{
+                        label: 'Rating',
+                        data: [9.5, 9.7, 8.5, 9.0, 9.8, 9.4, 8.7, 9.2],
+                        backgroundColor: 'rgba(234, 88, 12, 0.2)',
+                        borderColor: '#EA580C'
+                    }]
+                },
+                options: {
+                    scales: { r: { angleLines: { color: 'white' }, pointLabels: { color: 'white' }, ticks: { color: 'white' } } },
+                    plugins: { legend: { labels: { color: 'white' } } }
                 }
             });
         }
 
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', () => {
-            initCharts();
-            setupFilters();
-            renderGames(games);
-        });
+        document.addEventListener('DOMContentLoaded', () => initCharts());
     </script>
 </body>
 </html>

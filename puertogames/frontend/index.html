@@ -1,259 +1,321 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo | Puerto Games</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .game-card {
-            transition: all 0.3s ease;
-        }
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo | Puerto Games</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .game-card {
+      transition: all 0.3s ease;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(255 165 0 / 0.5);
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen">
-    <!-- Navbar Original -->
-    <nav class="bg-white shadow p-4 flex gap-4 rounded-b-lg mb-8">
-        <a href="index.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
-        <a href="dashboard.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
-        <a href="api.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-code mr-1"></i>API</a>
-        <a href="login.html" class="text-blue-600 hover:underline font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
-    </nav>
+<body class="bg-gradient-to-br from-black to-gray-900 min-h-screen flex flex-col">
 
-    <div class="container mx-auto py-8 px-4">
-        <h1 class="text-4xl font-extrabold mb-10 text-center text-purple-800 drop-shadow">Catálogo de Videojuegos</h1>
-        
-        <!-- Sección de Juegos -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Zelda -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-blue-400">
-                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co49x7.png" alt="Zelda" class="w-28 h-40 object-cover rounded mb-4 shadow">
-                <h2 class="text-xl font-bold mb-2 text-blue-700 text-center">The Legend of Zelda: Breath of the Wild</h2>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Aventura</p>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Nintendo Switch</p>
-                <div class="flex items-center mt-2">
-                    <div class="text-yellow-400 mr-1">
-                        ★★★★☆
-                    </div>
-                    <span class="text-gray-600">9.5/10</span>
-                </div>
-                <button onclick="showGameDetails('zelda')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
-                    <i class="fas fa-info-circle mr-1"></i> Ver detalles
-                </button>
-            </div>
-
-            <!-- Minecraft -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-green-400">
-                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co1x0a.png" alt="Minecraft" class="w-28 h-40 object-cover rounded mb-4 shadow">
-                <h2 class="text-xl font-bold mb-2 text-green-700 text-center">Minecraft</h2>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Sandbox</p>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Multiplataforma</p>
-                <div class="flex items-center mt-2">
-                    <div class="text-yellow-400 mr-1">
-                        ★★★★☆
-                    </div>
-                    <span class="text-gray-600">9.0/10</span>
-                </div>
-                <button onclick="showGameDetails('minecraft')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
-                    <i class="fas fa-info-circle mr-1"></i> Ver detalles
-                </button>
-            </div>
-
-            <!-- EA Sports FC 24 -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-red-400">
-                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co6lx2.png" alt="EA Sports FC 24" class="w-28 h-40 object-cover rounded mb-4 shadow">
-                <h2 class="text-xl font-bold mb-2 text-red-700 text-center">EA Sports FC 24</h2>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Deportes</p>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> PS5/Xbox/PC</p>
-                <div class="flex items-center mt-2">
-                    <div class="text-yellow-400 mr-1">
-                        ★★★★☆
-                    </div>
-                    <span class="text-gray-600">8.2/10</span>
-                </div>
-                <button onclick="showGameDetails('fc24')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
-                    <i class="fas fa-info-circle mr-1"></i> Ver detalles
-                </button>
-            </div>
-
-            <!-- GTA VI -->
-            <div class="game-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center border-t-4 border-yellow-400">
-                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co6wyg.png" alt="GTA VI" class="w-28 h-40 object-cover rounded mb-4 shadow">
-                <h2 class="text-xl font-bold mb-2 text-yellow-700 text-center">GTA VI</h2>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Género:</span> Acción-Aventura</p>
-                <p class="text-gray-600 mb-1"><span class="font-medium">Plataforma:</span> Próximamente</p>
-                <div class="flex items-center mt-2">
-                    <div class="text-yellow-400 mr-1">
-                        ★★★★★
-                    </div>
-                    <span class="text-gray-600">10/10 (esperado)</span>
-                </div>
-                <button onclick="showGameDetails('gta6')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">
-                    <i class="fas fa-info-circle mr-1"></i> Ver detalles
-                </button>
-            </div>
-        </div>
+  <!-- NAVBAR -->
+  <nav
+    class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8"
+  >
+    <div class="flex items-center">
+      <div
+        class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3"
+      >
+        <span class="text-orange-500 font-bold text-xl">PG</span>
+      </div>
+      <span class="text-xl font-bold text-white">PUERTO GAMES</span>
     </div>
+    <div class="flex gap-4 mt-2 sm:mt-0">
+      <a
+        href="index.html"
+        class="text-white font-semibold underline hover:text-gray-200"
+        ><i class="fas fa-home mr-1"></i>Inicio</a
+      >
+      <a
+        href="dashboard.html"
+        class="text-white hover:text-gray-200 font-semibold"
+        ><i class="fas fa-th-large mr-1"></i>Dashboard</a
+      >
+      <a
+        href="api.html"
+        class="text-white hover:text-gray-200 font-semibold"
+        ><i class="fas fa-code mr-1"></i>API</a
+      >
+      <a
+        href="login.html"
+        class="text-white hover:text-gray-200 font-semibold"
+        ><i class="fas fa-user mr-1"></i>Login</a
+      >
+    </div>
+  </nav>
 
-    <script>
-        // Datos completos de todos los juegos
-        const games = {
-            zelda: {
-                title: "The Legend of Zelda: Breath of the Wild",
-                description: "Explora el vasto reino de Hyrule en esta épica aventura de mundo abierto donde cada montaña puede escalarse y cada misterio tiene una recompensa.",
-                features: [
-                    "Mundo abierto masivo sin restricciones",
-                    "Sistema de física y química interactiva revolucionario",
-                    "120 santuarios con puzzles desafiantes",
-                    "Más de 100 horas de contenido completo",
-                    "Gráficos estilo anime con iluminación dinámica"
-                ],
-                price: "$59.99",
-                oldPrice: "$69.99",
-                discount: "15% OFF",
-                rating: "9.5/10",
-                genre: "Aventura, Mundo Abierto",
-                platform: "Nintendo Switch",
-                releaseDate: "3 de marzo, 2017",
-                developer: "Nintendo EPD",
-                image: "https://images.igdb.com/igdb/image/upload/t_cover_big/co49x7.png"
-            },
-            minecraft: {
-                title: "Minecraft",
-                description: "El juego de construcción definitivo donde tu imaginación es el único límite. Crea, explora y sobrevive en mundos infinitamente generados.",
-                features: [
-                    "Mundos infinitos generados proceduralmente",
-                    "Modo creativo con recursos ilimitados",
-                    "Modo supervivencia con criaturas y jefes",
-                    "Multijugador online cooperativo",
-                    "Soporte para mods y texturas personalizadas"
-                ],
-                price: "$29.99",
-                oldPrice: "$39.99",
-                discount: "25% OFF",
-                rating: "9.0/10",
-                genre: "Sandbox, Supervivencia",
-                platform: "Multiplataforma",
-                releaseDate: "18 de noviembre, 2011",
-                developer: "Mojang Studios",
-                image: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1x0a.png"
-            },
-            fc24: {
-                title: "EA Sports FC 24",
-                description: "La nueva era del fútbol virtual con la tecnología HyperMotionV y PlayStyles optimizados para una autenticidad sin precedentes.",
-                features: [
-                    "Tecnología HyperMotionV para animaciones realistas",
-                    "PlayStyles basados en datos reales de Opta",
-                    "Más de 19,000 jugadores y 700 equipos",
-                    "30+ ligas oficiales con licencia completa",
-                    "Modos Carrera y Ultimate Team mejorados"
-                ],
-                price: "$69.99",
-                oldPrice: "",
-                discount: "",
-                rating: "8.2/10",
-                genre: "Deportes, Fútbol",
-                platform: "PS5, Xbox Series X/S, PC",
-                releaseDate: "29 de septiembre, 2023",
-                developer: "EA Vancouver",
-                image: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6lx2.png"
-            },
-            gta6: {
-                title: "Grand Theft Auto VI",
-                description: "El esperado regreso a Vice City en lo que promete ser la entrega más ambiciosa de la franquicia que revolucionó los juegos de mundo abierto.",
-                features: [
-                    "Mapa más grande de la serie (Vice City + áreas circundantes)",
-                    "Primer juego con dos protagonistas jugables",
-                    "Sistema de inteligencia artificial mejorado",
-                    "Gráficos de última generación con ray tracing",
-                    "Modo online expansivo post-lanzamiento"
-                ],
-                price: "$79.99",
-                oldPrice: "",
-                discount: "",
-                rating: "10/10 (esperado)",
-                genre: "Acción-Aventura",
-                platform: "Próximamente (2025)",
-                releaseDate: "2025 (Estimado)",
-                developer: "Rockstar Games",
-                image: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6wyg.png"
-            }
-        };
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="container mx-auto px-4 pb-16 flex-grow">
+    <h1
+      class="text-4xl font-extrabold text-center text-orange-500 drop-shadow mb-12"
+    >
+      Catálogo de Videojuegos
+    </h1>
 
-        // Función para mostrar detalles con diseño profesional
-        function showGameDetails(gameId) {
-            const game = games[gameId];
-            
-            Swal.fire({
-                title: `<span class="text-2xl font-bold text-gray-800">${game.title}</span>`,
-                html: `
-                    <div class="text-left">
-                        <div class="flex flex-col md:flex-row gap-6">
-                            <div class="md:w-2/5">
-                                <img src="${game.image}" alt="${game.title}" class="w-full rounded-lg shadow-md border border-gray-200">
-                                <div class="mt-4 flex justify-between items-center">
-                                    <div>
-                                        <span class="text-3xl font-bold text-purple-600">${game.price}</span>
-                                        ${game.oldPrice ? `<span class="text-sm text-gray-500 line-through ml-2">${game.oldPrice}</span>` : ''}
-                                        ${game.discount ? `<span class="bg-red-100 text-red-800 text-xs font-medium ml-2 px-2 py-1 rounded">${game.discount}</span>` : ''}
-                                    </div>
-                                    <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition">
-                                        <i class="fas fa-shopping-cart mr-2"></i>Añadir
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="md:w-3/5 space-y-4">
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h3 class="font-semibold text-gray-700 mb-2">Descripción</h3>
-                                    <p class="text-gray-700">${game.description}</p>
-                                </div>
-                                
-                                <div class="bg-blue-50 p-4 rounded-lg">
-                                    <h3 class="font-semibold text-blue-800 mb-2">Características principales</h3>
-                                    <ul class="list-disc list-inside space-y-2 text-gray-700">
-                                        ${game.features.map(f => `<li>${f}</li>`).join('')}
-                                    </ul>
-                                </div>
-                                
-                                <div class="grid grid-cols-2 gap-4 text-sm">
-                                    <div class="bg-gray-50 p-3 rounded-lg">
-                                        <h4 class="font-semibold text-gray-600 mb-1">Género</h4>
-                                        <p class="text-gray-700">${game.genre}</p>
-                                    </div>
-                                    <div class="bg-gray-50 p-3 rounded-lg">
-                                        <h4 class="font-semibold text-gray-600 mb-1">Plataforma</h4>
-                                        <p class="text-gray-700">${game.platform}</p>
-                                    </div>
-                                    <div class="bg-gray-50 p-3 rounded-lg">
-                                        <h4 class="font-semibold text-gray-600 mb-1">Lanzamiento</h4>
-                                        <p class="text-gray-700">${game.releaseDate}</p>
-                                    </div>
-                                    <div class="bg-gray-50 p-3 rounded-lg">
-                                        <h4 class="font-semibold text-gray-600 mb-1">Desarrollador</h4>
-                                        <p class="text-gray-700">${game.developer}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `,
-                width: '900px',
-                showConfirmButton: false,
-                showCloseButton: true,
-                background: 'white',
-                backdrop: 'rgba(0,0,0,0.5)',
-                customClass: {
-                    closeButton: 'text-gray-400 hover:text-gray-600 text-2xl',
-                    popup: 'rounded-xl shadow-2xl'
-                }
-            });
-        }
-    </script>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+    >
+      <!-- Zelda -->
+      <div
+        class="game-card bg-gray-800 rounded-xl shadow-md overflow-hidden cursor-pointer border border-orange-600"
+        onclick="showGameDetails('zelda')"
+      >
+        <img
+          src="https://www.nintendo.com/eu/media/images/10_share_images/portals_3/2x1_Hub_TheLegendOfZelda_ToTK.jpg"
+          alt="The Legend of Zelda: Breath of the Wild"
+          class="w-full h-48 object-cover"
+        />
+        <div class="p-4">
+          <h2 class="text-orange-400 font-semibold text-lg">
+            The Legend of Zelda: Breath of the Wild
+          </h2>
+          <p class="text-gray-300 text-sm mt-1">
+            Aventura épica en mundo abierto con física revolucionaria.
+          </p>
+        </div>
+      </div>
+
+      <!-- Minecraft -->
+      <div
+        class="game-card bg-gray-800 rounded-xl shadow-md overflow-hidden cursor-pointer border border-orange-600"
+        onclick="showGameDetails('minecraft')"
+      >
+        <img
+          src="https://image.api.playstation.com/vulcan/ap/rnd/202407/0401/670c294ded3baf4fa11068db2ec6758c63f7daeb266a35a1.png"
+          alt="Minecraft"
+          class="w-full h-48 object-cover"
+        />
+        <div class="p-4">
+          <h2 class="text-orange-400 font-semibold text-lg">Minecraft</h2>
+          <p class="text-gray-300 text-sm mt-1">
+            Construcción ilimitada y supervivencia en mundos infinitos.
+          </p>
+        </div>
+      </div>
+
+      <!-- EA Sports FC 25 -->
+      <div
+        class="game-card bg-gray-800 rounded-xl shadow-md overflow-hidden cursor-pointer border border-orange-600"
+        onclick="showGameDetails('fc24')"
+      >
+        <img
+          src="https://image.api.playstation.com/vulcan/ap/rnd/202503/2520/f3c135f8ebdc50b782c6f5f02b27130b499e22847f05aee6.png"
+          alt="EA Sports FC 25"
+          class="w-full h-48 object-cover"
+        />
+        <div class="p-4">
+          <h2 class="text-orange-400 font-semibold text-lg">EA Sports FC 24</h2>
+          <p class="text-gray-300 text-sm mt-1">
+            Tecnología HyperMotionV y PlayStyles para fútbol realista.
+          </p>
+        </div>
+      </div>
+
+      <!-- GTA VI -->
+      <div
+        class="game-card bg-gray-800 rounded-xl shadow-md overflow-hidden cursor-pointer border border-orange-600"
+        onclick="showGameDetails('gta6')"
+      >
+        <img
+          src="https://image.api.playstation.com/vulcan/ap/rnd/202505/0616/c9f078c260d79339cb581054ce5ca49f2b56ab943d1beb20.png"
+          alt="Grand Theft Auto VI"
+          class="w-full h-48 object-cover"
+        />
+        <div class="p-4">
+          <h2 class="text-orange-400 font-semibold text-lg">Grand Theft Auto VI</h2>
+          <p class="text-gray-300 text-sm mt-1">
+            El regreso más ambicioso a Vice City con IA mejorada.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL DETALLES -->
+  <script>
+    const games = {
+      zelda: {
+        title: "The Legend of Zelda: Breath of the Wild",
+        description:
+          "Explora el vasto reino de Hyrule en esta épica aventura de mundo abierto donde cada montaña puede escalarse y cada misterio tiene una recompensa.",
+        features: [
+          "Mundo abierto masivo sin restricciones",
+          "Sistema de física y química interactiva revolucionario",
+          "120 santuarios con puzzles desafiantes",
+          "Más de 100 horas de contenido completo",
+          "Gráficos estilo anime con iluminación dinámica",
+        ],
+        price: "$59.99",
+        oldPrice: "$69.99",
+        discount: "15% OFF",
+        rating: "9.5/10",
+        genre: "Aventura, Mundo Abierto",
+        platform: "Nintendo Switch",
+        releaseDate: "3 de marzo, 2017",
+        developer: "Nintendo EPD",
+        image: "https://www.nintendo.com/eu/media/images/10_share_images/portals_3/2x1_Hub_TheLegendOfZelda_ToTK.jpg",
+      },
+      minecraft: {
+        title: "Minecraft",
+        description:
+          "El juego de construcción definitivo donde tu imaginación es el único límite. Crea, explora y sobrevive en mundos infinitamente generados.",
+        features: [
+          "Mundos infinitos generados proceduralmente",
+          "Modo creativo con recursos ilimitados",
+          "Modo supervivencia con criaturas y jefes",
+          "Multijugador online cooperativo",
+          "Soporte para mods y texturas personalizadas",
+        ],
+        price: "$29.99",
+        oldPrice: "$39.99",
+        discount: "25% OFF",
+        rating: "9.0/10",
+        genre: "Sandbox, Supervivencia",
+        platform: "Multiplataforma",
+        releaseDate: "18 de noviembre, 2011",
+        developer: "Mojang Studios",
+        image: "https://image.api.playstation.com/vulcan/ap/rnd/202407/0401/670c294ded3baf4fa11068db2ec6758c63f7daeb266a35a1.png",
+      },
+      fc24: {
+        title: "EA Sports FC 24",
+        description:
+          "La nueva era del fútbol virtual con la tecnología HyperMotionV y PlayStyles optimizados para una autenticidad sin precedentes.",
+        features: [
+          "Tecnología HyperMotionV para animaciones realistas",
+          "PlayStyles basados en datos reales de Opta",
+          "Más de 19,000 jugadores y 700 equipos",
+          "30+ ligas oficiales con licencia completa",
+          "Modos Carrera y Ultimate Team mejorados",
+        ],
+        price: "$69.99",
+        oldPrice: "",
+        discount: "",
+        rating: "8.2/10",
+        genre: "Deportes, Fútbol",
+        platform: "PS5, Xbox Series X/S, PC",
+        releaseDate: "29 de septiembre, 2023",
+        developer: "EA Vancouver",
+        image: "https://image.api.playstation.com/vulcan/ap/rnd/202503/2520/f3c135f8ebdc50b782c6f5f02b27130b499e22847f05aee6.png",
+      },
+      gta6: {
+        title: "Grand Theft Auto VI",
+        description:
+          "El esperado regreso a Vice City en lo que promete ser la entrega más ambiciosa de la franquicia que revolucionó los juegos de mundo abierto.",
+        features: [
+          "Mapa más grande de la serie (Vice City + áreas circundantes)",
+          "Primer juego con dos protagonistas jugables",
+          "Sistema de inteligencia artificial mejorado",
+          "Gráficos de última generación con ray tracing",
+          "Modo online expansivo post-lanzamiento",
+        ],
+        price: "$79.99",
+        oldPrice: "",
+        discount: "",
+        rating: "10/10 (esperado)",
+        genre: "Acción-Aventura",
+        platform: "Próximamente (2025)",
+        releaseDate: "2025 (Estimado)",
+        developer: "Rockstar Games",
+        image: "https://image.api.playstation.com/vulcan/ap/rnd/202505/0616/c9f078c260d79339cb581054ce5ca49f2b56ab943d1beb20.png",
+      },
+    };
+
+    function showGameDetails(gameId) {
+      const game = games[gameId];
+      Swal.fire({
+        title: `<span class="text-2xl font-bold text-gray-800">${game.title}</span>`,
+        html: `
+          <div class="text-left">
+            <div class="flex flex-col md:flex-row gap-6">
+              <div class="md:w-2/5">
+                <img
+                  src="${game.image}"
+                  alt="${game.title}"
+                  class="w-full rounded-lg shadow-md border border-gray-200"
+                />
+                <div class="mt-4 flex justify-between items-center">
+                  <div>
+                    <span class="text-3xl font-bold text-orange-600">${game.price}</span>
+                    ${
+                      game.oldPrice
+                        ? `<span class="text-sm text-gray-500 line-through ml-2">${game.oldPrice}</span>`
+                        : ''
+                    }
+                    ${
+                      game.discount
+                        ? `<span class="bg-red-100 text-red-800 text-xs font-medium ml-2 px-2 py-1 rounded">${game.discount}</span>`
+                        : ''
+                    }
+                  </div>
+                  <button
+                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition"
+                  >
+                    <i class="fas fa-shopping-cart mr-2"></i>Añadir
+                  </button>
+                </div>
+              </div>
+              <div class="md:w-3/5 space-y-4">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <h3 class="font-semibold text-gray-700 mb-2">Descripción</h3>
+                  <p class="text-gray-700">${game.description}</p>
+                </div>
+                <div class="bg-orange-50 p-4 rounded-lg">
+                  <h3 class="font-semibold text-orange-600 mb-2">Características principales</h3>
+                  <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    ${game.features.map((f) => `<li>${f}</li>`).join('')}
+                  </ul>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                  <div class="bg-gray-50 p-3 rounded-lg">
+                    <h4 class="font-semibold text-gray-600 mb-1">Género</h4>
+                    <p class="text-gray-700">${game.genre}</p>
+                  </div>
+                  <div class="bg-gray-50 p-3 rounded-lg">
+                    <h4 class="font-semibold text-gray-600 mb-1">Plataforma</h4>
+                    <p class="text-gray-700">${game.platform}</p>
+                  </div>
+                  <div class="bg-gray-50 p-3 rounded-lg">
+                    <h4 class="font-semibold text-gray-600 mb-1">Lanzamiento</h4>
+                    <p class="text-gray-700">${game.releaseDate}</p>
+                  </div>
+                  <div class="bg-gray-50 p-3 rounded-lg">
+                    <h4 class="font-semibold text-gray-600 mb-1">Desarrollador</h4>
+                    <p class="text-gray-700">${game.developer}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `,
+        width: '900px',
+        showConfirmButton: false,
+        showCloseButton: true,
+        background: 'white',
+        backdrop: 'rgba(0,0,0,0.7)',
+        customClass: {
+          closeButton: 'text-gray-400 hover:text-gray-600 text-2xl',
+          popup: 'rounded-xl shadow-2xl',
+        },
+      });
+    }
+  </script>
 </body>
 </html>
+

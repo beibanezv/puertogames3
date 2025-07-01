@@ -7,34 +7,43 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen flex flex-col">
-    <nav class="bg-white shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
+<body class="bg-gradient-to-br from-black to-gray-900 min-h-screen flex flex-col">
+    <nav class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
         <div class="flex items-center">
-            <i class="fas fa-gamepad text-blue-600 text-2xl mr-2"></i>
-            <span class="text-xl font-bold text-blue-800">PUERTO GAMES</span>
+            <!-- Espacio para el logo -->
+            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3">
+                <span class="text-orange-500 font-bold text-xl">PG</span>
+            </div>
+            <span class="text-xl font-bold text-white">PUERTO GAMES</span>
         </div>
         <div class="flex gap-4 mt-2 sm:mt-0">
-            <a href="index.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
-            <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
-            <a href="api.html" class="text-blue-800 font-semibold underline"><i class="fas fa-code mr-1"></i>API</a>
-            <a href="login.html" class="text-blue-600 hover:text-blue-800 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
+            <a href="index.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-home mr-1"></i>Inicio</a>
+            <a href="dashboard.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-th-large mr-1"></i>Dashboard</a>
+            <a href="api.html" class="text-white font-semibold underline"><i class="fas fa-code mr-1"></i>API</a>
+            <a href="login.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
         </div>
     </nav>
 
     <div class="flex-grow flex items-center justify-center p-4">
-        <div class="w-full max-w-2xl bg-white rounded-xl shadow-xl overflow-hidden">
-            <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white text-center">
+        <div class="w-full max-w-2xl bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-orange-600">
+            <div class="bg-gradient-to-r from-orange-600 to-orange-800 p-6 text-white text-center">
                 <h1 class="text-2xl font-bold"><i class="fas fa-question-circle mr-2"></i>Trivia de Videojuegos</h1>
                 <p class="text-sm opacity-90 mt-1">Descubre datos curiosos sobre tus juegos favoritos</p>
             </div>
             
             <div class="p-8">
                 <!-- Contenedor de la pregunta -->
-                <div id="triviaQuestion" class="bg-gray-50 rounded-lg p-6 mb-6">
+                <div id="triviaQuestion" class="bg-gray-700 rounded-lg p-6 mb-6">
                     <div class="text-center">
-                        <i class="fas fa-spinner fa-spin text-blue-500 text-2xl mb-2"></i>
-                        <p class="text-gray-600">Cargando pregunta...</p>
+                        <i class="fas fa-spinner fa-spin text-orange-500 text-2xl mb-2"></i>
+                        <p class="text-gray-300">Cargando pregunta...</p>
                     </div>
                 </div>
                 
@@ -44,7 +53,7 @@
                 </div>
                 
                 <!-- Información de dificultad y categoría -->
-                <div id="questionInfo" class="flex justify-between text-sm text-gray-500 mb-6" style="display: none;">
+                <div id="questionInfo" class="flex justify-between text-sm text-gray-400 mb-6" style="display: none;">
                     <span id="difficulty" class="flex items-center">
                         <i class="fas fa-bolt mr-1"></i>
                         <span id="difficultyText"></span>
@@ -56,27 +65,27 @@
                 </div>
                 
                 <!-- Contador de preguntas -->
-                <div id="counter" class="text-center text-gray-500 text-sm mb-6">
+                <div id="counter" class="text-center text-gray-400 text-sm mb-6">
                     Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestions">10</span>
                 </div>
                 
                 <!-- Resultados -->
                 <div id="results" class="hidden text-center mb-6">
-                    <h3 class="text-xl font-bold text-purple-700 mb-2">Tu puntuación</h3>
-                    <div class="text-4xl font-bold mb-2">
+                    <h3 class="text-xl font-bold text-orange-500 mb-2">Tu puntuación</h3>
+                    <div class="text-4xl font-bold mb-2 text-white">
                         <span id="score">0</span>/<span id="maxScore">10</span>
                     </div>
-                    <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
-                        <div id="progressBar" class="h-full bg-blue-600 transition-all duration-500"></div>
+                    <div class="h-4 bg-gray-700 rounded-full overflow-hidden">
+                        <div id="progressBar" class="h-full bg-orange-600 transition-all duration-500"></div>
                     </div>
                 </div>
                 
                 <!-- Botones de acción -->
                 <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <button id="newQuestionBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center justify-center">
+                    <button id="newQuestionBtn" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center justify-center">
                         <i class="fas fa-sync-alt mr-2"></i> Nueva Pregunta
                     </button>
-                    <button id="revealAnswerBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center justify-center">
+                    <button id="revealAnswerBtn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center justify-center border border-orange-600">
                         <i class="fas fa-lightbulb mr-2"></i> Mostrar Respuesta
                     </button>
                 </div>
@@ -84,7 +93,7 @@
         </div>
     </div>
 
-    <footer class="bg-white p-4 text-center text-gray-600 text-sm">
+    <footer class="bg-gray-800 p-4 text-center text-gray-400 text-sm border-t border-orange-600">
         © 2023 Puerto Games. Todos los derechos reservados.
     </footer>
 
@@ -121,8 +130,8 @@
             // Mostrar estado de carga
             questionDiv.innerHTML = `
                 <div class="text-center">
-                    <i class="fas fa-spinner fa-spin text-blue-500 text-2xl mb-2"></i>
-                    <p class="text-gray-600">Cargando pregunta...</p>
+                    <i class="fas fa-spinner fa-spin text-orange-500 text-2xl mb-2"></i>
+                    <p class="text-gray-300">Cargando pregunta...</p>
                 </div>
             `;
             optionsContainer.style.display = 'none';
@@ -139,12 +148,12 @@
                     // Mostrar pregunta
                     const decodedQuestion = parser.parseFromString(currentQuestion.question, 'text/html').body.textContent;
                     questionDiv.innerHTML = `
-                        <h3 class="text-lg font-semibold text-center text-gray-800">${decodedQuestion}</h3>
+                        <h3 class="text-lg font-semibold text-center text-white">${decodedQuestion}</h3>
                     `;
                     
                     // Mostrar información de la pregunta
                     document.getElementById('difficultyText').textContent = difficultyTranslations[currentQuestion.difficulty] || currentQuestion.difficulty;
-                    document.getElementById('difficulty').className = `flex items-center ${difficultyColors[currentQuestion.difficulty] || 'text-gray-500'}`;
+                    document.getElementById('difficulty').className = `flex items-center ${difficultyColors[currentQuestion.difficulty] || 'text-gray-400'}`;
                     document.getElementById('categoryText').textContent = currentQuestion.category;
                     questionInfo.style.display = 'flex';
                     
@@ -160,7 +169,7 @@
                     allAnswers.forEach(answer => {
                         const decodedAnswer = parser.parseFromString(answer, 'text/html').body.textContent;
                         const optionBtn = document.createElement('button');
-                        optionBtn.className = 'w-full bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-4 text-left transition transform hover:scale-[1.02]';
+                        optionBtn.className = 'w-full bg-gray-700 hover:bg-gray-600 text-white border border-gray-600 rounded-lg p-4 text-left transition transform hover:scale-[1.02]';
                         optionBtn.textContent = decodedAnswer;
                         optionBtn.onclick = () => checkAnswer(answer);
                         optionsContainer.appendChild(optionBtn);
@@ -186,9 +195,9 @@
             optionButtons.forEach(btn => {
                 btn.disabled = true;
                 if (btn.textContent === decodedCorrect) {
-                    btn.classList.add('bg-green-100', 'border-green-400');
+                    btn.classList.add('bg-green-900', 'border-green-500');
                 } else if (btn.textContent === parser.parseFromString(selectedAnswer, 'text/html').body.textContent && selectedAnswer !== correctAnswer) {
-                    btn.classList.add('bg-red-100', 'border-red-400');
+                    btn.classList.add('bg-red-900', 'border-red-500');
                 }
             });
             
@@ -198,7 +207,9 @@
                     title: '¡Correcto!',
                     text: `Respuesta correcta.`,
                     icon: 'success',
-                    confirmButtonText: 'Continuar'
+                    confirmButtonText: 'Continuar',
+                    background: '#1f2937',
+                    color: 'white'
                 }).then(() => {
                     fetchTrivia();
                 });
@@ -207,7 +218,9 @@
                     title: 'Incorrecto',
                     html: `La respuesta correcta era: <strong>${decodedCorrect}</strong>`,
                     icon: 'error',
-                    confirmButtonText: 'Continuar'
+                    confirmButtonText: 'Continuar',
+                    background: '#1f2937',
+                    color: 'white'
                 }).then(() => {
                     fetchTrivia();
                 });
@@ -246,7 +259,9 @@
                 title: 'Trivia completada',
                 text: message,
                 icon: icon,
-                confirmButtonText: 'Jugar de nuevo'
+                confirmButtonText: 'Jugar de nuevo',
+                background: '#1f2937',
+                color: 'white'
             }).then(() => {
                 resetTrivia();
             });
@@ -264,7 +279,7 @@
         
         function showError(message) {
             document.getElementById('triviaQuestion').innerHTML = `
-                <div class="text-center text-red-600">
+                <div class="text-center text-red-500">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
                     ${message}
                 </div>
@@ -292,7 +307,9 @@
                     title: 'Respuesta correcta',
                     text: decodedCorrect,
                     icon: 'info',
-                    confirmButtonText: 'Gracias'
+                    confirmButtonText: 'Gracias',
+                    background: '#1f2937',
+                    color: 'white'
                 });
             }
         });
