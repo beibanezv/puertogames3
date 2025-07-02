@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo | Puerto Games</title>
+    <title>Base de Datos | Puerto Games</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -35,17 +35,22 @@
       <a
         href="index.html"
         class="text-white font-semibold underline hover:text-gray-200"
-        ><i class="fas fa-home mr-1"></i>Inicio</a
+        ><i class="fas fa-database mr-1"></i>Base de Datos</a
+      >
+      <a
+        href="catalogo.html"
+        class="text-white hover:text-gray-200 font-semibold"
+        ><i class="fas fa-book mr-1"></i>Catálogo</a
       >
       <a
         href="dashboard.html"
         class="text-white hover:text-gray-200 font-semibold"
-        ><i class="fas fa-th-large mr-1"></i>Dashboard</a
+        ><i class="fas fa-cogs mr-1"></i>Dashboard</a
       >
       <a
         href="api.html"
         class="text-white hover:text-gray-200 font-semibold"
-        ><i class="fas fa-code mr-1"></i>API</a
+        ><i class="fas fa-gamepad mr-1"></i>API</a
       >
       <a
         href="login.html"
@@ -56,11 +61,11 @@
   </nav>
 
     <div class="container mx-auto py-8 px-4">
-        <h1 class="text-4xl font-extrabold mb-10 text-center text-purple-800 drop-shadow">Catálogo de Videojuegos</h1>
+        <h1 class="text-4xl font-extrabold mb-10 text-center text-purple-800 drop-shadow">Base de Datos de Videojuegos</h1>
         
         <!-- Filtros de búsqueda -->
         <div class="flex flex-col md:flex-row justify-center mb-8 gap-4">
-            <input id="searchInput" type="text" placeholder="Buscar por nombre..." class="w-full md:w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+            <input id="searchInput" type="text" placeholder="Buscar por nombre en la base de datos..." class="w-full md:w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400" />
             <select id="platformFilter" class="w-full md:w-1/3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white">
                 <option value="">Todas las plataformas</option>
                 <option value="pc">PC</option>
@@ -74,191 +79,100 @@
         
         <!-- Sección de Juegos -->
         <div id="gamesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Los juegos de RAWG se cargarán aquí dinámicamente -->
+            <!-- Los juegos de la base de datos se cargarán aquí dinámicamente -->
         </div>
     </div>
   </main>
 
     <!-- Scripts -->
-    <script src="js/rawg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Datos completos de todos los juegos
-        const games = {
-            zelda: {
-                title: "The Legend of Zelda: Breath of the Wild",
-                description: "Explora el vasto reino de Hyrule en esta épica aventura de mundo abierto donde cada montaña puede escalarse y cada misterio tiene una recompensa.",
-                features: [
-                    "Mundo abierto masivo sin restricciones",
-                    "Sistema de física y química interactiva revolucionario",
-                    "120 santuarios con puzzles desafiantes",
-                    "Más de 100 horas de contenido completo",
-                    "Gráficos estilo anime con iluminación dinámica"
-                ],
-                price: "$59.99",
-                oldPrice: "$69.99",
-                discount: "15% OFF",
-                rating: "9.5/10",
-                genre: "Aventura, Mundo Abierto",
-                platform: "Nintendo Switch",
-                releaseDate: "3 de marzo, 2017",
-                developer: "Nintendo EPD",
-                image: "./imagenes/zelda.jpg"
-            },
-            minecraft: {
-                title: "Minecraft",
-                description: "El juego de construcción definitivo donde tu imaginación es el único límite. Crea, explora y sobrevive en mundos infinitamente generados.",
-                features: [
-                    "Mundos infinitos generados proceduralmente",
-                    "Modo creativo con recursos ilimitados",
-                    "Modo supervivencia con criaturas y jefes",
-                    "Multijugador online cooperativo",
-                    "Soporte para mods y texturas personalizadas"
-                ],
-                price: "$29.99",
-                oldPrice: "$39.99",
-                discount: "25% OFF",
-                rating: "9.0/10",
-                genre: "Sandbox, Supervivencia",
-                platform: "Multiplataforma",
-                releaseDate: "18 de noviembre, 2011",
-                developer: "Mojang Studios",
-                image: "./imagenes/mine.avif"
-            },
-            fc24: {
-                title: "EA Sports FC 24",
-                description: "La nueva era del fútbol virtual con la tecnología HyperMotionV y PlayStyles optimizados para una autenticidad sin precedentes.",
-                features: [
-                    "Tecnología HyperMotionV para animaciones realistas",
-                    "PlayStyles basados en datos reales de Opta",
-                    "Más de 19,000 jugadores y 700 equipos",
-                    "30+ ligas oficiales con licencia completa",
-                    "Modos Carrera y Ultimate Team mejorados"
-                ],
-                price: "$69.99",
-                oldPrice: "",
-                discount: "",
-                rating: "8.2/10",
-                genre: "Deportes, Fútbol",
-                platform: "PS5, Xbox Series X/S, PC",
-                releaseDate: "29 de septiembre, 2023",
-                developer: "EA Vancouver",
-                image: "./imagenes/ea25.avif"
-            },
-            gta6: {
-                title: "Grand Theft Auto VI",
-                description: "El esperado regreso a Vice City en lo que promete ser la entrega más ambiciosa de la franquicia que revolucionó los juegos de mundo abierto.",
-                features: [
-                    "Mapa más grande de la serie (Vice City + áreas circundantes)",
-                    "Primer juego con dos protagonistas jugables",
-                    "Sistema de inteligencia artificial mejorado",
-                    "Gráficos de última generación con ray tracing",
-                    "Modo online expansivo post-lanzamiento"
-                ],
-                price: "$79.99",
-                oldPrice: "",
-                discount: "",
-                rating: "10/10 (esperado)",
-                genre: "Acción-Aventura",
-                platform: "Próximamente (2025)",
-                releaseDate: "2025 (Estimado)",
-                developer: "Rockstar Games",
-                image: "./imagenes/gta6.avif"
+        // --- Solo juegos de la API RAWG ---
+        let juegosRAWG = [];
+        let lastSearch = '';
+        async function buscarJuegosRAWG(q) {
+            if (!q || q.length < 2) {
+                document.getElementById('gamesContainer').innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold">Escribe al menos 2 letras para buscar.</div>';
+                return;
             }
-        };
+            try {
+                const url = `https://api.rawg.io/api/games?key=a7104160559046f59814743992c5f5b9&search=${encodeURIComponent(q)}`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('No se pudo buscar juegos');
+                const data = await res.json();
+                juegosRAWG = data.results || [];
+                renderGamesRAWG(juegosRAWG);
+            } catch (e) {
+                document.getElementById('gamesContainer').innerHTML = '<div class="col-span-full text-center text-red-400 font-bold">Error al buscar juegos.</div>';
+            }
+        }
 
-        // Función para mostrar detalles con diseño profesional
-        function showGameDetails(gameId) {
-            const game = games[gameId];
-            
-            Swal.fire({
-                title: `<span class="text-2xl font-bold text-gray-800">${game.title}</span>`,
-                html: `
-                    <div class="text-left">
-                        <div class="flex flex-col md:flex-row gap-6">
-                            <div class="md:w-2/5">
-                                <img src="${game.image}" alt="${game.title}" class="w-full rounded-lg shadow-md border border-gray-200">
-                                <div class="mt-4 flex justify-between items-center">
-                                    <div>
-                                        <span class="text-3xl font-bold text-purple-600">${game.price}</span>
-                                        ${game.oldPrice ? `<span class="text-sm text-gray-500 line-through ml-2">${game.oldPrice}</span>` : ''}
-                                        ${game.discount ? `<span class="bg-red-100 text-red-800 text-xs font-medium ml-2 px-2 py-1 rounded">${game.discount}</span>` : ''}
-                                    </div>
-                                    <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition">
-                                        <i class="fas fa-shopping-cart mr-2"></i>Añadir
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="md:w-3/5 space-y-4">
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h3 class="font-semibold text-gray-700 mb-2">Descripción</h3>
-                                    <p class="text-gray-700">${game.description}</p>
-                                </div>
-                                
-                                <div class="bg-blue-50 p-4 rounded-lg">
-                                    <h3 class="font-semibold text-blue-800 mb-2">Características principales</h3>
-                                    <ul class="list-disc list-inside space-y-2 text-gray-700">
-                                        ${game.features.map(f => `<li>${f}</li>`).join('')}
-                                    </ul>
-                                </div>
-                                
-                                <div class="grid grid-cols-2 gap-4 text-sm">
-                                    <div class="bg-gray-50 p-3 rounded-lg">
-                                        <h4 class="font-semibold text-gray-600 mb-1">Género</h4>
-                                        <p class="text-gray-700">${game.genre}</p>
-                                    </div>
-                                    <div class="bg-gray-50 p-3 rounded-lg">
-                                        <h4 class="font-semibold text-gray-600 mb-1">Plataforma</h4>
-                                        <p class="text-gray-700">${game.platform}</p>
-                                    </div>
-                                    <div class="bg-gray-50 p-3 rounded-lg">
-                                        <h4 class="font-semibold text-gray-600 mb-1">Lanzamiento</h4>
-                                        <p class="text-gray-700">${game.releaseDate}</p>
-                                    </div>
-                                    <div class="bg-gray-50 p-3 rounded-lg">
-                                        <h4 class="font-semibold text-gray-600 mb-1">Desarrollador</h4>
-                                        <p class="text-gray-700">${game.developer}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        function renderGamesRAWG(games) {
+            const gamesContainer = document.getElementById('gamesContainer');
+            if (!games.length) {
+                gamesContainer.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold">No se encontraron juegos.</div>';
+                return;
+            }
+            gamesContainer.innerHTML = games.map(game => `
+                <div class="game-card bg-gray-800 rounded-xl shadow-lg border border-orange-600 flex flex-col cursor-pointer hover:ring-2 hover:ring-orange-500 transition" onclick="showGameDetailsRAWG('${game.slug}')">
+                    <img src="${game.background_image || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${game.name}" class="rounded-t-xl h-48 w-full object-cover">
+                    <div class="p-4 flex-1 flex flex-col">
+                        <h2 class="text-lg font-bold text-white mb-2">${game.name}</h2>
+                        <p class="text-sm text-gray-300 mb-2 line-clamp-2">${game.released ? 'Lanzamiento: ' + game.released : ''}</p>
                     </div>
-                `,
-                width: '900px',
-                showConfirmButton: false,
-                showCloseButton: true,
-                background: 'white',
-                backdrop: 'rgba(0,0,0,0.5)',
-                customClass: {
-                    closeButton: 'text-gray-400 hover:text-gray-600 text-2xl',
-                    popup: 'rounded-xl shadow-2xl'
-                }
-            });
+                </div>
+            `).join('');
         }
 
-        // Función para filtrar juegos
-        function filterGames() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const platformFilter = document.getElementById('platformFilter').value;
-            const gameCards = document.querySelectorAll('.game-card');
-            
-            gameCards.forEach(card => {
-                const title = card.querySelector('h2').innerText.toLowerCase();
-                const platform = card.getAttribute('data-platform');
-                
-                const matchesSearch = title.includes(searchTerm);
-                const matchesPlatform = platformFilter === '' || platform === platformFilter;
-                
-                if (matchesSearch && matchesPlatform) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
+        // Mostrar detalles usando API RAWG (por slug)
+        async function showGameDetailsRAWG(slug) {
+            try {
+                const url = `https://api.rawg.io/api/games/${slug}?key=a7104160559046f59814743992c5f5b9`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('No se pudo obtener información del juego');
+                const juego = await res.json();
+                Swal.fire({
+                    title: `<span class='text-2xl font-bold text-gray-800'>${juego.name}</span>`,
+                    html: `
+                        <div class='text-left'>
+                            <img src='${juego.background_image || ''}' alt='${juego.name}' class='w-full rounded-lg shadow-md border border-gray-200 mb-4'>
+                            <p class='text-gray-700 mb-2'><b>Fecha de lanzamiento:</b> ${juego.released || 'Desconocida'}</p>
+                            <p class='text-gray-700 mb-2'><b>Géneros:</b> ${(juego.genres || []).map(g => g.name).join(', ') || 'N/A'}</p>
+                            <p class='text-gray-700 mb-2'><b>Plataformas:</b> ${(juego.platforms || []).map(p => p.platform.name).join(', ') || 'N/A'}</p>
+                            <p class='text-gray-700 mb-2'><b>Rating:</b> ${juego.rating || 'N/A'}</p>
+                            <p class='text-gray-700 mt-4'>${juego.description_raw || 'Sin descripción detallada.'}</p>
+                        </div>
+                    `,
+                    width: '700px',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    background: 'white',
+                    backdrop: 'rgba(0,0,0,0.5)',
+                    customClass: {
+                        closeButton: 'text-gray-400 hover:text-gray-600 text-2xl',
+                        popup: 'rounded-xl shadow-2xl'
+                    }
+                });
+            } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo obtener información detallada del juego.'
+                });
+            }
         }
 
-        // Event listeners para los filtros
-        document.getElementById('searchInput').addEventListener('input', filterGames);
-        document.getElementById('platformFilter').addEventListener('change', filterGames);
+        // Escuchar el input del buscador y buscar en RAWG
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const q = this.value.trim();
+            lastSearch = q;
+            buscarJuegosRAWG(q);
+        });
+        // Buscar por defecto algunos juegos populares al cargar
+        buscarJuegosRAWG('zelda');
     </script>
+    <footer class="bg-gray-900 text-gray-400 text-center py-4 mt-auto border-t border-orange-600">
+        © 2025 Puerto Games. Todos los derechos reservados.
+    </footer>
 </body>
 </html>
