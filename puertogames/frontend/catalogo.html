@@ -149,11 +149,13 @@
     document.getElementById('filtroPrecio').addEventListener('change', aplicarFiltrosYOrden);
     document.getElementById('filtroCalificacion').addEventListener('change', aplicarFiltrosYOrden);
     document.getElementById('ordenarPor').addEventListener('change', aplicarFiltrosYOrden);
-    // Buscar juegos
+    // Buscar juegos por nombre en tiempo real
     searchInput.addEventListener('input', function() {
         const q = this.value.trim().toLowerCase();
-        juegosFiltrados = juegos.filter(j => j.nombre.toLowerCase().includes(q));
-        aplicarFiltrosYOrden();
+        // Filtra los juegos por coincidencia en el nombre
+        const filtrados = juegos.filter(j => j.nombre && j.nombre.toLowerCase().includes(q));
+        juegosFiltrados = filtrados;
+        renderCatalogo(filtrados);
     });
 
     // Mostrar detalles

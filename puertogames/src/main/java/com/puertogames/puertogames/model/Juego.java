@@ -6,35 +6,29 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+// Entidad que representa un videojuego en la base de datos
+// Incluye atributos como nombre, género, plataforma, calificación, etc.
 @Entity
 @Table(name = "juegos")
 public class Juego {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // Identificador único del juego
 
-    private String nombre;
+    private String nombre; // Nombre del juego
+    private String genero; // Género del juego
+    private String plataforma; // Plataforma disponible
+    private Double calificacion; // Calificación promedio
+    private String descripcion; // Descripción del juego
+    private String imagenUrl; // URL de la imagen del juego
+    private String fechaLanzamiento; // Fecha de lanzamiento
+    private String desarrollador; // Desarrollador del juego
+    private Double precio; // Precio del juego
+    private Integer stock; // Stock disponible
+    private String idioma; // Idioma del juego
 
-    private String genero;
-
-    private String plataforma;
-
-    private Double calificacion;
-
-    private String descripcion;
-
-    private String imagenUrl;
-
-    private String fechaLanzamiento;
-
-    private String desarrollador;
-
-    private Double precio;
-    private Integer stock;
-    private String idioma;
-
-    // Getters y setters
+    // Getters y setters para todos los atributos
 
     public Long getId() {
         return id;

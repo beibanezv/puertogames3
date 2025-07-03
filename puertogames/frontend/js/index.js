@@ -1,4 +1,6 @@
-// Hace fetch directo a la API de RAWG al hacer clic en una card y muestra detalles en un modal
+// index.js
+// Renderiza cards de juegos y muestra detalles usando la API de RAWG
+// Incluye funciones para mostrar detalles en un modal y renderizar la lista de juegos
 
 const RAWG_API_KEY = 'a7104160559046f59814743992c5f5b9'; // Usa tu propia API Key
 

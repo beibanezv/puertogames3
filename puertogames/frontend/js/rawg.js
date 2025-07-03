@@ -1,5 +1,6 @@
 // rawg.js
-// Muestra juegos populares de la API RAWG en el index.html
+// Muestra juegos populares de la API RAWG en el index.html y simula precios
+// Incluye funciones para obtener, renderizar y mostrar juegos con precios aleatorios
 
 const RAWG_API_KEY = 'a7104160559046f59814743992c5f5b9';
 const RAWG_API_URL = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}`;
@@ -7,6 +8,7 @@ const RAWG_API_URL = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}`;
 // Precios simulados para los juegos (por id de RAWG o por nombre)
 const PRECIOS_JUEGOS = {};
 
+// Devuelve o genera un precio aleatorio para un juego
 function getPrecioParaJuego(game) {
     // Si ya tiene precio, lo devuelve
     if (PRECIOS_JUEGOS[game.id]) return PRECIOS_JUEGOS[game.id];
@@ -18,6 +20,7 @@ function getPrecioParaJuego(game) {
 
 let juegosRAWG = [];
 
+// Obtiene juegos de la API y los muestra en pantalla
 async function fetchAndDisplayGames() {
     const gamesContainer = document.getElementById('gamesContainer');
     gamesContainer.innerHTML = '<p>Cargando juegos...</p>';
@@ -35,6 +38,7 @@ async function fetchAndDisplayGames() {
     }
 }
 
+// Renderiza los juegos en el contenedor principal
 function renderGames(games) {
     const gamesContainer = document.getElementById('gamesContainer');
     if (!games.length) {
@@ -61,6 +65,7 @@ function renderGames(games) {
     }).join('');
 }
 
+// Filtra los juegos según el término de búsqueda y la plataforma seleccionada
 function filterGames() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     const platformFilter = document.getElementById('platformFilter').value;

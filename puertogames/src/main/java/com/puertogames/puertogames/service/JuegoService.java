@@ -1,5 +1,6 @@
 package com.puertogames.puertogames.service;
 
+// Importaciones necesarias para el servicio
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,23 +9,27 @@ import org.springframework.stereotype.Service;
 import com.puertogames.puertogames.model.Juego;
 import com.puertogames.puertogames.repository.JuegoRepository;
 
-@Service
+@Service // Servicio de lógica de negocio para juegos
 public class JuegoService {
 
-    @Autowired
+    @Autowired // Inyección del repositorio de juegos
     private JuegoRepository repo;
 
+    // Devuelve todos los juegos
     public List<Juego> getAllJuegos() {
         return repo.findAll();
     }
 
+    // Crea un nuevo juego
     public Juego createJuego(Juego juego) {
         return repo.save(juego);
     }
 
+    // Actualiza un juego existente
     public Juego updateJuego(Long id, Juego juego) {
         return repo.findById(id)
             .map(j -> {
+                // Actualiza los campos del juego
                 j.setNombre(juego.getNombre());
                 j.setGenero(juego.getGenero());
                 j.setPlataforma(juego.getPlataforma());
@@ -41,6 +46,7 @@ public class JuegoService {
             .orElseThrow(() -> new RuntimeException("Juego no encontrado"));
     }
 
+    // Elimina un juego por ID
     public void deleteJuego(Long id) {
         repo.deleteById(id);
     }

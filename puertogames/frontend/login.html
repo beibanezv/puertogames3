@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión | Puerto Games</title>
+    <!-- Tailwind para estilos rápidos -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SweetAlert2 para alertas bonitas -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Toastify para notificaciones -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </head>
 <body class="bg-gradient-to-br from-black via-gray-900 to-gray-800 min-h-screen flex flex-col">
-    <!-- NAV -->
+    <!-- NAV (oculta en login para evitar navegación) -->
     <!-- Eliminada la barra de navegación para evitar navegación a otras páginas desde el login -->
     <div class="flex flex-col items-center justify-center mt-8 mb-8">
+        <!-- Logo principal -->
         <div class="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-4 shadow-lg border-4 border-orange-600 animate-pulse">
             <span class="text-orange-500 font-bold text-4xl">PG</span>
         </div>
@@ -21,7 +26,7 @@
         <span class="text-lg text-gray-300 font-medium">¡Bienvenido! Inicia sesión para acceder al catálogo</span>
     </div>
 
-    <!-- FORMULARIO -->
+    <!-- FORMULARIO DE LOGIN -->
     <div class="flex-grow flex items-center justify-center px-4">
         <div class="w-full max-w-md bg-gray-800 rounded-xl shadow-2xl overflow-hidden border border-orange-600">
             <div class="bg-orange-600 p-6 text-white text-center rounded-t-xl">
@@ -29,13 +34,16 @@
                 <p class="text-sm opacity-90 mt-1">Accede a tu cuenta de Puerto Games</p>
             </div>
             
+            <!-- Formulario principal de login -->
             <form id="loginForm" class="p-8 space-y-6">
                 <div class="space-y-2">
                     <label for="username" class="block text-sm font-medium text-white">Usuario</label>
                     <div class="relative">
+                        <!-- Icono usuario -->
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fas fa-user text-orange-500"></i>
                         </div>
+                        <!-- Input usuario -->
                         <input type="text" id="username" name="username" required
                             class="pl-10 w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-900 text-white focus:ring-orange-500 focus:border-orange-500"
                             placeholder="Ingresa tu usuario">
@@ -45,27 +53,32 @@
                 <div class="space-y-2">
                     <label for="password" class="block text-sm font-medium text-white">Contraseña</label>
                     <div class="relative">
+                        <!-- Icono candado -->
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fas fa-lock text-orange-500"></i>
                         </div>
+                        <!-- Input contraseña -->
                         <input type="password" id="password" name="password" required
                             class="pl-10 w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-900 text-white focus:ring-orange-500 focus:border-orange-500"
                             placeholder="Ingresa tu contraseña">
                     </div>
                 </div>
                 
+                <!-- Mensaje de error -->
                 <div id="errorMsg" class="text-red-500 text-sm hidden"></div>
                 
+                <!-- Botón de login -->
                 <button type="submit"
                     class="w-full flex justify-center py-2 px-4 rounded-md text-white font-semibold bg-orange-600 hover:bg-orange-700 transition transform hover:scale-[1.02]">
                     <i class="fas fa-sign-in-alt mr-2"></i> Entrar
                 </button>
                 
+                <!-- Enlace para mostrar registro -->
                 <div class="text-center text-sm text-gray-400">
                     ¿No tienes cuenta? <button id="btnShowRegister" type="button" class="text-orange-400 hover:underline font-medium">Regístrate aquí</button>
                 </div>
             </form>
-            <!-- Formulario de registro -->
+            <!-- Formulario de registro de usuario -->
             <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
                 <div class="bg-gray-900 rounded-xl shadow-2xl max-w-md w-full p-8 relative border border-orange-600">
                     <button id="cerrarRegisterModal" class="absolute top-4 right-4 text-orange-400 hover:text-orange-600 text-2xl"><i class="fas fa-times"></i></button>
@@ -88,15 +101,21 @@
         </div>
     </div>
 
-    <!-- SCRIPT -->
+    <!-- SCRIPT PRINCIPAL DE LOGIN Y REGISTRO -->
     <script>
+        // Archivo principal de inicio de sesión y registro de usuarios para Puerto Games
+        // Incluye lógica de login, registro, notificaciones y manejo de formularios
+
+        // Referencias a elementos del DOM
         const form = document.getElementById('loginForm');
         const errorMsg = document.getElementById('errorMsg');
 
+        // Maneja el envío del formulario de login
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             const username = form.username.value.trim();
             const password = form.password.value.trim();
+            // Validación de campos vacíos
             if (!username || !password) {
                 errorMsg.textContent = 'Por favor, complete todos los campos.';
                 errorMsg.classList.remove('hidden');
@@ -106,6 +125,7 @@
             }
 
             try {
+                // Petición al backend para login
                 const response = await fetch('http://localhost:8080/api/usuarios/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -115,6 +135,7 @@
                 if (!response.ok) throw new Error('Error en la petición');
                 const ok = await response.json();
                 if (ok === true) {
+                    // Login exitoso, muestra alerta y redirige
                     Swal.fire({
                         icon: 'success',
                         title: '¡Bienvenido!',
@@ -131,16 +152,18 @@
                         window.location.href = 'catalogo.html';
                     }, 2000);
                 } else {
+                    // Usuario o contraseña incorrectos
                     errorMsg.textContent = 'Usuario o contraseña incorrectos.';
                     errorMsg.classList.remove('hidden');
                 }
             } catch (err) {
+                // Error de conexión
                 errorMsg.textContent = 'Error de conexión con el servidor.';
                 errorMsg.classList.remove('hidden');
             }
         });
 
-        // Toastify helper para notificaciones armónicas
+        // Función para mostrar notificaciones Toastify
         function showToastify({text, backgroundColor = '#6366f1', type = 'info', duration = 2500}) {
             Toastify({
                 text,
@@ -163,6 +186,7 @@
                 sessionStorage.setItem('notified-'+page, '1');
             }
         }
+        // Detecta clics en enlaces de navegación (si existieran)
         document.querySelectorAll('nav a').forEach(a => {
             a.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
@@ -171,8 +195,6 @@
                 }
             });
         });
-
-        // Ejemplo de uso: showToastify({ text: 'Bienvenido', backgroundColor: '#22c55e', type: 'success' });
 
         // Notificación Toastify al navegar entre páginas
         const pageMap = {
@@ -197,6 +219,7 @@
             }, 300);
         }
 
+        // Lógica para mostrar y cerrar el modal de registro
         const btnShowRegister = document.getElementById('btnShowRegister');
         const registerModal = document.getElementById('registerModal');
         const cerrarRegisterModal = document.getElementById('cerrarRegisterModal');
@@ -208,6 +231,7 @@
         cerrarRegisterModal.onclick = () => registerModal.classList.add('hidden');
         registerModal.onclick = e => { if (e.target === registerModal) registerModal.classList.add('hidden'); };
 
+        // Maneja el envío del formulario de registro
         registerForm.onsubmit = async function(e) {
             e.preventDefault();
             const nombreUsuario = document.getElementById('regUsername').value.trim();
@@ -217,6 +241,7 @@
                 return;
             }
             try {
+                // Petición al backend para registrar usuario
                 const res = await fetch('http://localhost:8080/api/usuarios/registro', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -235,6 +260,7 @@
         };
     </script>
 
+    <!-- Footer del sitio -->
     <footer class="bg-gray-900 text-gray-400 text-center py-4 mt-auto border-t border-orange-600">
         © 2025 Puerto Games. Todos los derechos reservados.
     </footer>

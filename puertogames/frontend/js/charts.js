@@ -1,3 +1,7 @@
+// charts.js
+// Lógica para obtener datos de juegos y mostrar gráficos estadísticos usando Chart.js
+// Incluye funciones para agrupar datos y crear gráficos de género, plataforma, etc.
+
 // Suponiendo que tienes Chart.js incluido en tu HTML
 // <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -8,7 +12,7 @@ async function fetchJuegos() {
     return await response.json();
 }
 
-// Funciones para agrupar datos
+// Funciones para agrupar datos por campo
 function agruparPor(juegos, campo) {
     const conteo = {};
     juegos.forEach(j => {
@@ -21,7 +25,7 @@ function agruparPor(juegos, campo) {
     };
 }
 
-// Función para crear un gráfico
+// Función para crear un gráfico con Chart.js
 function crearGrafico(ctx, tipo, etiquetas, datos, titulo) {
     return new Chart(ctx, {
         type: tipo,
@@ -50,7 +54,7 @@ function crearGrafico(ctx, tipo, etiquetas, datos, titulo) {
     });
 }
 
-// Inicializar los gráficos
+// Inicializar los gráficos al cargar la página
 async function initCharts() {
     try {
         const juegos = await fetchJuegos();
