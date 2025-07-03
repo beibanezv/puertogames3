@@ -293,6 +293,37 @@
             }
         }
         
+        // Toastify helper para notificaciones armónicas
+        function showToastify({text, backgroundColor = '#6366f1', type = 'info', duration = 2500}) {
+            Toastify({
+                text,
+                duration,
+                close: true,
+                gravity: 'top',
+                position: 'right',
+                backgroundColor,
+                stopOnFocus: true,
+                onClick: function() {},
+                className: type === 'error' ? 'toast-error' : (type === 'success' ? 'toast-success' : 'toast-info'),
+                style: { '--toastify-close-color': '#000' }
+            }).showToast();
+        }
+        
+        function notifyNav(page) {
+            if (!sessionStorage.getItem('notified-'+page)) {
+                showToastify({ text: 'Navegaste a ' + page, backgroundColor: '#6366f1', type: 'info', duration: 1600 });
+                sessionStorage.setItem('notified-'+page, '1');
+            }
+        }
+        document.querySelectorAll('nav a').forEach(a => {
+            a.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('#')) {
+                    notifyNav(this.textContent.trim());
+                }
+            });
+        });
+        
         // Event listeners
         document.getElementById('newQuestionBtn').addEventListener('click', fetchTrivia);
         document.getElementById('revealAnswerBtn').addEventListener('click', () => {

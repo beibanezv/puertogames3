@@ -191,6 +191,22 @@
             });
         }
 
+        // Toastify helper para notificaciones armónicas
+        function showToastify({text, backgroundColor = '#6366f1', type = 'info', duration = 2500}) {
+            Toastify({
+                text,
+                duration,
+                close: true,
+                gravity: 'top',
+                position: 'right',
+                backgroundColor,
+                stopOnFocus: true,
+                onClick: function() {},
+                className: type === 'error' ? 'toast-error' : (type === 'success' ? 'toast-success' : 'toast-info'),
+                style: { '--toastify-close-color': '#000' }
+            }).showToast();
+        }
+
         // Notificación Toastify al navegar entre páginas
         const pageMap = {
             'index.html': 'Catálogo de Videojuegos',
@@ -213,6 +229,21 @@
                 }).showToast();
             }, 300);
         }
+
+        function notifyNav(page) {
+            if (!sessionStorage.getItem('notified-'+page)) {
+                showToastify({ text: 'Navegaste a ' + page, backgroundColor: '#6366f1', type: 'info', duration: 1600 });
+                sessionStorage.setItem('notified-'+page, '1');
+            }
+        }
+        document.querySelectorAll('nav a').forEach(a => {
+            a.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('#')) {
+                    notifyNav(this.textContent.trim());
+                }
+            });
+        });
 
         document.addEventListener('DOMContentLoaded', () => initCharts());
     </script>

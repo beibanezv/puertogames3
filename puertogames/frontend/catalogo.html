@@ -64,15 +64,7 @@
             juegos = await res.json();
             juegosFiltrados = juegos;
             renderCatalogo(juegos);
-            Toastify({
-                text: `Catálogo cargado (${juegos.length} juegos)`,
-                duration: 2500,
-                gravity: 'top',
-                position: 'right',
-                backgroundColor: '#6366f1',
-                stopOnFocus: true,
-                close: true
-            }).showToast();
+            showToastify({ text: `Catálogo cargado (${juegos.length} juegos)`, backgroundColor: '#22c55e', type: 'success' });
         } catch (err) {
             catalogoContainer.innerHTML = `<div class='col-span-full text-center text-red-400 font-bold'>Error al cargar el catálogo.</div>`;
         }
@@ -120,6 +112,40 @@
     };
     cerrarModal.addEventListener('click', () => modalDetalle.classList.add('hidden'));
     modalDetalle.addEventListener('click', e => { if (e.target === modalDetalle) modalDetalle.classList.add('hidden'); });
+
+    // Toastify helper para notificaciones armónicas
+    function showToastify({text, backgroundColor = '#6366f1', type = 'info', duration = 2500}) {
+        Toastify({
+            text,
+            duration,
+            close: true,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor,
+            stopOnFocus: true,
+            onClick: function() {},
+            className: type === 'error' ? 'toast-error' : (type === 'success' ? 'toast-success' : 'toast-info'),
+            style: { '--toastify-close-color': '#000' }
+        }).showToast();
+    }
+
+    // Ejemplo de uso: showToastify({ text: 'Catálogo cargado', backgroundColor: '#22c55e', type: 'success' });
+
+    // Notificaciones al navegar entre páginas
+    function notifyNav(page) {
+        if (!sessionStorage.getItem('notified-'+page)) {
+            showToastify({ text: 'Navegaste a ' + page, backgroundColor: '#6366f1', type: 'info', duration: 1600 });
+            sessionStorage.setItem('notified-'+page, '1');
+        }
+    }
+    document.querySelectorAll('nav a').forEach(a => {
+        a.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && !href.startsWith('#')) {
+                notifyNav(this.textContent.trim());
+            }
+        });
+    });
 
     // Cargar catálogo al iniciar
     cargarJuegos();

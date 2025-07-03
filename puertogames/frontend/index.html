@@ -163,6 +163,32 @@
             }
         }
 
+        // Toastify helper para notificaciones armónicas
+        function showToastify({text, backgroundColor = '#6366f1', type = 'info', duration = 2500}) {
+            Toastify({
+                text,
+                duration,
+                close: true,
+                gravity: 'top',
+                position: 'right',
+                backgroundColor,
+                stopOnFocus: true,
+                onClick: function() {},
+                className: type === 'error' ? 'toast-error' : (type === 'success' ? 'toast-success' : 'toast-info'),
+                style: { '--toastify-close-color': '#000' }
+            }).showToast();
+        }
+
+        // Notificación al navegar entre páginas principales
+        function notifyNav(page) {
+            if (!sessionStorage.getItem('notified-'+page)) {
+                showToastify({ text: 'Navegaste a ' + page, backgroundColor: '#6366f1', type: 'info', duration: 1600 });
+                sessionStorage.setItem('notified-'+page, '1');
+            }
+        }
+
+        // Ejemplo de uso: showToastify({ text: 'Juegos RAWG cargados', backgroundColor: '#22c55e', type: 'success' });
+
         // Escuchar el input del buscador y buscar en RAWG
         document.getElementById('searchInput').addEventListener('input', function() {
             const q = this.value.trim();
@@ -171,6 +197,15 @@
         });
         // Buscar por defecto algunos juegos populares al cargar
         buscarJuegosRAWG('zelda');
+
+        document.querySelectorAll('nav a').forEach(a => {
+            a.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('#')) {
+                    notifyNav(this.textContent.trim());
+                }
+            });
+        });
     </script>
     <footer class="bg-gray-900 text-gray-400 text-center py-4 mt-auto border-t border-orange-600">
         © 2025 Puerto Games. Todos los derechos reservados.
