@@ -1,4 +1,3 @@
-// external.js
 // Lógica para mostrar preguntas de trivia y juegos dinámicos usando APIs externas
 // Incluye funciones para decodificar HTML, crear tarjetas de preguntas y mostrar trivia
 // También se encarga de cargar juegos desde FreeToGame API y backend, y mostrar detalles y reviews de los juegos

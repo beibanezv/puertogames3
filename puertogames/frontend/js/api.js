@@ -1,3 +1,7 @@
+// api.js - Funciones para interactuar con la API REST del backend de Puertogames
+// Define funciones asíncronas para obtener juegos, iniciar sesión y obtener estadísticas.
+// Puedes agregar más funciones según los endpoints disponibles en el backend.
+
 const API_BASE_URL = '/api';
 
 async function fetchJuegos() {

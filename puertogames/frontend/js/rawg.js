@@ -1,4 +1,3 @@
-// rawg.js
 // Muestra juegos populares de la API RAWG en el index.html y simula precios
 // Incluye funciones para obtener, renderizar y mostrar juegos con precios aleatorios
 

@@ -2,8 +2,6 @@
 // Lógica para obtener datos de juegos y mostrar gráficos estadísticos usando Chart.js
 // Incluye funciones para agrupar datos y crear gráficos de género, plataforma, etc.
 
-// Suponiendo que tienes Chart.js incluido en tu HTML
-// <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 // Función para obtener todos los juegos del backend
 async function fetchJuegos() {

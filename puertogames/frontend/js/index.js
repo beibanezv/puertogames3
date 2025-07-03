@@ -1,4 +1,3 @@
-// index.js
 // Renderiza cards de juegos y muestra detalles usando la API de RAWG
 // Incluye funciones para mostrar detalles en un modal y renderizar la lista de juegos
 

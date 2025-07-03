@@ -1,4 +1,3 @@
-// login.js
 // Lógica de manejo de login de usuario en el frontend
 // Envía los datos al backend y muestra mensajes de error o éxito
 
