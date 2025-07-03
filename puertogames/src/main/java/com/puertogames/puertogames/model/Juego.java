@@ -30,6 +30,10 @@ public class Juego {
 
     private String desarrollador;
 
+    private Double precio;
+    private Integer stock;
+    private String idioma;
+
     // Getters y setters
 
     public Long getId() {
@@ -102,5 +106,29 @@ public class Juego {
 
     public void setDesarrollador(String desarrollador) {
         this.desarrollador = desarrollador;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
     }
 }

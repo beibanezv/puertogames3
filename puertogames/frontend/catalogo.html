@@ -25,6 +25,7 @@
             <a href="dashboard.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-cogs mr-1"></i>Dashboard</a>
             <a href="api.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-gamepad mr-1"></i>API</a>
             <a href="login.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
+            <a href="admin.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-cogs mr-1"></i>Admin</a>
         </div>
     </nav>
 
@@ -51,17 +52,18 @@
     const modalDetalle = document.getElementById('modalDetalle');
     const cerrarModal = document.getElementById('cerrarModal');
     const detalleJuego = document.getElementById('detalleJuego');
+    const API_BASE_URL = "http://localhost:8080/api/juegos";
     let juegos = [];
     let juegosFiltrados = [];
 
     // Cargar juegos desde la base de datos
     async function cargarJuegos() {
         try {
-            const res = await fetch('/api/juegos');
+            const res = await fetch(API_BASE_URL);
             if (!res.ok) throw new Error('No se pudo cargar el catálogo');
             juegos = await res.json();
             juegosFiltrados = juegos;
-            renderCatalogo();
+            renderCatalogo(juegos);
             Toastify({
                 text: `Catálogo cargado (${juegos.length} juegos)`,
                 duration: 2500,
@@ -77,18 +79,21 @@
     }
 
     // Renderizar catálogo
-    function renderCatalogo() {
-        if (juegosFiltrados.length === 0) {
-            catalogoContainer.innerHTML = `<div class='col-span-full text-center text-gray-400 font-bold'>No hay juegos en el catálogo.</div>`;
+    function renderCatalogo(juegos) {
+        if (!juegos.length) {
+            catalogoContainer.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold">No hay juegos en el catálogo.</div>';
             return;
         }
-        catalogoContainer.innerHTML = juegosFiltrados.map(juego => `
-            <div class="bg-gray-800 rounded-xl shadow-lg border border-orange-600 flex flex-col">
-                <img src="${juego.imagen || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.titulo}" class="rounded-t-xl h-48 w-full object-cover">
+        catalogoContainer.innerHTML = juegos.map(juego => `
+            <div class="game-card bg-gray-800 rounded-xl shadow-lg border border-orange-600 flex flex-col">
+                <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-t-xl h-48 w-full object-cover">
                 <div class="p-4 flex-1 flex flex-col">
-                    <h3 class="text-lg font-bold text-white mb-2">${juego.titulo}</h3>
+                    <h2 class="text-lg font-bold text-white mb-2">${juego.nombre}</h2>
                     <p class="text-sm text-gray-300 mb-2 line-clamp-2">${juego.descripcion || 'Sin descripción.'}</p>
-                    <button onclick="mostrarDetalle(${juego.id})" class="mt-auto bg-orange-600 hover:bg-orange-700 text-white font-semibold py-1 px-3 rounded transition">Ver Detalles</button>
+                    <p class="text-xs text-gray-400">${juego.genero ? 'Género: ' + juego.genero : ''}</p>
+                    <p class="text-xs text-gray-400">${juego.plataforma ? 'Plataforma: ' + juego.plataforma : ''}</p>
+                    <p class="text-xs text-gray-400">${juego.calificacion ? 'Rating: ' + juego.calificacion : ''}</p>
+                    <p class="text-xs text-gray-400">${juego.precio ? 'Precio: $' + juego.precio : ''}</p>
                 </div>
             </div>
         `).join('');
@@ -97,8 +102,8 @@
     // Buscar juegos
     searchInput.addEventListener('input', function() {
         const q = this.value.trim().toLowerCase();
-        juegosFiltrados = juegos.filter(j => j.titulo.toLowerCase().includes(q));
-        renderCatalogo();
+        juegosFiltrados = juegos.filter(j => j.nombre.toLowerCase().includes(q));
+        renderCatalogo(juegosFiltrados);
     });
 
     // Mostrar detalles
@@ -106,8 +111,8 @@
         const juego = juegos.find(j => j.id === id);
         if (!juego) return;
         detalleJuego.innerHTML = `
-            <img src="${juego.imagen || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.titulo}" class="rounded-xl mb-4 w-full h-56 object-cover">
-            <h2 class="text-2xl font-bold text-white mb-2">${juego.titulo}</h2>
+            <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-xl mb-4 w-full h-56 object-cover">
+            <h2 class="text-2xl font-bold text-white mb-2">${juego.nombre}</h2>
             <p class="text-gray-300 mb-2"><b>Fecha de lanzamiento:</b> ${juego.fechaLanzamiento || 'Desconocida'}</p>
             <p class="text-gray-300 mb-4">${juego.descripcion || 'Sin descripción.'}</p>
         `;

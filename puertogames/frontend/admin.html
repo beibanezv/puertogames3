@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Puerto Games</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gradient-to-br from-black to-gray-900 min-h-screen flex flex-col">
+    <!-- NAV -->
+    <nav class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
+        <div class="flex items-center">
+            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3">
+                <span class="text-orange-500 font-bold text-xl">PG</span>
+            </div>
+            <span class="text-xl font-bold text-white">PUERTO GAMES</span>
+        </div>
+        <div class="flex gap-4 mt-2 sm:mt-0">
+            <a href="index.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-database mr-1"></i>Base de Datos</a>
+            <a href="catalogo.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-book mr-1"></i>Catálogo</a>
+            <a href="admin.html" class="text-white underline font-semibold"><i class="fas fa-cogs mr-1"></i>Admin</a>
+            <a href="login.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
+            <a href="dashboard.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-cogs mr-1"></i>Dashboard</a>
+            <a href="api.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-gamepad mr-1"></i>API</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 flex flex-col gap-8 flex-1">
+        <h1 class="text-3xl font-bold text-orange-500 mb-4 text-center">Panel de Administración de Juegos</h1>
+        <div class="flex justify-end mb-4">
+            <button id="btnAgregar" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded shadow flex items-center gap-2"><i class="fas fa-plus"></i>Agregar Juego</button>
+        </div>
+        <div id="adminCatalogo" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
+    </div>
+
+    <!-- Modal Formulario -->
+    <div id="modalForm" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-900 rounded-xl shadow-2xl max-w-lg w-full p-8 relative border border-orange-600">
+            <button id="cerrarModalForm" class="absolute top-4 right-4 text-orange-400 hover:text-orange-600 text-2xl"><i class="fas fa-times"></i></button>
+            <h2 class="text-xl font-bold text-white mb-4" id="formTitle">Agregar Juego</h2>
+            <form id="juegoForm" class="space-y-4">
+                <div>
+                    <label class="block text-white mb-1">Título</label>
+                    <input type="text" id="tituloInput" name="titulo" required class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" autocomplete="off">
+                    <div id="rawgDropdown" class="absolute z-50 w-full bg-white rounded shadow-lg mt-1 hidden"></div>
+                </div>
+                <div>
+                    <label class="block text-white mb-1">Descripción</label>
+                    <textarea id="descripcionInput" name="descripcion" rows="2" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500"></textarea>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white mb-1">Fecha de Lanzamiento</label>
+                        <input type="date" id="fechaInput" name="fechaLanzamiento" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-1">Idioma</label>
+                        <input type="text" id="idiomaInput" name="idioma" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" placeholder="Ej: Español, Inglés">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white mb-1">Género</label>
+                        <input type="text" id="generoInput" name="genero" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" placeholder="Ej: Acción, Aventura">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-1">Plataforma</label>
+                        <input type="text" id="plataformaInput" name="plataforma" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" placeholder="Ej: PC, PlayStation, Xbox">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-white mb-1">Desarrollador</label>
+                    <input type="text" id="desarrolladorInput" name="desarrollador" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" placeholder="Ej: Nintendo, Ubisoft">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white mb-1">Precio</label>
+                        <input type="number" id="precioInput" name="precio" min="0" step="0.01" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" placeholder="Ej: 59.99">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-1">Stock</label>
+                        <input type="number" id="stockInput" name="stock" min="0" step="1" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" placeholder="Ej: 100">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-white mb-1">Imagen (autocompletar RAWG)</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="imagenInput" name="imagen" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" placeholder="URL de imagen">
+                        <button type="button" id="btnAutoRAWG" class="bg-blue-600 hover:bg-blue-700 text-white px-3 rounded"><i class="fas fa-magic"></i></button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-white mb-1">Rating (autocompletar RAWG)</label>
+                    <input type="text" id="ratingInput" name="rating" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" placeholder="Ej: 8.5">
+                </div>
+                <div class="flex justify-end gap-2 mt-6">
+                    <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    // --- ADMIN JS ---
+    const adminCatalogo = document.getElementById('adminCatalogo');
+    const btnAgregar = document.getElementById('btnAgregar');
+    const modalForm = document.getElementById('modalForm');
+    const cerrarModalForm = document.getElementById('cerrarModalForm');
+    const juegoForm = document.getElementById('juegoForm');
+    const formTitle = document.getElementById('formTitle');
+    const tituloInput = document.getElementById('tituloInput');
+    const descripcionInput = document.getElementById('descripcionInput');
+    const fechaInput = document.getElementById('fechaInput');
+    const imagenInput = document.getElementById('imagenInput');
+    const ratingInput = document.getElementById('ratingInput');
+    const btnAutoRAWG = document.getElementById('btnAutoRAWG');
+    const idiomaInput = document.getElementById('idiomaInput');
+    const generoInput = document.getElementById('generoInput');
+    const plataformaInput = document.getElementById('plataformaInput');
+    const desarrolladorInput = document.getElementById('desarrolladorInput');
+    const precioInput = document.getElementById('precioInput');
+    const stockInput = document.getElementById('stockInput');
+    const rawgDropdown = document.getElementById('rawgDropdown');
+
+    const API_BASE_URL = "http://localhost:8080/api/juegos";
+
+    let juegos = [];
+    let editId = null;
+
+    // Cargar juegos desde backend
+    async function cargarJuegos() {
+        try {
+            const res = await fetch(API_BASE_URL);
+            if (!res.ok) throw new Error('No se pudo cargar el catálogo');
+            juegos = await res.json();
+            renderAdminCatalogo();
+        } catch (e) {
+            adminCatalogo.innerHTML = '<div class="col-span-full text-center text-red-400 font-bold">Error al cargar el catálogo.</div>';
+        }
+    }
+
+    function renderAdminCatalogo() {
+        if (!juegos.length) {
+            adminCatalogo.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold">No hay juegos en el catálogo.</div>';
+            return;
+        }
+        adminCatalogo.innerHTML = juegos.map(juego => `
+            <div class="bg-gray-800 rounded-xl shadow-lg border border-orange-600 flex flex-col">
+                <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-t-xl h-48 w-full object-cover">
+                <div class="p-4 flex-1 flex flex-col">
+                    <h3 class="text-lg font-bold text-white mb-2">${juego.nombre}</h3>
+                    <p class="text-sm text-gray-300 mb-2 line-clamp-2">${juego.descripcion || 'Sin descripción.'}</p>
+                    <div class="flex gap-2 mt-auto">
+                        <button onclick="editarJuego(${juego.id})" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition"><i class="fas fa-edit"></i> Editar</button>
+                        <button onclick="eliminarJuego(${juego.id})" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded transition"><i class="fas fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Mostrar modal para agregar
+    btnAgregar.onclick = () => {
+        formTitle.textContent = 'Agregar Juego';
+        juegoForm.reset();
+        editId = null;
+        modalForm.classList.remove('hidden');
+    };
+    cerrarModalForm.onclick = () => modalForm.classList.add('hidden');
+    modalForm.onclick = e => { if (e.target === modalForm) modalForm.classList.add('hidden'); };
+
+    // --- Dropdown RAWG ---
+    tituloInput.addEventListener('input', async function() {
+        const q = this.value.trim();
+        if (q.length < 2) {
+            rawgDropdown.classList.add('hidden');
+            return;
+        }
+        try {
+            const url = `https://api.rawg.io/api/games?key=a7104160559046f59814743992c5f5b9&search=${encodeURIComponent(q)}`;
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data.results && data.results.length) {
+                rawgDropdown.innerHTML = data.results.slice(0,6).map(game => `
+                    <div class='px-4 py-2 hover:bg-orange-100 cursor-pointer flex gap-2 items-center' data-img='${game.background_image||""}' data-rating='${game.rating||""}' data-genero='${(game.genres||[]).map(g=>g.name).join(", ")}' data-fecha='${game.released||""}' data-plataforma='${(game.platforms||[]).map(p=>p.platform.name).join(", ")}' data-desarrollador='${(game.developers||[]).map(d=>d.name).join(", ")}' data-titulo='${game.name}'>
+                        <img src='${game.background_image||"https://via.placeholder.com/40x40?text=No+Img"}' class='w-10 h-10 object-cover rounded mr-2'>
+                        <span class='font-semibold text-gray-800'>${game.name}</span>
+                        <span class='text-xs text-gray-500 ml-auto'>${game.released||""}</span>
+                    </div>
+                `).join("");
+                rawgDropdown.classList.remove('hidden');
+            } else {
+                rawgDropdown.classList.add('hidden');
+            }
+        } catch {
+            rawgDropdown.classList.add('hidden');
+        }
+    });
+    rawgDropdown.addEventListener('click', function(e) {
+        const item = e.target.closest('div[data-titulo]');
+        if (!item) return;
+        tituloInput.value = item.dataset.titulo;
+        if (item.dataset.img) imagenInput.value = item.dataset.img;
+        if (item.dataset.rating) ratingInput.value = item.dataset.rating;
+        if (item.dataset.genero) generoInput.value = item.dataset.genero;
+        if (item.dataset.fecha) fechaInput.value = item.dataset.fecha;
+        if (item.dataset.plataforma) plataformaInput.value = item.dataset.plataforma;
+        if (item.dataset.desarrollador) desarrolladorInput.value = item.dataset.desarrollador;
+        rawgDropdown.classList.add('hidden');
+    });
+    document.addEventListener('click', function(e) {
+        if (!rawgDropdown.contains(e.target) && e.target !== tituloInput) {
+            rawgDropdown.classList.add('hidden');
+        }
+    });
+
+    // Cargar catálogo al iniciar
+    cargarJuegos();
+
+    // Guardar juego (agregar o editar)
+    juegoForm.onsubmit = async function(e) {
+        e.preventDefault();
+        const juego = {
+            nombre: tituloInput.value.trim(),
+            descripcion: descripcionInput.value.trim(),
+            fechaLanzamiento: fechaInput.value,
+            imagenUrl: imagenInput.value.trim(),
+            calificacion: ratingInput.value.trim(),
+            genero: generoInput.value.trim(),
+            plataforma: plataformaInput.value.trim(),
+            desarrollador: desarrolladorInput.value.trim(),
+            precio: parseFloat(precioInput.value),
+            stock: parseInt(stockInput.value),
+            idioma: idiomaInput.value.trim()
+        };
+        try {
+            let res;
+            if (editId) {
+                res = await fetch(`${API_BASE_URL}/${editId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(juego)
+                });
+            } else {
+                res = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(juego)
+                });
+            }
+            if (!res.ok) throw new Error('Error al guardar');
+            Toastify({ text: 'Juego guardado', duration: 2000, backgroundColor: '#22c55e', close: true }).showToast();
+            modalForm.classList.add('hidden');
+            cargarJuegos();
+        } catch (e) {
+            Swal.fire({ icon: 'error', text: 'Error al guardar el juego.' });
+        }
+    };
+
+    // Editar juego
+    window.editarJuego = function(id) {
+        const juego = juegos.find(j => j.id === id);
+        if (!juego) return;
+        formTitle.textContent = 'Editar Juego';
+        tituloInput.value = juego.nombre;
+        descripcionInput.value = juego.descripcion || '';
+        fechaInput.value = juego.fechaLanzamiento ? juego.fechaLanzamiento.substring(0,10) : '';
+        imagenInput.value = juego.imagenUrl || '';
+        ratingInput.value = juego.calificacion || '';
+        generoInput.value = juego.genero || '';
+        plataformaInput.value = juego.plataforma || '';
+        desarrolladorInput.value = juego.desarrollador || '';
+        precioInput.value = juego.precio || '';
+        stockInput.value = juego.stock || '';
+        idiomaInput.value = juego.idioma || '';
+        editId = id;
+        modalForm.classList.remove('hidden');
+    };
+
+    // Eliminar juego
+    window.eliminarJuego = async function(id) {
+        if (!confirm('¿Seguro que deseas eliminar este juego?')) return;
+        try {
+            const res = await fetch(`${API_BASE_URL}/${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error('Error al eliminar');
+            Toastify({ text: 'Juego eliminado', duration: 2000, backgroundColor: '#ef4444', close: true }).showToast();
+            cargarJuegos();
+        } catch (e) {
+            Swal.fire({ icon: 'error', text: 'Error al eliminar el juego.' });
+        }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <footer class="bg-gray-900 text-gray-400 text-center py-4 mt-auto border-t border-orange-600">
+        © 2025 Puerto Games. Todos los derechos reservados.
+    </footer>
+</body>
+</html>

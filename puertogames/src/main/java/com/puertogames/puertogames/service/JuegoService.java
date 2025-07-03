@@ -33,6 +33,9 @@ public class JuegoService {
                 j.setImagenUrl(juego.getImagenUrl());
                 j.setFechaLanzamiento(juego.getFechaLanzamiento());
                 j.setDesarrollador(juego.getDesarrollador());
+                j.setPrecio(juego.getPrecio());
+                j.setStock(juego.getStock());
+                j.setIdioma(juego.getIdioma());
                 return repo.save(j);
             })
             .orElseThrow(() -> new RuntimeException("Juego no encontrado"));
