@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo | Puerto Games</title>
+    <title>Dashboard | Puerto Games</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
-<body class="bg-gradient-to-br from-black to-gray-900 min-h-screen flex flex-col">
-    <nav class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
+<body class="bg-gradient-to-br from-black via-gray-900 to-gray-800 min-h-screen flex flex-col">
+    <nav class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8 sticky top-0 z-40 bg-opacity-95 backdrop-blur">
         <div class="flex items-center">
-            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3">
+            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3 shadow-lg">
                 <span class="text-orange-500 font-bold text-xl">PG</span>
             </div>
-            <span class="text-xl font-bold text-white">PUERTO GAMES</span>
+            <span class="text-xl font-extrabold text-white tracking-wide drop-shadow">PUERTO GAMES</span>
         </div>
         <div class="flex gap-4 mt-2 sm:mt-0">
-            <a href="index.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-database mr-1"></i>Base de Datos</a>
-            <a href="catalogo.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-book mr-1"></i>Catálogo</a>
-            <a href="dashboard.html" class="text-white underline font-semibold"><i class="fas fa-cogs mr-1"></i>Dashboard</a>
-            <a href="api.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-gamepad mr-1"></i>API</a>
-            <a href="login.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
-            <a href="admin.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-cogs mr-1"></i>Admin</a>
+            <a href="index.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-database mr-1"></i>Base de Datos</a>
+            <a href="catalogo.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-book mr-1"></i>Catálogo</a>
+            <a href="dashboard.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-cogs mr-1"></i>Dashboard</a>
+            <a href="api.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-gamepad mr-1"></i>Trivia</a>
+            <a href="login.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-user mr-1"></i>Login</a>
+            <a href="admin.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-cogs mr-1"></i>Admin</a>
         </div>
     </nav>
 
@@ -34,34 +34,6 @@
             <h1 class="text-3xl md:text-4xl font-extrabold text-orange-500">
                 <i class="fas fa-chart-bar mr-3"></i>Estadísticas PuertoGames
             </h1>
-            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                <div class="relative">
-                    <select id="filterGenre" class="appearance-none pl-3 pr-8 py-2 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-800 text-white">
-                        <option value="">Todos los géneros</option>
-                        <option value="Aventura">Aventura</option>
-                        <option value="Acción">Acción</option>
-                        <option value="RPG">RPG</option>
-                        <option value="Shooter">Shooter</option>
-                        <option value="Estrategia">Estrategia</option>
-                    </select>
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                        <i class="fas fa-chevron-down text-gray-400"></i>
-                    </div>
-                </div>
-                <div class="relative">
-                    <select id="filterPlatform" class="appearance-none pl-3 pr-8 py-2 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-800 text-white">
-                        <option value="">Todas las plataformas</option>
-                        <option value="PC">PC</option>
-                        <option value="PlayStation">PlayStation</option>
-                        <option value="Xbox">Xbox</option>
-                        <option value="Nintendo">Nintendo</option>
-                        <option value="Mobile">Mobile</option>
-                    </select>
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                        <i class="fas fa-chevron-down text-gray-400"></i>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
@@ -91,55 +63,89 @@
     </footer>
 
     <script>
-        const games = [
-            { title: "Zelda", genre: "Aventura", platform: "Nintendo", rating: 9.5 },
-            { title: "Elden Ring", genre: "RPG", platform: "PC", rating: 9.7 },
-            { title: "Warzone", genre: "Shooter", platform: "Xbox", rating: 8.5 },
-            { title: "Starcraft", genre: "Estrategia", platform: "PC", rating: 9.0 },
-            { title: "God of War", genre: "Acción", platform: "PlayStation", rating: 9.8 },
-            { title: "Hades", genre: "RPG", platform: "PC", rating: 9.4 },
-            { title: "Valorant", genre: "Shooter", platform: "PC", rating: 8.7 },
-            { title: "Civ VI", genre: "Estrategia", platform: "Mobile", rating: 9.2 }
-        ];
-
-        // Utilidades para procesar datos
+        // --- DASHBOARD CON DATOS REALES DEL CATÁLOGO ---
+        const API_BASE_URL = "http://localhost:8080/api/juegos";
+        let games = [];
         const genres = ['Aventura', 'Acción', 'RPG', 'Shooter', 'Estrategia'];
-        const platforms = ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile'];
+        const platforms = ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Android'];
+
+        async function cargarJuegos() {
+            try {
+                const res = await fetch(API_BASE_URL);
+                if (!res.ok) throw new Error('No se pudo cargar el catálogo');
+                games = await res.json();
+                renderGamesGrid(games);
+                initCharts();
+            } catch (e) {
+                document.getElementById('gamesGrid').innerHTML = '<div class="col-span-full text-center text-red-400 font-bold">Error al cargar el catálogo.</div>';
+            }
+        }
 
         function countBy(arr, key, values) {
-            return values.map(v => arr.filter(g => g[key] === v).length);
+            return values.map(v => arr.filter(g => (g[key]||'').toLowerCase().includes(v.toLowerCase())).length);
         }
 
         function avgRatingByPlatform(arr, platforms) {
             return platforms.map(p => {
-                const filtered = arr.filter(g => g.platform === p);
+                const filtered = arr.filter(g => (g.plataforma||'').toLowerCase().includes(p.toLowerCase()));
                 if (filtered.length === 0) return 0;
-                return (filtered.reduce((sum, g) => sum + g.rating, 0) / filtered.length).toFixed(1);
+                return (filtered.reduce((sum, g) => sum + (parseFloat(g.calificacion)||0), 0) / filtered.length).toFixed(1);
             });
         }
 
         function getRatings(arr) {
-            return arr.map(g => g.rating);
+            return arr.map(g => parseFloat(g.calificacion)||0);
         }
-
         function getTitles(arr) {
-            return arr.map(g => g.title);
+            return arr.map(g => g.nombre);
         }
 
-        function initCharts() {
+        function renderGamesGrid(juegos) {
+            const grid = document.getElementById('gamesGrid');
+            if (!juegos.length) {
+                grid.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold">No hay juegos en el catálogo.</div>';
+                return;
+            }
+            grid.innerHTML = juegos.map(juego => `
+                <div class="game-card bg-gray-900 rounded-2xl shadow border border-orange-500 flex flex-col p-0">
+                    <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-t-2xl h-40 w-full object-cover mb-0">
+                    <div class="flex-1 flex flex-col justify-between px-4 py-3">
+                        <h2 class="text-base font-semibold text-white mb-1 truncate text-center">${juego.nombre}</h2>
+                        <div class="flex justify-between items-center mb-2 gap-2">
+                            <span class="text-xs text-orange-400 font-medium bg-gray-800 px-2 py-0.5 rounded">${juego.genero || ''}</span>
+                            <span class="text-xs text-yellow-400 font-semibold flex items-center ml-2"><i class='fas fa-star mr-1'></i>${juego.calificacion || '-'}</span>
+                        </div>
+                        <div class="mt-auto flex items-end justify-center">
+                            <span class="text-xl font-bold text-green-400 bg-gray-800 px-3 py-0.5 rounded-lg border border-green-500">$${juego.precio ? Math.round(juego.precio) : '--'}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filtrarYActualizar() {
+            const genre = document.getElementById('filterGenre').value;
+            const platform = document.getElementById('filterPlatform').value;
+            let filtrados = games;
+            if (genre) filtrados = filtrados.filter(j => (j.genero||'').toLowerCase().includes(genre.toLowerCase()));
+            if (platform) filtrados = filtrados.filter(j => (j.plataforma||'').toLowerCase().includes(platform.toLowerCase()));
+            renderGamesGrid(filtrados);
+            initCharts(filtrados);
+        }
+
+        function initCharts(arr = games) {
             // Distribución por Género
             new Chart(document.getElementById('genreChart'), {
                 type: 'doughnut',
                 data: {
                     labels: genres,
                     datasets: [{
-                        data: countBy(games, 'genre', genres),
+                        data: countBy(arr, 'genero', genres),
                         backgroundColor: ['#EA580C','#F97316','#FB923C','#FDBA74','#FED7AA']
                     }]
                 },
                 options: { plugins: { legend: { labels: { color: 'white' } } } }
             });
-
             // Rating Promedio por Plataforma
             new Chart(document.getElementById('platformChart'), {
                 type: 'bar',
@@ -147,7 +153,7 @@
                     labels: platforms,
                     datasets: [{
                         label: 'Rating Promedio',
-                        data: avgRatingByPlatform(games, platforms),
+                        data: avgRatingByPlatform(arr, platforms),
                         backgroundColor: '#EA580C'
                     }]
                 },
@@ -159,7 +165,6 @@
                     }
                 }
             });
-
             // Cantidad de Juegos por Plataforma
             new Chart(document.getElementById('countPlatformChart'), {
                 type: 'polarArea',
@@ -167,21 +172,20 @@
                     labels: platforms,
                     datasets: [{
                         label: 'Cantidad de Juegos',
-                        data: countBy(games, 'platform', platforms),
+                        data: countBy(arr, 'plataforma', platforms),
                         backgroundColor: ['#F97316','#FB923C','#FDBA74','#FCD34D','#FDE68A']
                     }]
                 },
                 options: { plugins: { legend: { labels: { color: 'white' } } } }
             });
-
             // Comparación de Ratings
             new Chart(document.getElementById('compareRatingChart'), {
                 type: 'radar',
                 data: {
-                    labels: getTitles(games),
+                    labels: getTitles(arr),
                     datasets: [{
                         label: 'Rating',
-                        data: getRatings(games),
+                        data: getRatings(arr),
                         backgroundColor: 'rgba(234, 88, 12, 0.2)',
                         borderColor: '#EA580C'
                     }]
@@ -193,61 +197,9 @@
             });
         }
 
-        // Toastify helper para notificaciones armónicas
-        function showToastify({text, backgroundColor = '#6366f1', type = 'info', duration = 2500}) {
-            Toastify({
-                text,
-                duration,
-                close: true,
-                gravity: 'top',
-                position: 'right',
-                backgroundColor,
-                stopOnFocus: true,
-                onClick: function() {},
-                className: type === 'error' ? 'toast-error' : (type === 'success' ? 'toast-success' : 'toast-info'),
-                style: { '--toastify-close-color': '#000' }
-            }).showToast();
-        }
-
-        // Notificación Toastify al navegar entre páginas
-        const pageMap = {
-            'index.html': 'Catálogo de Videojuegos',
-            'dashboard.html': 'Dashboard de Juegos',
-            'api.html': 'Trivia de Videojuegos',
-            'login.html': 'Login de Usuario'
-        };
-        const current = location.pathname.split('/').pop();
-        const ref = document.referrer;
-        if (ref && pageMap[current]) {
-            setTimeout(() => {
-                Toastify({
-                    text: `Has navegado a: ${pageMap[current]}`,
-                    duration: 2500,
-                    gravity: 'top',
-                    position: 'right',
-                    backgroundColor: '#6366f1',
-                    stopOnFocus: true,
-                    close: true
-                }).showToast();
-            }, 300);
-        }
-
-        function notifyNav(page) {
-            if (!sessionStorage.getItem('notified-'+page)) {
-                showToastify({ text: 'Navegaste a ' + page, backgroundColor: '#6366f1', type: 'info', duration: 1600 });
-                sessionStorage.setItem('notified-'+page, '1');
-            }
-        }
-        document.querySelectorAll('nav a').forEach(a => {
-            a.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href && !href.startsWith('#')) {
-                    notifyNav(this.textContent.trim());
-                }
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', () => initCharts());
+        // document.getElementById('filterGenre').addEventListener('change', filtrarYActualizar);
+        // document.getElementById('filterPlatform').addEventListener('change', filtrarYActualizar);
+        document.addEventListener('DOMContentLoaded', cargarJuegos);
     </script>
 </body>
 </html>

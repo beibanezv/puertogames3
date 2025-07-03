@@ -18,12 +18,12 @@
             <span class="text-xl font-bold text-white">PUERTO GAMES</span>
         </div>
         <div class="flex gap-4 mt-2 sm:mt-0">
-            <a href="index.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-database mr-1"></i>Base de Datos</a>
-            <a href="catalogo.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-book mr-1"></i>Catálogo</a>
-            <a href="dashboard.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-cogs mr-1"></i>Dashboard</a>
-            <a href="api.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-gamepad mr-1"></i>API</a>
-            <a href="login.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
-            <a href="admin.html" class="text-white underline font-semibold"><i class="fas fa-cogs mr-1"></i>Admin</a>
+            <a href="index.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-database mr-1"></i>Base de Datos</a>
+            <a href="catalogo.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-book mr-1"></i>Catálogo</a>
+            <a href="dashboard.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-cogs mr-1"></i>Dashboard</a>
+            <a href="api.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-gamepad mr-1"></i>Trivia</a>
+            <a href="login.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-user mr-1"></i>Login</a>
+            <a href="admin.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-cogs mr-1"></i>Admin</a>
         </div>
     </nav>
 
@@ -88,7 +88,6 @@
                     <label class="block text-white mb-1">Imagen (autocompletar RAWG)</label>
                     <div class="flex gap-2">
                         <input type="text" id="imagenInput" name="imagen" class="w-full px-3 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:ring-orange-500" placeholder="URL de imagen">
-                        <button type="button" id="btnAutoRAWG" class="bg-blue-600 hover:bg-blue-700 text-white px-3 rounded"><i class="fas fa-magic"></i></button>
                     </div>
                 </div>
                 <div>
@@ -115,7 +114,6 @@
     const fechaInput = document.getElementById('fechaInput');
     const imagenInput = document.getElementById('imagenInput');
     const ratingInput = document.getElementById('ratingInput');
-    const btnAutoRAWG = document.getElementById('btnAutoRAWG');
     const idiomaInput = document.getElementById('idiomaInput');
     const generoInput = document.getElementById('generoInput');
     const plataformaInput = document.getElementById('plataformaInput');
@@ -307,30 +305,6 @@
             cargarJuegos();
         } catch (e) {
             showToastify({ text: 'Error al eliminar el juego.', backgroundColor: '#ef4444', type: 'error' });
-        }
-    };
-
-    // Notificación al autocompletar RAWG
-    btnAutoRAWG.onclick = async () => {
-        const titulo = tituloInput.value.trim();
-        if (!titulo) {
-            showToastify({ text: 'Escribe un título para autocompletar.', backgroundColor: '#6366f1', type: 'info' });
-            return;
-        }
-        try {
-            const url = `https://api.rawg.io/api/games?key=a7104160559046f59814743992c5f5b9&search=${encodeURIComponent(titulo)}`;
-            const res = await fetch(url);
-            const data = await res.json();
-            if (data.results && data.results.length) {
-                const juego = data.results[0];
-                if (juego.background_image) imagenInput.value = juego.background_image;
-                if (juego.rating) ratingInput.value = juego.rating;
-                showToastify({ text: 'Datos autocompletados desde RAWG', backgroundColor: '#6366f1', type: 'success' });
-            } else {
-                showToastify({ text: 'No se encontró información en RAWG.', backgroundColor: '#6366f1', type: 'info' });
-            }
-        } catch (e) {
-            showToastify({ text: 'Error al consultar RAWG.', backgroundColor: '#ef4444', type: 'error' });
         }
     };
     </script>

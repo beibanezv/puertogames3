@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
         .game-card {
@@ -18,67 +20,42 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-black to-gray-900 min-h-screen flex flex-col">
+<body class="bg-gradient-to-br from-black via-gray-900 to-gray-800 min-h-screen flex flex-col">
+    <!-- NAV -->
+    <nav class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8 sticky top-0 z-40 bg-opacity-95 backdrop-blur">
+        <div class="flex items-center">
+            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3 shadow-lg">
+                <span class="text-orange-500 font-bold text-xl">PG</span>
+            </div>
+            <span class="text-xl font-extrabold text-white tracking-wide drop-shadow">PUERTO GAMES</span>
+        </div>
+        <div class="flex gap-4 mt-2 sm:mt-0">
+            <a href="index.html" class="text-white underline font-semibold"><i class="fas fa-database mr-1"></i>Base de Datos</a>
+            <a href="catalogo.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-book mr-1"></i>Catálogo</a>
+            <a href="dashboard.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-cogs mr-1"></i>Dashboard</a>
+            <a href="api.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-gamepad mr-1"></i>Trivia</a>
+            <a href="login.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-user mr-1"></i>Login</a>
+            <a href="admin.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-cogs mr-1"></i>Admin</a>
+        </div>
+    </nav>
 
-  <!-- NAVBAR -->
-  <nav
-    class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8"
-  >
-    <div class="flex items-center">
-      <div
-        class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3"
-      >
-        <span class="text-orange-500 font-bold text-xl">PG</span>
-      </div>
-      <span class="text-xl font-bold text-white">PUERTO GAMES</span>
-    </div>
-    <div class="flex gap-4 mt-2 sm:mt-0">
-      <a
-        href="index.html"
-        class="text-white font-semibold underline hover:text-gray-200"
-        ><i class="fas fa-database mr-1"></i>Base de Datos</a
-      >
-      <a
-        href="catalogo.html"
-        class="text-white hover:text-gray-200 font-semibold"
-        ><i class="fas fa-book mr-1"></i>Catálogo</a
-      >
-      <a
-        href="dashboard.html"
-        class="text-white hover:text-gray-200 font-semibold"
-        ><i class="fas fa-cogs mr-1"></i>Dashboard</a
-      >
-      <a
-        href="api.html"
-        class="text-white hover:text-gray-200 font-semibold"
-        ><i class="fas fa-gamepad mr-1"></i>API</a
-      >
-      <a
-        href="login.html"
-        class="text-white hover:text-gray-200 font-semibold"
-        ><i class="fas fa-user mr-1"></i>Login</a
-      >
-      <a href="admin.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-cogs mr-1"></i>Admin</a>
-    </div>
-  </nav>
-
-    <div class="container mx-auto py-8 px-4">
-        <h1 class="text-4xl font-extrabold mb-10 text-center text-purple-800 drop-shadow">Base de Datos de Videojuegos</h1>
-        
+    <div class="container mx-auto py-8 px-4 flex-1 w-full">
+        <h1 class="text-4xl font-extrabold mb-10 text-center text-orange-400 drop-shadow">Base de Datos de Videojuegos</h1>
         <!-- Filtros de búsqueda -->
         <div class="flex flex-col md:flex-row justify-center mb-8 gap-4">
-            <input id="searchInput" type="text" placeholder="Buscar por nombre en la base de datos..." class="w-full md:w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400" />
+            <input id="searchInput" type="text" placeholder="Buscar por nombre en la base de datos..." class="w-full max-w-xl px-5 py-3 rounded-xl border-2 border-orange-500 bg-gray-900 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 shadow-lg placeholder-gray-400 transition" />
         </div>
-        
         <!-- Sección de Juegos -->
-        <div id="gamesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Los juegos de la base de datos se cargarán aquí dinámicamente -->
+        <div id="gamesContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-2 pb-16"></div>
+    </div>
+
+    <!-- MODAL DETALLE -->
+    <div id="modalDetalle" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+        <div id="modalContent" class="bg-gray-900 rounded-2xl shadow-2xl max-w-lg w-full p-0 relative border border-orange-600 overflow-hidden scale-90 opacity-0 max-h-[90vh] flex flex-col">
+            <div id="detalleJuego" class="overflow-y-auto max-h-[80vh] w-full"></div>
         </div>
     </div>
-  </main>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // --- Solo juegos de la API RAWG ---
         let juegosRAWG = [];
@@ -107,119 +84,137 @@
                 return;
             }
             gamesContainer.innerHTML = games.map(game => `
-                <div class="game-card bg-gray-800 rounded-xl shadow-lg border border-orange-600 flex flex-col cursor-pointer hover:ring-2 hover:ring-orange-500 transition" data-slug="${game.slug}">
-                    <img src="${game.background_image || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${game.name}" class="rounded-t-xl h-48 w-full object-cover">
-                    <div class="p-4 flex-1 flex flex-col">
-                        <h2 class="text-lg font-bold text-white mb-2">${game.name}</h2>
-                        <p class="text-sm text-gray-300 mb-2 line-clamp-2">${game.released ? 'Lanzamiento: ' + game.released : ''}</p>
+                <div class="game-card bg-gray-900 rounded-2xl shadow border border-orange-500 flex flex-col cursor-pointer hover:ring-2 hover:ring-orange-400 transition group p-0" data-slug="${game.slug}" data-id="${game.id}">
+                    <img src="${game.background_image || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${game.name}" class="rounded-t-2xl h-40 w-full object-cover group-hover:opacity-90 transition mb-0">
+                    <div class="flex-1 flex flex-col justify-between px-4 py-3">
+                        <h2 class="text-base font-semibold text-white mb-1 truncate text-center">${game.name}</h2>
+                        <div class="flex justify-between items-center mb-2 gap-2">
+                            <span class="text-xs text-orange-400 font-medium bg-gray-800 px-2 py-0.5 rounded">${game.genres && game.genres[0] ? game.genres[0].name : ''}</span>
+                            <span class="text-xs text-yellow-400 font-semibold flex items-center ml-2"><i class='fas fa-star mr-1'></i>${game.rating || '-'}</span>
+                        </div>
+                        <div class="mt-auto flex items-end justify-center">
+                            <span class="text-sm font-bold text-green-400 bg-gray-800 px-3 py-0.5 rounded-lg border border-green-500">${game.released ? game.released : '--'}</span>
+                        </div>
                     </div>
                 </div>
             `).join('');
-            // Animación avanzada al clickear una card
+            // Animación avanzada al clickear una card y mostrar modal
             document.querySelectorAll('.game-card').forEach(card => {
                 card.onclick = function() {
-                    // Glow animado
-                    let glow = document.createElement('div');
-                    glow.style.position = 'absolute';
-                    glow.style.inset = 0;
-                    glow.style.borderRadius = '1rem';
-                    glow.style.boxShadow = '0 0 0 0px orange, 0 0 80px 10px #ff8800aa';
-                    glow.style.opacity = '0.7';
-                    glow.style.pointerEvents = 'none';
-                    glow.className = 'card-glow';
-                    card.style.position = 'relative';
-                    card.appendChild(glow);
-                    anime.timeline()
-                        .add({
-                            targets: card,
-                            scale: [1, 1.08, 1],
-                            rotate: [-6, 2, 0],
-                            filter: ['blur(0px)', 'blur(2px)', 'blur(0px)'],
-                            duration: 600,
-                            easing: 'easeOutElastic(1, .7)',
-                            update: anim => {
-                                let prog = anim.progress / 100;
-                                glow.style.boxShadow = `0 0 0 ${30*prog}px orange, 0 0 ${80+40*prog}px ${10+10*prog}px #ff8800aa`;
-                            }
-                        })
-                        .add({
-                            targets: glow,
-                            opacity: [0.7, 0.1],
-                            duration: 400,
-                            easing: 'linear',
-                            complete: () => { if (glow && glow.parentNode) glow.parentNode.removeChild(glow); }
-                        }, '-=300')
-                        .finished.then(() => {
-                            const slug = card.getAttribute('data-slug');
-                            showGameDetailsRAWG(slug);
-                        });
+                    anime({
+                        targets: card,
+                        scale: [1, 1.07, 1],
+                        duration: 350,
+                        easing: 'easeInOutQuad',
+                        complete: () => {
+                            const id = card.getAttribute('data-id');
+                            mostrarDetalleRAWG(id);
+                        }
+                    });
                 };
             });
         }
 
-        // Mostrar detalles usando API RAWG (por slug)
-        async function showGameDetailsRAWG(slug) {
+        // Modal de detalles RAWG
+        async function mostrarDetalleRAWG(id) {
             try {
-                const url = `https://api.rawg.io/api/games/${slug}?key=a7104160559046f59814743992c5f5b9`;
-                const res = await fetch(url);
-                if (!res.ok) throw new Error('No se pudo obtener información del juego');
+                const res = await fetch(`https://api.rawg.io/api/games/${id}?key=a7104160559046f59814743992c5f5b9`);
+                if (!res.ok) throw new Error('No se pudo cargar el detalle');
                 const juego = await res.json();
-                Swal.fire({
-                    title: `<span class='text-2xl font-bold text-gray-800'>${juego.name}</span>`,
-                    html: `
-                        <div class='text-left'>
-                            <img src='${juego.background_image || ''}' alt='${juego.name}' class='w-full rounded-lg shadow-md border border-gray-200 mb-4'>
-                            <p class='text-gray-700 mb-2'><b>Fecha de lanzamiento:</b> ${juego.released || 'Desconocida'}</p>
-                            <p class='text-gray-700 mb-2'><b>Géneros:</b> ${(juego.genres || []).map(g => g.name).join(', ') || 'N/A'}</p>
-                            <p class='text-gray-700 mb-2'><b>Plataformas:</b> ${(juego.platforms || []).map(p => p.platform.name).join(', ') || 'N/A'}</p>
-                            <p class='text-gray-700 mb-2'><b>Rating:</b> ${juego.rating || 'N/A'}</p>
-                            <p class='text-gray-700 mt-4'>${juego.description_raw || 'Sin descripción detallada.'}</p>
+                const detalleJuego = document.getElementById('detalleJuego');
+                detalleJuego.innerHTML = `
+                    <div id="modalGlow" class="absolute inset-0 pointer-events-none z-0"></div>
+                    <div id="modalInner" class="flex flex-col items-center gap-2 relative z-10 pb-6 px-6">
+                        <img src="${juego.background_image || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.name}" class="rounded-xl mb-3 w-full h-56 object-cover shadow-lg border-2 border-gray-800 modal-img" style="filter: blur(8px); opacity:0;">
+                        <h2 class="text-2xl font-bold text-white mb-1 text-center modal-title" style="opacity:0; transform: translateY(30px);">${juego.name}</h2>
+                        <div class="flex flex-wrap justify-center gap-2 mb-2 modal-tags w-full" style="opacity:0; transform: translateY(30px);">
+                            <span class="text-xs text-orange-400 font-medium bg-gray-800 px-2 py-0.5 rounded">${juego.genres && juego.genres[0] ? juego.genres[0].name : '-'}</span>
+                            <span class="text-xs text-yellow-400 font-semibold flex items-center"><i class='fas fa-star mr-1'></i>${juego.rating || '-'}</span>
+                            <span class="text-xs text-green-400 font-semibold bg-gray-800 px-2 py-0.5 rounded border border-green-500">${juego.released ? juego.released : '--'}</span>
                         </div>
-                    `,
-                    width: '700px',
-                    showConfirmButton: false,
-                    showCloseButton: true,
-                    background: 'white',
-                    backdrop: 'rgba(0,0,0,0.5)',
-                    customClass: {
-                        closeButton: 'text-gray-400 hover:text-gray-600 text-2xl',
-                        popup: 'rounded-xl shadow-2xl'
-                    }
-                });
-            } catch (err) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'No se pudo obtener información detallada del juego.'
-                });
+                        <p class="text-gray-400 text-sm mb-1 modal-fecha w-full text-center break-words" style="opacity:0; transform: translateY(30px);"><b>Plataformas:</b> ${(juego.platforms && juego.platforms.length) ? juego.platforms.map(p=>p.platform.name).join(', ') : '-'}</p>
+                        <p class="text-gray-300 text-sm mb-2 text-center modal-desc w-full break-words" style="opacity:0; transform: translateY(30px);">${juego.description_raw || 'Sin descripción.'}</p>
+                        <a href="${juego.website || '#'}" target="_blank" class="mt-4 px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-yellow-400 text-white font-semibold shadow-lg hover:scale-105 hover:from-orange-600 hover:to-yellow-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">Sitio Oficial</a>
+                    </div>
+                `;
+                const modalDetalle = document.getElementById('modalDetalle');
+                modalDetalle.classList.remove('hidden');
+                const modalContent = document.getElementById('modalContent');
+                const modalGlow = document.getElementById('modalGlow');
+                // Estado inicial
+                modalContent.style.opacity = 0;
+                modalContent.style.transform = 'scale(0.7) rotate(-8deg)';
+                modalContent.style.filter = 'blur(8px)';
+                modalGlow.innerHTML = '';
+                let glow = document.createElement('div');
+                glow.style.position = 'absolute';
+                glow.style.inset = 0;
+                glow.style.borderRadius = '1.5rem';
+                glow.style.boxShadow = '0 0 0 0px orange, 0 0 80px 10px #ff8800aa';
+                glow.style.opacity = '0.7';
+                glow.style.transition = 'box-shadow 0.3s';
+                modalGlow.appendChild(glow);
+                anime.timeline()
+                    .add({
+                        targets: modalContent,
+                        opacity: [0, 1],
+                        scale: [0.7, 1.08, 1],
+                        rotate: [-8, 2, 0],
+                        filter: ['blur(8px)', 'blur(0px)'],
+                        duration: 700,
+                        easing: 'easeOutElastic(1, .7)',
+                        update: anim => {
+                            let prog = anim.progress / 100;
+                            glow.style.boxShadow = `0 0 0 ${30*prog}px orange, 0 0 ${80+40*prog}px ${10+10*prog}px #ff8800aa`;
+                        }
+                    })
+                    .add({
+                        targets: glow,
+                        opacity: [0.7, 0.1],
+                        duration: 600,
+                        easing: 'linear',
+                        complete: () => { glow.style.display = 'none'; }
+                    }, '-=300')
+                    .add({
+                        targets: '.modal-img',
+                        filter: ['blur(8px)', 'blur(0px)'],
+                        opacity: [0, 1],
+                        duration: 400,
+                        easing: 'easeOutCubic'
+                    }, '-=400')
+                    .add({
+                        targets: ['.modal-title', '.modal-tags'],
+                        opacity: [0, 1],
+                        translateY: [30, 0],
+                        duration: 350,
+                        delay: anime.stagger(80),
+                        easing: 'easeOutCubic'
+                    }, '-=200')
+                    .add({
+                        targets: ['.modal-fecha', '.modal-desc'],
+                        opacity: [0, 1],
+                        translateY: [30, 0],
+                        duration: 350,
+                        delay: anime.stagger(80),
+                        easing: 'easeOutCubic'
+                    }, '-=200');
+            } catch (e) {
+                showToastify({ text: 'No se pudo cargar el detalle', backgroundColor: '#ef4444', type: 'error' });
             }
         }
+        document.getElementById('modalDetalle').addEventListener('click', e => { if (e.target === document.getElementById('modalDetalle')) document.getElementById('modalDetalle').classList.add('hidden'); });
 
-        // Toastify helper para notificaciones armónicas
-        function showToastify({text, backgroundColor = '#6366f1', type = 'info', duration = 2500}) {
+        // Toastify helper
+        function showToastify({ text, backgroundColor = '#6366f1', type = 'info', duration = 1800 }) {
             Toastify({
                 text,
                 duration,
-                close: true,
                 gravity: 'top',
                 position: 'right',
                 backgroundColor,
-                stopOnFocus: true,
-                onClick: function() {},
-                className: type === 'error' ? 'toast-error' : (type === 'success' ? 'toast-success' : 'toast-info'),
-                style: { '--toastify-close-color': '#000' }
+                stopOnFocus: true
             }).showToast();
         }
-
-        // Notificación al navegar entre páginas principales
-        function notifyNav(page) {
-            if (!sessionStorage.getItem('notified-'+page)) {
-                showToastify({ text: 'Navegaste a ' + page, backgroundColor: '#6366f1', type: 'info', duration: 1600 });
-                sessionStorage.setItem('notified-'+page, '1');
-            }
-        }
-
-        // Ejemplo de uso: showToastify({ text: 'Juegos RAWG cargados', backgroundColor: '#22c55e', type: 'success' });
 
         // Escuchar el input del buscador y buscar en RAWG
         document.getElementById('searchInput').addEventListener('input', function() {
@@ -230,6 +225,13 @@
         // Buscar por defecto algunos juegos populares al cargar
         buscarJuegosRAWG('zelda');
 
+        // Notificaciones al navegar entre páginas
+        function notifyNav(page) {
+            if (!sessionStorage.getItem('notified-'+page)) {
+                showToastify({ text: 'Navegaste a ' + page, backgroundColor: '#6366f1', type: 'info', duration: 1600 });
+                sessionStorage.setItem('notified-'+page, '1');
+            }
+        }
         document.querySelectorAll('nav a').forEach(a => {
             a.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
@@ -240,7 +242,7 @@
         });
     </script>
     <footer class="bg-gray-900 text-gray-400 text-center py-4 mt-auto border-t border-orange-600">
-        © 2025 Puerto Games. Todos los derechos reservados.
+        <span class="font-semibold">© 2025 Puerto Games.</span> Todos los derechos reservados.
     </footer>
 </body>
 </html>

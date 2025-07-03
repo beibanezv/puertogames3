@@ -11,32 +11,74 @@
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
-<body class="bg-gradient-to-br from-black to-gray-900 min-h-screen flex flex-col">
+<body class="bg-gradient-to-br from-black via-gray-900 to-gray-800 min-h-screen flex flex-col">
     <!-- NAV -->
-    <nav class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8">
+    <nav class="bg-orange-600 shadow-lg p-4 flex flex-wrap justify-between items-center rounded-b-lg mb-8 sticky top-0 z-40 bg-opacity-95 backdrop-blur">
         <div class="flex items-center">
-            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3">
+            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center mr-3 shadow-lg">
                 <span class="text-orange-500 font-bold text-xl">PG</span>
             </div>
-            <span class="text-xl font-bold text-white">PUERTO GAMES</span>
+            <span class="text-xl font-extrabold text-white tracking-wide drop-shadow">PUERTO GAMES</span>
         </div>
         <div class="flex gap-4 mt-2 sm:mt-0">
-            <a href="index.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-database mr-1"></i>Base de Datos</a>
+            <a href="index.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-database mr-1"></i>Base de Datos</a>
             <a href="catalogo.html" class="text-white underline font-semibold"><i class="fas fa-book mr-1"></i>Catálogo</a>
-            <a href="dashboard.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-cogs mr-1"></i>Dashboard</a>
-            <a href="api.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-gamepad mr-1"></i>API</a>
-            <a href="login.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-user mr-1"></i>Login</a>
-            <a href="admin.html" class="text-white hover:text-gray-200 font-semibold"><i class="fas fa-cogs mr-1"></i>Admin</a>
+            <a href="dashboard.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-cogs mr-1"></i>Dashboard</a>
+            <a href="api.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-gamepad mr-1"></i>Trivia</a>
+            <a href="login.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-user mr-1"></i>Login</a>
+            <a href="admin.html" class="text-white hover:text-orange-200 font-semibold transition"><i class="fas fa-cogs mr-1"></i>Admin</a>
         </div>
     </nav>
 
     <!-- BUSCADOR -->
-    <div class="flex justify-center mb-6 px-4">
-        <input id="searchInput" type="text" placeholder="Buscar juego por título..." class="w-full max-w-xl px-4 py-2 rounded-lg border border-orange-500 bg-gray-900 text-white focus:ring-orange-500 focus:border-orange-500" />
+    <div class="flex justify-center mb-8 px-4">
+        <input id="searchInput" type="text" placeholder="Buscar juego por título..." class="w-full max-w-xl px-5 py-3 rounded-xl border-2 border-orange-500 bg-gray-900 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 shadow-lg placeholder-gray-400 transition" />
     </div>
 
+    <!-- FILTROS Y ORDEN -->
+    <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-6 px-4">
+        <select id="filtroGenero" class="px-4 py-2 rounded-lg border-2 border-orange-500 bg-gray-900 text-white focus:ring-2 focus:ring-orange-500 shadow placeholder-gray-400 transition">
+            <option value="">Todos los géneros</option>
+        </select>
+        <select id="filtroPrecio" class="px-4 py-2 rounded-lg border-2 border-orange-500 bg-gray-900 text-white focus:ring-2 focus:ring-orange-500 shadow placeholder-gray-400 transition">
+            <option value="">Todos los precios</option>
+            <option value="-10000">Menos de $10.000</option>
+            <option value="10000-30000">$10.000 - $30.000</option>
+            <option value="30000-60000">$30.000 - $60.000</option>
+            <option value="60000+">Más de $60.000</option>
+        </select>
+        <select id="filtroCalificacion" class="px-4 py-2 rounded-lg border-2 border-orange-500 bg-gray-900 text-white focus:ring-2 focus:ring-orange-500 shadow placeholder-gray-400 transition">
+            <option value="">Todas las calificaciones</option>
+            <option value="4+">4 o más</option>
+            <option value="3-4">3 - 4</option>
+            <option value="2-3">2 - 3</option>
+            <option value="-2">Menos de 2</option>
+        </select>
+        <select id="ordenarPor" class="px-4 py-2 rounded-lg border-2 border-orange-500 bg-gray-900 text-white focus:ring-2 focus:ring-orange-500 shadow placeholder-gray-400 transition">
+            <option value="">Ordenar por</option>
+            <option value="nombre">Nombre</option>
+            <option value="precio">Precio</option>
+            <option value="calificacion">Calificación</option>
+        </select>
+    </div>
+    <!-- BOTÓN CARRITO -->
+    <button id="btnCarrito" class="fixed bottom-8 right-8 z-50 bg-orange-600 hover:bg-orange-700 text-white rounded-full shadow-lg w-16 h-16 flex items-center justify-center text-3xl focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="carritoCount" class="absolute top-2 right-2 bg-red-500 text-xs rounded-full px-2 py-0.5 font-bold">0</span>
+    </button>
+    <!-- PANEL CARRITO -->
+    <div id="carritoPanel" class="fixed top-0 right-0 h-full w-80 bg-gray-900 border-l border-orange-600 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="flex justify-between items-center p-4 border-b border-orange-600">
+            <span class="text-lg font-bold text-orange-400">Carrito</span>
+            <button id="cerrarCarrito" class="text-orange-400 hover:text-orange-600 text-2xl"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="carritoItems" class="flex-1 overflow-y-auto p-4"></div>
+        <div class="p-4 border-t border-orange-600">
+            <button id="vaciarCarrito" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded w-full">Vaciar carrito</button>
+        </div>
+    </div>
     <!-- CATÁLOGO -->
-    <div id="catalogoContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4 pb-12"></div>
+    <div id="catalogoContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4 pb-16"></div>
 
     <!-- MODAL DETALLE -->
     <div id="modalDetalle" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
@@ -54,8 +96,9 @@
     const API_BASE_URL = "http://localhost:8080/api/juegos";
     let juegos = [];
     let juegosFiltrados = [];
+    let carrito = JSON.parse(localStorage.getItem('carritoPG') || '[]');
 
-    // Cargar juegos desde la base de datos
+    // --- CARGA DE JUEGOS ---
     async function cargarJuegos() {
         try {
             const res = await fetch(API_BASE_URL);
@@ -63,55 +106,54 @@
             juegos = await res.json();
             juegosFiltrados = juegos;
             renderCatalogo(juegos);
-            showToastify({ text: `Catálogo cargado (${juegos.length} juegos)`, backgroundColor: '#22c55e', type: 'success' });
+            cargarFiltros();
         } catch (err) {
             catalogoContainer.innerHTML = `<div class='col-span-full text-center text-red-400 font-bold'>Error al cargar el catálogo.</div>`;
         }
     }
-
-    // Renderizar catálogo
-    function renderCatalogo(juegos) {
-        if (!juegos.length) {
-            catalogoContainer.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold">No hay juegos en el catálogo.</div>';
-            return;
-        }
-        catalogoContainer.innerHTML = juegos.map(juego => `
-            <div class="game-card bg-gray-900 rounded-2xl shadow border border-orange-500 flex flex-col cursor-pointer hover:ring-2 hover:ring-orange-400 transition group p-0" data-id="${juego.id}">
-                <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-t-2xl h-40 w-full object-cover group-hover:opacity-90 transition mb-0">
-                <div class="flex-1 flex flex-col justify-between px-4 py-3">
-                    <h2 class="text-base font-semibold text-white mb-1 truncate text-center">${juego.nombre}</h2>
-                    <div class="flex justify-between items-center mb-2 gap-2">
-                        <span class="text-xs text-orange-400 font-medium bg-gray-800 px-2 py-0.5 rounded">${juego.genero || ''}</span>
-                        <span class="text-xs text-yellow-400 font-semibold flex items-center ml-2"><i class='fas fa-star mr-1'></i>${juego.calificacion || '-'}</span>
-                    </div>
-                    <div class="mt-auto flex items-end justify-center">
-                        <span class="text-xl font-bold text-green-400 bg-gray-800 px-3 py-0.5 rounded-lg border border-green-500">$${juego.precio ? Math.round(juego.precio) : '--'}</span>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-        // Animación y click con Anime.js
-        document.querySelectorAll('.game-card').forEach(card => {
-            card.onclick = function() {
-                anime({
-                    targets: card,
-                    scale: [1, 1.07, 1],
-                    duration: 350,
-                    easing: 'easeInOutQuad',
-                    complete: () => {
-                        const id = Number(card.getAttribute('data-id'));
-                        window.mostrarDetalle(id);
-                    }
-                });
-            };
-        });
+    // --- FILTROS Y ORDEN ---
+    function cargarFiltros() {
+        // Extraer géneros individuales únicos
+        const generos = [...new Set(juegos.flatMap(j => (j.genero||'').split(',').map(g => g.trim())).filter(Boolean))];
+        const filtroGenero = document.getElementById('filtroGenero');
+        filtroGenero.innerHTML = '<option value="">Todos los géneros</option>' + generos.map(g => `<option value="${g}">${g}</option>`).join('');
     }
-
+    function aplicarFiltrosYOrden() {
+        let filtrados = [...juegos];
+        const gen = document.getElementById('filtroGenero').value;
+        const prec = document.getElementById('filtroPrecio').value;
+        const cal = document.getElementById('filtroCalificacion').value;
+        const ord = document.getElementById('ordenarPor').value;
+        if (gen) filtrados = filtrados.filter(j => (j.genero||'').split(',').map(g => g.trim().toLowerCase()).includes(gen.toLowerCase()));
+        if (prec) {
+            if (prec === '-10000') filtrados = filtrados.filter(j => j.precio < 10000);
+            else if (prec === '10000-30000') filtrados = filtrados.filter(j => j.precio >= 10000 && j.precio <= 30000);
+            else if (prec === '30000-60000') filtrados = filtrados.filter(j => j.precio > 30000 && j.precio <= 60000);
+            else if (prec === '60000+') filtrados = filtrados.filter(j => j.precio > 60000);
+        }
+        if (cal) {
+            if (cal === '4+') filtrados = filtrados.filter(j => parseFloat(j.calificacion) >= 4);
+            else if (cal === '3-4') filtrados = filtrados.filter(j => parseFloat(j.calificacion) >= 3 && parseFloat(j.calificacion) < 4);
+            else if (cal === '2-3') filtrados = filtrados.filter(j => parseFloat(j.calificacion) >= 2 && parseFloat(j.calificacion) < 3);
+            else if (cal === '-2') filtrados = filtrados.filter(j => parseFloat(j.calificacion) < 2);
+        }
+        if (ord) {
+            if (ord === 'nombre') filtrados.sort((a,b) => a.nombre.localeCompare(b.nombre));
+            else if (ord === 'precio') filtrados.sort((a,b) => (a.precio||0)-(b.precio||0));
+            else if (ord === 'calificacion') filtrados.sort((a,b) => (parseFloat(b.calificacion)||0)-(parseFloat(a.calificacion)||0));
+        }
+        juegosFiltrados = filtrados;
+        renderCatalogo(filtrados);
+    }
+    document.getElementById('filtroGenero').addEventListener('change', aplicarFiltrosYOrden);
+    document.getElementById('filtroPrecio').addEventListener('change', aplicarFiltrosYOrden);
+    document.getElementById('filtroCalificacion').addEventListener('change', aplicarFiltrosYOrden);
+    document.getElementById('ordenarPor').addEventListener('change', aplicarFiltrosYOrden);
     // Buscar juegos
     searchInput.addEventListener('input', function() {
         const q = this.value.trim().toLowerCase();
         juegosFiltrados = juegos.filter(j => j.nombre.toLowerCase().includes(q));
-        renderCatalogo(juegosFiltrados);
+        aplicarFiltrosYOrden();
     });
 
     // Mostrar detalles
@@ -131,7 +173,7 @@
                 <p class="text-gray-400 text-sm mb-1 modal-fecha w-full text-center break-words" style="opacity:0; transform: translateY(30px);"><b>Fecha:</b> ${juego.fechaLanzamiento || 'Desconocida'}</p>
                 <p class="text-gray-400 text-sm mb-1 modal-plat w-full text-center break-words" style="opacity:0; transform: translateY(30px);"><b>Plataforma:</b> ${juego.plataforma || '-'}</p>
                 <p class="text-gray-300 text-sm mb-2 text-center modal-desc w-full break-words" style="opacity:0; transform: translateY(30px);">${juego.descripcion || 'Sin descripción.'}</p>
-                <button class="mt-4 px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-yellow-400 text-white font-semibold shadow-lg hover:scale-105 hover:from-orange-600 hover:to-yellow-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">Comprar</button>
+                <button id="btnAgregarCarritoModal" class="mt-4 px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-yellow-400 text-white font-semibold shadow-lg hover:scale-105 hover:from-orange-600 hover:to-yellow-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">Agregar al carrito</button>
             </div>
         `;
         modalDetalle.classList.remove('hidden');
@@ -201,8 +243,104 @@
                 delay: anime.stagger(80),
                 easing: 'easeOutCubic'
             }, '-=200');
+        // Botón agregar al carrito en el modal
+        document.getElementById('btnAgregarCarritoModal').onclick = function() {
+            agregarAlCarrito(juego.id);
+            modalDetalle.classList.add('hidden');
+        };
     };
     modalDetalle.addEventListener('click', e => { if (e.target === modalDetalle) modalDetalle.classList.add('hidden'); });
+
+    // --- CARRITO DE COMPRAS ---
+    function actualizarCarritoUI() {
+        const panel = document.getElementById('carritoPanel');
+        const items = document.getElementById('carritoItems');
+        const count = document.getElementById('carritoCount');
+        const total = carrito.reduce((sum, j) => sum + (j.precio || 0), 0);
+        if (!carrito.length) {
+            items.innerHTML = '<div class="text-gray-400 text-center">El carrito está vacío.</div>';
+        } else {
+            items.innerHTML = carrito.map(j => `
+                <div class="flex items-center gap-2 mb-3 bg-gray-800 rounded p-2">
+                    <img src="${j.imagenUrl || 'https://via.placeholder.com/60x40?text=No+Img'}" class="w-12 h-10 object-cover rounded border border-gray-700">
+                    <div class="flex-1">
+                        <div class="text-white font-semibold text-sm">${j.nombre}</div>
+                        <div class="text-xs text-gray-400">$${j.precio ? Math.round(j.precio) : '--'}</div>
+                    </div>
+                    <button onclick="quitarDelCarrito(${j.id})" class="text-red-500 hover:text-red-700 text-lg"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('') + `<div class='flex justify-between items-center mt-4 border-t border-orange-600 pt-4'>
+                <span class='text-white font-bold'>Total:</span>
+                <span class='text-green-400 font-bold text-lg'>$${total}</span>
+            </div>
+            <button class='mt-4 w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 rounded-lg transition'>Pagar</button>`;
+        }
+        count.textContent = carrito.length;
+    }
+    function agregarAlCarrito(id) {
+        const juego = juegos.find(j => j.id === id);
+        if (!juego || carrito.some(j => j.id === id)) return;
+        carrito.push(juego);
+        localStorage.setItem('carritoPG', JSON.stringify(carrito));
+        actualizarCarritoUI();
+        showToastify({ text: 'Agregado al carrito', backgroundColor: '#22c55e', type: 'success' });
+    }
+    window.quitarDelCarrito = function(id) {
+        carrito = carrito.filter(j => j.id !== id);
+        localStorage.setItem('carritoPG', JSON.stringify(carrito));
+        actualizarCarritoUI();
+    }
+    document.getElementById('btnCarrito').onclick = () => {
+        document.getElementById('carritoPanel').style.transform = 'translateX(0)';
+        actualizarCarritoUI();
+    };
+    document.getElementById('cerrarCarrito').onclick = () => {
+        document.getElementById('carritoPanel').style.transform = 'translateX(100%)';
+    };
+    document.getElementById('vaciarCarrito').onclick = () => {
+        carrito = [];
+        localStorage.setItem('carritoPG', '[]');
+        actualizarCarritoUI();
+    };
+
+    // --- RENDER CATALOGOS ---
+    function renderCatalogo(juegos) {
+        if (!juegos.length) {
+            catalogoContainer.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold">No hay juegos en el catálogo.</div>';
+            return;
+        }
+        catalogoContainer.innerHTML = juegos.map(juego => `
+            <div class="game-card bg-gray-900 rounded-2xl shadow border border-orange-500 flex flex-col cursor-pointer hover:ring-2 hover:ring-orange-400 transition group p-0" data-id="${juego.id}">
+                <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-t-2xl h-40 w-full object-cover group-hover:opacity-90 transition mb-0">
+                <div class="flex-1 flex flex-col justify-between px-4 py-3">
+                    <h2 class="text-base font-semibold text-white mb-1 truncate text-center">${juego.nombre}</h2>
+                    <div class="flex justify-between items-center mb-2 gap-2">
+                        <span class="text-xs text-orange-400 font-medium bg-gray-800 px-2 py-0.5 rounded">${juego.genero || ''}</span>
+                        <span class="text-xs text-yellow-400 font-semibold flex items-center ml-2"><i class='fas fa-star mr-1'></i>${juego.calificacion || '-'}</span>
+                    </div>
+                    <div class="mt-auto flex items-end justify-center gap-2">
+                        <span class="text-xl font-bold text-green-400 bg-gray-800 px-3 py-0.5 rounded-lg border border-green-500">$${juego.precio ? Math.round(juego.precio) : '--'}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        // ...animación y click modal...
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.onclick = function(e) {
+                if (e.target.closest('button')) return;
+                anime({
+                    targets: card,
+                    scale: [1, 1.07, 1],
+                    duration: 350,
+                    easing: 'easeInOutQuad',
+                    complete: () => {
+                        const id = Number(card.getAttribute('data-id'));
+                        window.mostrarDetalle(id);
+                    }
+                });
+            };
+        });
+    }
 
     // Toastify helper para notificaciones armónicas
     function showToastify({text, backgroundColor = '#6366f1', type = 'info', duration = 2500}) {
@@ -243,7 +381,7 @@
     </script>
 
     <footer class="bg-gray-900 text-gray-400 text-center py-4 mt-auto border-t border-orange-600">
-        © 2025 Puerto Games. Todos los derechos reservados.
+        <span class="font-semibold">© 2025 Puerto Games.</span> Todos los derechos reservados.
     </footer>
 </body>
 </html>
