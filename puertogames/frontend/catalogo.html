@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body class="bg-gradient-to-br from-black to-gray-900 min-h-screen flex flex-col">
     <!-- NAV -->
@@ -39,8 +40,7 @@
 
     <!-- MODAL DETALLE -->
     <div id="modalDetalle" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
-        <div class="bg-gray-900 rounded-xl shadow-2xl max-w-lg w-full p-8 relative border border-orange-600">
-            <button id="cerrarModal" class="absolute top-4 right-4 text-orange-400 hover:text-orange-600 text-2xl"><i class="fas fa-times"></i></button>
+        <div id="modalContent" class="bg-gray-900 rounded-2xl shadow-2xl max-w-lg w-full p-0 relative border border-orange-600 overflow-hidden scale-90 opacity-0">
             <div id="detalleJuego"></div>
         </div>
     </div>
@@ -50,7 +50,6 @@
     const catalogoContainer = document.getElementById('catalogoContainer');
     const searchInput = document.getElementById('searchInput');
     const modalDetalle = document.getElementById('modalDetalle');
-    const cerrarModal = document.getElementById('cerrarModal');
     const detalleJuego = document.getElementById('detalleJuego');
     const API_BASE_URL = "http://localhost:8080/api/juegos";
     let juegos = [];
@@ -77,18 +76,35 @@
             return;
         }
         catalogoContainer.innerHTML = juegos.map(juego => `
-            <div class="game-card bg-gray-800 rounded-xl shadow-lg border border-orange-600 flex flex-col">
-                <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-t-xl h-48 w-full object-cover">
-                <div class="p-4 flex-1 flex flex-col">
-                    <h2 class="text-lg font-bold text-white mb-2">${juego.nombre}</h2>
-                    <p class="text-sm text-gray-300 mb-2 line-clamp-2">${juego.descripcion || 'Sin descripción.'}</p>
-                    <p class="text-xs text-gray-400">${juego.genero ? 'Género: ' + juego.genero : ''}</p>
-                    <p class="text-xs text-gray-400">${juego.plataforma ? 'Plataforma: ' + juego.plataforma : ''}</p>
-                    <p class="text-xs text-gray-400">${juego.calificacion ? 'Rating: ' + juego.calificacion : ''}</p>
-                    <p class="text-xs text-gray-400">${juego.precio ? 'Precio: $' + juego.precio : ''}</p>
+            <div class="game-card bg-gray-900 rounded-2xl shadow border border-orange-500 flex flex-col cursor-pointer hover:ring-2 hover:ring-orange-400 transition group p-0" data-id="${juego.id}">
+                <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-t-2xl h-40 w-full object-cover group-hover:opacity-90 transition mb-0">
+                <div class="flex-1 flex flex-col justify-between px-4 py-3">
+                    <h2 class="text-base font-semibold text-white mb-1 truncate text-center">${juego.nombre}</h2>
+                    <div class="flex justify-between items-center mb-2 gap-2">
+                        <span class="text-xs text-orange-400 font-medium bg-gray-800 px-2 py-0.5 rounded">${juego.genero || ''}</span>
+                        <span class="text-xs text-yellow-400 font-semibold flex items-center ml-2"><i class='fas fa-star mr-1'></i>${juego.calificacion || '-'}</span>
+                    </div>
+                    <div class="mt-auto flex items-end justify-center">
+                        <span class="text-xl font-bold text-green-400 bg-gray-800 px-3 py-0.5 rounded-lg border border-green-500">$${juego.precio ? Math.round(juego.precio) : '--'}</span>
+                    </div>
                 </div>
             </div>
         `).join('');
+        // Animación y click con Anime.js
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.onclick = function() {
+                anime({
+                    targets: card,
+                    scale: [1, 1.07, 1],
+                    duration: 350,
+                    easing: 'easeInOutQuad',
+                    complete: () => {
+                        const id = Number(card.getAttribute('data-id'));
+                        window.mostrarDetalle(id);
+                    }
+                });
+            };
+        });
     }
 
     // Buscar juegos
@@ -103,14 +119,89 @@
         const juego = juegos.find(j => j.id === id);
         if (!juego) return;
         detalleJuego.innerHTML = `
-            <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-xl mb-4 w-full h-56 object-cover">
-            <h2 class="text-2xl font-bold text-white mb-2">${juego.nombre}</h2>
-            <p class="text-gray-300 mb-2"><b>Fecha de lanzamiento:</b> ${juego.fechaLanzamiento || 'Desconocida'}</p>
-            <p class="text-gray-300 mb-4">${juego.descripcion || 'Sin descripción.'}</p>
+            <div id="modalGlow" class="absolute inset-0 pointer-events-none z-0"></div>
+            <div id="modalInner" class="flex flex-col items-center gap-2 relative z-10 pb-6 px-6">
+                <img src="${juego.imagenUrl || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${juego.nombre}" class="rounded-xl mb-3 w-full h-56 object-cover shadow-lg border-2 border-gray-800 modal-img" style="filter: blur(8px); opacity:0;">
+                <h2 class="text-2xl font-bold text-white mb-1 text-center modal-title" style="opacity:0; transform: translateY(30px);">${juego.nombre}</h2>
+                <div class="flex flex-wrap justify-center gap-2 mb-2 modal-tags w-full" style="opacity:0; transform: translateY(30px);">
+                    <span class="text-xs text-orange-400 font-medium bg-gray-800 px-2 py-0.5 rounded">${juego.genero || '-'}</span>
+                    <span class="text-xs text-yellow-400 font-semibold flex items-center"><i class='fas fa-star mr-1'></i>${juego.calificacion || '-'}</span>
+                    <span class="text-xs text-green-400 font-semibold bg-gray-800 px-2 py-0.5 rounded border border-green-500">$${juego.precio ? Math.round(juego.precio) : '--'}</span>
+                </div>
+                <p class="text-gray-400 text-sm mb-1 modal-fecha w-full text-center break-words" style="opacity:0; transform: translateY(30px);"><b>Fecha:</b> ${juego.fechaLanzamiento || 'Desconocida'}</p>
+                <p class="text-gray-400 text-sm mb-1 modal-plat w-full text-center break-words" style="opacity:0; transform: translateY(30px);"><b>Plataforma:</b> ${juego.plataforma || '-'}</p>
+                <p class="text-gray-300 text-sm mb-2 text-center modal-desc w-full break-words" style="opacity:0; transform: translateY(30px);">${juego.descripcion || 'Sin descripción.'}</p>
+                <button class="mt-4 px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-yellow-400 text-white font-semibold shadow-lg hover:scale-105 hover:from-orange-600 hover:to-yellow-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">Comprar</button>
+            </div>
         `;
         modalDetalle.classList.remove('hidden');
+        const modalContent = document.getElementById('modalContent');
+        const modalGlow = document.getElementById('modalGlow');
+        const modalInner = document.getElementById('modalInner');
+        // Estado inicial
+        modalContent.style.opacity = 0;
+        modalContent.style.transform = 'scale(0.7) rotate(-8deg)';
+        modalContent.style.filter = 'blur(8px)';
+        modalGlow.innerHTML = '';
+        // Glow animado
+        let glow = document.createElement('div');
+        glow.style.position = 'absolute';
+        glow.style.inset = 0;
+        glow.style.borderRadius = '1.5rem';
+        glow.style.boxShadow = '0 0 0 0px orange, 0 0 80px 10px #ff8800aa';
+        glow.style.opacity = '0.7';
+        glow.style.transition = 'box-shadow 0.3s';
+        modalGlow.appendChild(glow);
+        // Animación principal del modal
+        anime.timeline()
+            .add({
+                targets: modalContent,
+                opacity: [0, 1],
+                scale: [0.7, 1.08, 1],
+                rotate: [-8, 2, 0],
+                filter: ['blur(8px)', 'blur(0px)'],
+                duration: 700,
+                easing: 'easeOutElastic(1, .7)',
+                update: anim => {
+                    // Glow animado
+                    let prog = anim.progress / 100;
+                    glow.style.boxShadow = `0 0 0 ${30*prog}px orange, 0 0 ${80+40*prog}px ${10+10*prog}px #ff8800aa`;
+                }
+            })
+            .add({
+                targets: glow,
+                opacity: [0.7, 0.1],
+                duration: 600,
+                easing: 'linear',
+                complete: () => { glow.style.display = 'none'; }
+            }, '-=300')
+            // Imagen desenfocada y fade-in
+            .add({
+                targets: '.modal-img',
+                filter: ['blur(8px)', 'blur(0px)'],
+                opacity: [0, 1],
+                duration: 400,
+                easing: 'easeOutCubic'
+            }, '-=400')
+            // Título y tags
+            .add({
+                targets: ['.modal-title', '.modal-tags'],
+                opacity: [0, 1],
+                translateY: [30, 0],
+                duration: 350,
+                delay: anime.stagger(80),
+                easing: 'easeOutCubic'
+            }, '-=200')
+            // Fecha, plataforma, descripción
+            .add({
+                targets: ['.modal-fecha', '.modal-plat', '.modal-desc'],
+                opacity: [0, 1],
+                translateY: [30, 0],
+                duration: 350,
+                delay: anime.stagger(80),
+                easing: 'easeOutCubic'
+            }, '-=200');
     };
-    cerrarModal.addEventListener('click', () => modalDetalle.classList.add('hidden'));
     modalDetalle.addEventListener('click', e => { if (e.target === modalDetalle) modalDetalle.classList.add('hidden'); });
 
     // Toastify helper para notificaciones armónicas

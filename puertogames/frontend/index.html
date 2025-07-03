@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
         .game-card {
             transition: all 0.3s ease;
@@ -67,15 +68,6 @@
         <!-- Filtros de búsqueda -->
         <div class="flex flex-col md:flex-row justify-center mb-8 gap-4">
             <input id="searchInput" type="text" placeholder="Buscar por nombre en la base de datos..." class="w-full md:w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400" />
-            <select id="platformFilter" class="w-full md:w-1/3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white">
-                <option value="">Todas las plataformas</option>
-                <option value="pc">PC</option>
-                <option value="playstation">PlayStation</option>
-                <option value="xbox">Xbox</option>
-                <option value="nintendo">Nintendo</option>
-                <option value="android">Android</option>
-                <option value="ios">iOS</option>
-            </select>
         </div>
         
         <!-- Sección de Juegos -->
@@ -115,7 +107,7 @@
                 return;
             }
             gamesContainer.innerHTML = games.map(game => `
-                <div class="game-card bg-gray-800 rounded-xl shadow-lg border border-orange-600 flex flex-col cursor-pointer hover:ring-2 hover:ring-orange-500 transition" onclick="showGameDetailsRAWG('${game.slug}')">
+                <div class="game-card bg-gray-800 rounded-xl shadow-lg border border-orange-600 flex flex-col cursor-pointer hover:ring-2 hover:ring-orange-500 transition" data-slug="${game.slug}">
                     <img src="${game.background_image || 'https://via.placeholder.com/400x225?text=Sin+Imagen'}" alt="${game.name}" class="rounded-t-xl h-48 w-full object-cover">
                     <div class="p-4 flex-1 flex flex-col">
                         <h2 class="text-lg font-bold text-white mb-2">${game.name}</h2>
@@ -123,6 +115,46 @@
                     </div>
                 </div>
             `).join('');
+            // Animación avanzada al clickear una card
+            document.querySelectorAll('.game-card').forEach(card => {
+                card.onclick = function() {
+                    // Glow animado
+                    let glow = document.createElement('div');
+                    glow.style.position = 'absolute';
+                    glow.style.inset = 0;
+                    glow.style.borderRadius = '1rem';
+                    glow.style.boxShadow = '0 0 0 0px orange, 0 0 80px 10px #ff8800aa';
+                    glow.style.opacity = '0.7';
+                    glow.style.pointerEvents = 'none';
+                    glow.className = 'card-glow';
+                    card.style.position = 'relative';
+                    card.appendChild(glow);
+                    anime.timeline()
+                        .add({
+                            targets: card,
+                            scale: [1, 1.08, 1],
+                            rotate: [-6, 2, 0],
+                            filter: ['blur(0px)', 'blur(2px)', 'blur(0px)'],
+                            duration: 600,
+                            easing: 'easeOutElastic(1, .7)',
+                            update: anim => {
+                                let prog = anim.progress / 100;
+                                glow.style.boxShadow = `0 0 0 ${30*prog}px orange, 0 0 ${80+40*prog}px ${10+10*prog}px #ff8800aa`;
+                            }
+                        })
+                        .add({
+                            targets: glow,
+                            opacity: [0.7, 0.1],
+                            duration: 400,
+                            easing: 'linear',
+                            complete: () => { if (glow && glow.parentNode) glow.parentNode.removeChild(glow); }
+                        }, '-=300')
+                        .finished.then(() => {
+                            const slug = card.getAttribute('data-slug');
+                            showGameDetailsRAWG(slug);
+                        });
+                };
+            });
         }
 
         // Mostrar detalles usando API RAWG (por slug)
