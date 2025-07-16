@@ -2,7 +2,7 @@
 // Define funciones asíncronas para obtener juegos, iniciar sesión y obtener estadísticas.
 // Puedes agregar más funciones según los endpoints disponibles en el backend.
 
-const API_BASE_URL = 'https://proactive-bravery-production.up.railway.app/api';
+const API_BASE_URL = 'https://proactive-bravery-production.up.railway.app/api'; 
 
 async function fetchJuegos() {
     const response = await fetch(`${API_BASE_URL}/juegos`);
